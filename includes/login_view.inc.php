@@ -10,7 +10,33 @@ function check_new_user() {
             echo "<h2>Registration Complete!</h2><br><br>";
             unset($_GET['signup']);
         }
+    }
+}
+
+function check_login_fail() {
+
+    if (isset($_SESSION['errors_login'])) {
+
+        $errors = $_SESSION['errors_login'];
+
+        echo "<br>";
+
+        foreach ($errors as $error) {
+            echo '<p class="error-msg">' . $error  . '</p>';
+        }
+
+        unset($_SESSION['errors_login']);
 
     }
+
+    // if(isset($_GET['login'])) {
+
+    //     if ($_GET['login'] == 'fail') {
+
+    //         echo "<h2>Login failed</h2><br><br>";
+    //         unset($_GET['login']);
+    //     }
+
+    // }
 
 }

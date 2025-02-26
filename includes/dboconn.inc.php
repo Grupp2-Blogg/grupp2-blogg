@@ -6,7 +6,6 @@ $dbusername = "user";
 $dbpassword = "";
 
 
-
 $dsn = "mysql:host=$dbservername;port=3306;dbname=$dbname";
 
 try {

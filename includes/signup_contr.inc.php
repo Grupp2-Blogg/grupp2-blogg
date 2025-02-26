@@ -10,8 +10,8 @@ function is_firstname_set(string $firstname) {
     } else {
         return true;
     }
-
 }
+
 function is_lastname_set(string $lastname) {
 
     if (empty($lastname)) {
@@ -19,9 +19,7 @@ function is_lastname_set(string $lastname) {
     } else {
         return true;
     }
-
 }
-
 
 function is_birthyear_set($birthyear) {
 
@@ -47,7 +45,6 @@ function create_new_user(object $pdo, string $username, string $pwd, string $ema
     db_create_user($pdo, $username, $pwd, $email, $firstname,$lastname, $gender,$birthyear);
 
 }
-
 
 function is_input_set (string $username, string $pwd, string $email) {
 

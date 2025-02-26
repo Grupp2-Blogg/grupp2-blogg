@@ -37,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $gender = null;
         }
 
-
         if (!is_input_set($username, $pwd, $email)) {
             $errors["no_input"] = "Fill in all required fields!";
         }
@@ -71,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // $_SESSION['signup_data'] = $signupData;
 
-            header("Location: ../index.php");
+            header("Location: ../signup.php");
             exit;
         } else {
             create_new_user($pdo, $username, $pwd, $email, $firstname, $lastname, $gender, $birthyear);
