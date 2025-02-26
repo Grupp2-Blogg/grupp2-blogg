@@ -21,12 +21,12 @@
                 check_login_fail(); 
             ?>
             <h2>Login</h2>
-            <form action="./includes/login.inc.php" method="post">
+            <form action="./includes/login.inc.php" method="post" class="account-form">
             <div class="form-bigtext-container">
                     Username:
                     <input type="text" name="username" placeholder="Username">
                 </div>
-                <div class="form-password-container">
+                <div class="form-bigtext-container">
                     Password:
                     <input type="password" name="pwd" id="" placeholder="Password">
                 </div>

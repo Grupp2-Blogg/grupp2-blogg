@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (empty($user) || !isset($user) || $user === NULL) {
 
-            $errors["invalid_login"] = "Incorrect user or password";
+            $errors["invalid_login"] = "Incorrect username or password";
             $_SESSION['errors_login'] = $errors;
 
             header("Location: ../login.php?login=fail");
@@ -35,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $_SESSION["user"] = ["id" => $user["id"], "username" => $user["username"]];
-        header("Location: ../profile.php?login=success");
+        header("Location: ../index.php?login=success");
+        // header("Location: ../profile.php?login=success");
 
         $stmt = null;
         $pdo = null;
