@@ -17,5 +17,5 @@ try {
 
 } catch (PDOException $e) {
 
-    echo "DATABASE CONNECTION FAILED: " . $e->getMessage() . "<br><br>";
+    echo "DATABASE CONNECTION FAILED : " . $e->getMessage() . "<br><br>";
 }
