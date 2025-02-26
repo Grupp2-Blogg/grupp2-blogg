@@ -2,14 +2,8 @@
     require_once './includes/session_config.php';
     require_once './includes/login_view.inc.php';
 
-    if (isset($_SESSION['user'])) {
+    if (!isset($_SESSION['user'])) {
 
-        $user = $_SESSION['user'];
-
-        unset($_SESSION['user']);
-
-    }
-    else {
         header("Location: login.php");
         exit;
     }
@@ -24,7 +18,12 @@
     <title>Blogg Profil</title>
 </head>
 <body>
-    <h2><?= "Welcome " . $user['username'] . "!<br>" ?></h2>
+    <main class="page-wrapper">
+        <section class="account-container">
+            <h2><?= "Welcome " . $_SESSION['user']['username'] . "!" ?></h2>
+            <p><?= "User_ID: " . $_SESSION['user']['id']?></p>
+        </section>
+    </main>
     
 </body>
 </html>
