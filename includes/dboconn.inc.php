@@ -1,12 +1,13 @@
 <?php
 
-$dbservername = "localhost";
+$dbservername = "193.181.23.31";
 $dbname = "fishyblogg";
-$dbusername = "root";
+$dbusername = "user";
 $dbpassword = "";
 
 
-$dsn = "mysql:host=$dbservername;dbname=$dbname";
+
+$dsn = "mysql:host=$dbservername;port=3306;dbname=$dbname";
 
 try {
 

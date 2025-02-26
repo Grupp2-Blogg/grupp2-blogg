@@ -6,18 +6,18 @@ function db_create_user (object $pdo, string $username, string $pwd, string $ema
 
     try {
         
-        $hash = password_hash($pwd, PASSWORD_DEFAULT);
+        $hash_pwd = password_hash($pwd, PASSWORD_DEFAULT);
 
         $query = "INSERT 
                     INTO 
-                        users (username, email, hash, firstname, lastname, gender, birthyear)
+                        users (username, email, hash_pwd, firstname, lastname, gender, birthyear)
                     VALUES 
-                        (:username, :email, :hash, :firstname, :lastname, :gender, :birthyear);";
+                        (:username, :email, :hash_pwd, :firstname, :lastname, :gender, :birthyear);";
 
         $stmt = $pdo->prepare($query);
 
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':hash', $hash);
+        $stmt->bindParam(':hash_pwd', $hash_pwd);
         $stmt->bindParam(':email', $email);
         
         if ($gender === null) {

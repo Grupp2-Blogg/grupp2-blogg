@@ -60,8 +60,6 @@ require_once './includes/signup_view.inc.php';
                             $earliestYear = $currentYear - 120;
                             $yearAmount = $currentYear - $earliestYear;
 
-                            $years = [];
-
                             for ($i = $currentYear; $i >= $earliestYear; $i--) { 
                                 
                                 echo "<option value='{$i}'>{$i}</option>";

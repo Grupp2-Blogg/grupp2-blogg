@@ -5,18 +5,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $pwd = $_POST['pwd'];
     $email = $_POST['email'];
-    
+
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $gender = $_POST['gender'];
     $birthyear = $_POST['birthyear'];
-    
+
     try {
-        
+
         require_once './dboconn.inc.php';
         require_once './signup_model.inc.php';
         require_once './signup_contr.inc.php';
-        
+
         // ERROR HANDLERS
         $errors = [];
 
@@ -73,8 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             header("Location: ../index.php");
             exit;
-        }
-        else {
+        } else {
             create_new_user($pdo, $username, $pwd, $email, $firstname, $lastname, $gender, $birthyear);
             header("Location: ../login.php?signup=success");
 
@@ -87,5 +86,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (PDOException $e) {
         die("Query failed: " .  $e->getMessage());
     }
-
-} 
+}
