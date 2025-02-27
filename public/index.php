@@ -38,8 +38,8 @@
                 if ((isset($_GET['logout']) && $_GET['logout'] == 'true')) {
                     unset($_SESSION['user']);
                 }
-
-                if (isset($_SESSION['user'])) {
+                
+                if (isset($_SESSION['user']['id'])) {
 
                     echo "<p>Welcome " . $_SESSION['user']['username'] . "!</p>";
 

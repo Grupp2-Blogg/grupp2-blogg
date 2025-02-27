@@ -1,12 +1,15 @@
 <?php 
     require_once '../app/config/session_config.php';
-    require_once '../app/views/login_view.php';
+    require_once '../app/views/profile_view.php';
 
-    if (!isset($_SESSION['user'])) {
+    $enterEdit = false;
 
-        header("Location: login.php");
-        exit;
+    if (isset($_SESSION['enter-edit'])) {
+        $enterEdit = true;
+        unset($_SESSION['enter-edit']);
     }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +23,21 @@
 <body>
     <main class="page-wrapper">
         <section class="account-container">
-            <h2><?= "Welcome " . $_SESSION['user']['username'] . "!" ?></h2>
-            <p><?= "User_ID: " . $_SESSION['user']['id']?></p>
+            <h2><?= "Användarinfo för " . $_SESSION['user']['username']?></h2>
+            <?php 
+                $user = $_SESSION['user'];
+
+                if ($enterEdit) {
+                    edit_display($user);
+                }
+                else {
+                    normal_display($user);
+                    echo '<form action="../includes/profile.inc.php" method="get">
+                        <input type="submit" name="account-enter-edit" value="Redigera">
+                    </form>';
+                    
+                }
+            ?>
         </section>
     </main>
     

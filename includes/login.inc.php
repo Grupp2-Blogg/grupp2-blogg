@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $_SESSION["user"] = ["id" => $user["id"], "username" => $user["username"]];
-        header("Location: ../public/index.php?login=success");
+        header("Location: ./profile.inc.php?login=success");
 
         $stmt = null;
         $pdo = null;
