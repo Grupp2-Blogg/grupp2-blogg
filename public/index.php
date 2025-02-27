@@ -39,7 +39,7 @@
                     unset($_SESSION['user']);
                 }
 
-                if (isset($_SESSION['user'])) {
+                if (isset($_SESSION['user']['id'])) {
 
                     echo "<p>Welcome " . $_SESSION['user']['username'] . "!</p>";
 
@@ -67,6 +67,7 @@
             <li><a href="#">Hem</a></li>
             <li><a href="#">Bilder</a></li>
             <li><a href="#">Recept</a></li>
+            <li><a href="addpost.php">Inlägg</a></li>
 
         </ul>
     </nav>
