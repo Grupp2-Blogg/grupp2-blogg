@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-function check_signup_errors() {
+function check_signup_errors()
+{
 
     if (isset($_SESSION['errors_signup'])) {
 
@@ -16,14 +17,16 @@ function check_signup_errors() {
 
         unset($_SESSION['errors_signup']);
     }
+}
 
-    // else if (isset($_GET['signup'])) {
+function populate_year_select_options(int $yearsback)
+{
 
-    //     if ($_GET['signup'] == 'success') {
-            
-    //         echo "<h2>Signup complete!</h2><br>";
-    //     }
+    $currentYear = date("Y");
+    $earliestYear = $currentYear - $yearsback;
 
-    // }
+    for ($i = $currentYear; $i >= $earliestYear; $i--) {
 
+        echo "<option value='{$i}'>{$i}</option>";
+    }
 }

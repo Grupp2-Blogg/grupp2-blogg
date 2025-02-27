@@ -1,6 +1,6 @@
 <?php
-require_once './includes/session_config.php';
-require_once './includes/signup_view.inc.php';
+    require_once '../app/config/session_config.php';
+    require_once '../app/views/signup_view.php';
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ require_once './includes/signup_view.inc.php';
         <section class="account-container">
             <h2>Signup</h2>
 
-            <form action="./includes/signup.inc.php" method="post" class="account-form">
+            <form action="../includes/signup.inc.php" method="post" class="account-form">
                 <div class="form-bigtext-container">
                     *Username:
                     <input type="text" name="username" placeholder="Username">
@@ -55,17 +55,7 @@ require_once './includes/signup_view.inc.php';
                     <select name="birthyear" id="">
                         <option value="" selected>----</option>
                         <?php
-
-                            $currentYear = date("Y");
-                            $earliestYear = $currentYear - 120;
-                            $yearAmount = $currentYear - $earliestYear;
-
-                            for ($i = $currentYear; $i >= $earliestYear; $i--) { 
-                                
-                                echo "<option value='{$i}'>{$i}</option>";
-
-                            }
-
+                            populate_year_select_options(110);
                         ?>
                     </select>
                 </div>
@@ -79,9 +69,7 @@ require_once './includes/signup_view.inc.php';
             </form>
             <p class="required-fields">* required fields</p>
             <?php
-
-            check_signup_errors();
-
+                check_signup_errors();
             ?>
         </section>
     </main>

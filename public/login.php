@@ -1,7 +1,8 @@
 <?php
+    require_once '../app/config/session_config.php';
 
-    require_once './includes/session_config.php';
-    require_once './includes/login_view.inc.php';
+    // require_once './app/config/session_config.php';
+    require_once '../app/views/login_view.php';
 
 ?>
 
@@ -21,7 +22,7 @@
                 check_login_fail(); 
             ?>
             <h2>Login</h2>
-            <form action="./includes/login.inc.php" method="post" class="account-form">
+            <form action="../includes/login.inc.php" method="post" class="account-form">
             <div class="form-bigtext-container">
                     Username:
                     <input type="text" name="username" placeholder="Username">

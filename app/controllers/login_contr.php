@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-function is_correct_login(object $pdo, string $username, string $pwd) {
+function authorize_login(object $pdo, string $username, string $pwd) {
 
     $user = db_get_user_by_username($pdo, $username, $pwd);
 

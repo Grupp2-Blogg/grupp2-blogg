@@ -1,6 +1,6 @@
 <?php 
-    require_once './includes/session_config.php';
-    require_once './includes/login_view.inc.php';
+    require_once '../app/config/session_config.php';
+    require_once '../app/views/login_view.php';
 
     if (!isset($_SESSION['user'])) {
 

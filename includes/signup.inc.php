@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
 
-        require_once './dboconn.inc.php';
-        require_once './signup_model.inc.php';
-        require_once './signup_contr.inc.php';
+        require_once '../app/config/dboconn.php';
+        require_once '../app/models/signup_model.php';
+        require_once '../app/controllers/signup_contr.php';
 
         // ERROR HANDLERS
         $errors = [];
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors["tc_nocheck"] = "You need to accept the Terms & Service!";
         }
 
-        require_once './session_config.php';
+        require_once '../app/config/session_config.php';
 
         if (!empty($errors)) {
 
@@ -70,11 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // $_SESSION['signup_data'] = $signupData;
 
-            header("Location: ../signup.php");
+            header("Location: ../public/signup.php");
             exit;
         } else {
             create_new_user($pdo, $username, $pwd, $email, $firstname, $lastname, $gender, $birthyear);
-            header("Location: ../login.php?signup=success");
+            header("Location: ../public/login.php?signup=success");
 
             $pdo = null;
             $stmt = null;

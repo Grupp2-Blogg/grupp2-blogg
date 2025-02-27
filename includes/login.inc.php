@@ -7,36 +7,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
 
-        require_once './dboconn.inc.php';
-        require_once './login_model.inc.php';
-        require_once './login_contr.inc.php';
+        require_once '../app/config/dboconn.php';
+        require_once '../app/models/login_model.php';
+        require_once '../app/controllers/login_contr.php';
 
         $errors = [];
 
-        require_once './session_config.php';
+        require_once '../app/config/session_config.php';
         
         if (!is_input_set($username, $pwd)) {
             $errors["no_input"] = "Fill in all required fields!";
             $_SESSION['errors_login'] = $errors;
 
-            header("Location: ../login.php?login=fail");
+            header("Location: ../public/login.php");
             exit;
         }
 
-        $user = is_correct_login($pdo, $username, $pwd);
+        $user = authorize_login($pdo, $username, $pwd);
 
         if (empty($user) || !isset($user) || $user === NULL) {
 
             $errors["invalid_login"] = "Incorrect username or password";
             $_SESSION['errors_login'] = $errors;
 
-            header("Location: ../login.php?login=fail");
+            header("Location: ../public/login.php");
             exit;
         }
 
         $_SESSION["user"] = ["id" => $user["id"], "username" => $user["username"]];
-        header("Location: ../index.php?login=success");
-        // header("Location: ../profile.php?login=success");
+        header("Location: ../public/index.php?login=success");
 
         $stmt = null;
         $pdo = null;

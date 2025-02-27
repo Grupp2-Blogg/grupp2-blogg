@@ -11,16 +11,13 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    
 }
 
 body {
     background-color: var(--main-background);
-
 }
 
 .page-wrapper {
-    
     background-color: var(--main-color-green); 
     height: 100vh;
     max-width: 1100px;
@@ -33,14 +30,10 @@ body {
 .account-container {
     
     background-color: var(--shade-of-green);
-    /* min-height: 500px;
-    max-height: 80%; */
-    /* max-height: 500px; */
     min-width: 220px;
     border: 2px solid black;
     border-radius: 0.5rem;
     padding: 1.5rem;
-    /* background-color: rgb(228, 228, 228); */
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
