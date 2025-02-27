@@ -2,16 +2,15 @@
 require '../app/config/dboconn.php';
 require '../app/config/session_config.php';
 
-if(!isset($_SESSION['user_id'])){
-    /*die("Error: You must be logged in on your profile to post.");*/
-    $_SESSION['user_id'] = 1; /*Tillfällig "användare"*/
+if(!isset($_SESSION['user']['id'])){
+    die("Error: You must be logged in on your profile to post.");
 }
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $title = $_POST['blogtitle'];
     $content = $_POST['blogcontent'];
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user']['id'];
 
     $imagePath = NULL;
     if (isset($_FILES['post_image'])&& $_FILES['post_image']['error'] === UPLOAD_ERR_OK){
