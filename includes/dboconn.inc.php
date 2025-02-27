@@ -1,6 +1,6 @@
 <?php
 
-$config = require(__DIR__ . "includes/config.php");
+$config = require(__DIR__ . "/config.php");
 
 try {
 
