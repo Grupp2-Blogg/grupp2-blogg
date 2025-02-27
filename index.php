@@ -13,19 +13,6 @@
     <header class="top-header">
        <h1>GÄDDHÄNG</h1> 
 
-    
-        
-        <!--<div class="profile-picture">
-                  <img src="fiskeb/dominik.jpg" alt="">
-
-
-                  <div class="login-container">
-                    <a href="#" class="login-btn">Logga in</a>
-                    <a href="#" class="register-btn">Registrera</a>
-                   
-                </div>
-        </div>-->
-
         <div class="login-banner">
             <div class="login-container">
                 <a href="#" class="login-btn">Logga in</a>
@@ -56,13 +43,6 @@
         <p>Napp och gäng, gäddhäng</p>
         <p style="height: 1500px;"></p>
     </div>
-    
-
-    
-
-
-
-
-    
+       
 </body>
 </html>
