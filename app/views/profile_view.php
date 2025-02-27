@@ -2,22 +2,35 @@
 
 declare(strict_types=1);
 
-function normal_display($user)
+function check_edit_mode()
 {
-    echo "<ul> ";
-    echo "<li>AnvändarID: " . "[" . $user['id'] . "]" . "</li>";
-    echo "<li>Användarnamn: " . $user['username'] . "</li>";
-    echo "<li>Email: " . $user['email'] . "</li>";
-    echo "<li>Lösenord: </li>";
-    echo "<li>Förnamn: " . $user['firstname'] . "</li>";
-    echo "<li>Efternamn: " . $user['lastname'] . "</li>";
-    echo "<li>Kön: " . $user['gender'] . "</li>";
-    echo "<li>Födelseår: " . $user['birthyear'] . "</li>";
-    echo "<li>Konto skapat: " . $user['created_at'] . "</li>";
-    echo "</ul> ";
+    if (isset($_SESSION['user'])) {
+
+
+        if (isset($_SESSION['enter-edit'])) {
+
+            require_once '../includes/editform.inc.php';
+            unset($_SESSION['enter-edit']);
+        } else {
+            require_once '../includes/account_info.inc.php';
+        }
+
+    }
 }
 
-function edit_display($user)
+function check_profile_update_errors()
 {
-    require_once '../includes/editform.inc.php';
+
+    if (isset($_SESSION['errors_profile'])) {
+
+        $errors = $_SESSION['errors_profile'];
+
+        echo "<br>";
+
+        foreach ($errors as $error) {
+            echo '<p class="error-msg">' . $error  . '</p>';
+        }
+
+        unset($_SESSION['errors_profile']);
+    }
 }

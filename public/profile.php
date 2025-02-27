@@ -2,14 +2,11 @@
     require_once '../app/config/session_config.php';
     require_once '../app/views/profile_view.php';
 
-    $enterEdit = false;
+    if (!isset($_SESSION['user'])) {
 
-    if (isset($_SESSION['enter-edit'])) {
-        $enterEdit = true;
-        unset($_SESSION['enter-edit']);
+        header("Location: ./login.php");
+        exit;
     }
-
-    
 ?>
 
 <!DOCTYPE html>
@@ -23,20 +20,10 @@
 <body>
     <main class="page-wrapper">
         <section class="account-container">
-            <h2><?= "Användarinfo för " . $_SESSION['user']['username']?></h2>
+            <h2>Personuppgifter</h2>
             <?php 
-                $user = $_SESSION['user'];
-
-                if ($enterEdit) {
-                    edit_display($user);
-                }
-                else {
-                    normal_display($user);
-                    echo '<form action="../includes/profile.inc.php" method="get">
-                        <input type="submit" name="account-enter-edit" value="Redigera">
-                    </form>';
-                    
-                }
+                check_edit_mode();                
+                check_profile_update_errors();
             ?>
         </section>
     </main>
