@@ -1,6 +1,6 @@
 <?php
-require 'includes/dboconn.inc.php';
-require 'includes/session_config.php';
+require '../app/config/dboconn.php';
+require '../app/config/session_config.php';
 
 if(!isset($_SESSION['user_id'])){
     /*die("Error: You must be logged in on your profile to post.");*/
