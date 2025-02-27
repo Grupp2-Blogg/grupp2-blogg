@@ -17,7 +17,7 @@
 <body>
 
     <header class="top-header">
-        <h1>GÄDDHÄNG</h1>
+        <img src="./fiskebi/8880968.jpg">
 
 
 
