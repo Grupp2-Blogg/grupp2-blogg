@@ -1,0 +1,146 @@
+:root {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    --main-background: #7b583d;
+    --shade-of-green: #AAB396;
+    --shade-of-vanilla: #F7EED3;
+    --shade-of-sand: #FFF8E8;
+    --main-color-green: #7b794c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--main-background);
+}
+
+.page-wrapper {
+    background-color: var(--main-color-green); 
+    height: 100vh;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-container {
+    
+    background-color: var(--shade-of-green);
+    min-width: 220px;
+    border: 2px solid black;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.account-container > h2 {
+    align-self: center;
+}
+
+.account-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+
+
+.account-form input[type="text"], input[type="password"] {
+    min-height: 1.5rem;
+}
+
+.account-form * {
+    border-radius: 0.2rem;
+}
+
+.form-email-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-form > * > * {
+    border: 0.5px solid black;
+}
+
+.form-bigtext-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.form-bigtext-container > input {
+    font-size: 1rem;
+    padding: 0.2rem 0.35rem;
+}
+
+.form-smalltext-container {
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.form-smalltext-container > input {
+    padding: 0.1rem 0.25rem;
+}
+
+.form-password-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-gender-container {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.form-gender-container > * {
+    border: none;
+    font-size: 0.8rem;
+}
+
+.form-gender-container > input {
+    font-size: 0.5rem;
+}
+
+.form-gender {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-button-container {
+    display: flex;
+    justify-content: center;
+
+}
+
+.form-button {
+    justify-self: center;
+    min-width: 35%;
+    min-height: 1.75rem;
+    /* background-color: #C2BAB7; */
+    background: var(--main-background);
+    color: var(--shade-of-vanilla);
+    font-weight: bold;
+
+}
+
+.form-button:hover {
+    cursor: pointer;
+    background-color: grey;
+}
+
+.required-fields {
+    font-size: 0.75rem;
+}
+
+.error-msg {
+    color: red;
+}
