@@ -28,20 +28,18 @@ try {
     } else {
         $_SESSION['user'] = $user;
     }
+
     // Om användaren tryckt "Redigera" knappen, sätt session variabel.
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         if (isset($_GET['account-enter-edit'])) {
 
             $_SESSION['enter-edit'] = 'true';
-            $_SESSION['user'] = $user;
-
             header("Location: ../public/profile.php");
             exit;
 
         }
     }
-
 
 
     // Om användaren tryckt "Spara ändringar" knappen. Kör insert till databas(efter massa validering)
@@ -55,6 +53,7 @@ try {
         $gender = trim($_POST['gender']);
         $birthyear = trim($_POST['birthyear']);
 
+        
         if (!is_firstname_set($firstname)) {
             $firstname = null;
         }
