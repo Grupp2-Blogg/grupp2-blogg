@@ -1,4 +1,5 @@
 <?php
+require_once '../app/config/dboconn.php'; 
     require_once '../app/config/session_config.php';
 ?>
 
@@ -67,7 +68,40 @@
         <p style="height: 1500px;"></p>
     </div>
 
+  <!--farzad visa alla inlägg-->
 
+  <div >
+    <h1>Blogginlägg</h1>
+    <?php
+    try {
+        // Hämta blogginlägg från tabellen blogposts i fallande ordning (nyaste först)
+        $stmt = $pdo->prepare("SELECT * FROM blogposts ORDER BY id DESC");
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($posts) {
+    
+            foreach ($posts as $post) {
+                echo '<div >';
+            
+                echo '<div >' . htmlspecialchars($post['blogtitle']) . '</div>';
+            
+                echo '<div >' . nl2br(htmlspecialchars($post['blogcontent'])) . '</div>';
+                
+                if (!empty($post['post_image'])) {
+                    echo '<div class="post-image"><img src="' . htmlspecialchars($post['post_image']) . '" alt="Bloggbild"></div>';
+                }
+                echo '</div>';
+            }
+        } else {
+            echo '<p>Inga inlägg hittades.</p>';
+        }
+    } catch (PDOException $e) {
+        
+        echo "Fel vid hämtning av inlägg: " . $e->getMessage();
+    }
+    ?>
+</div>
 
 
 
