@@ -82,11 +82,11 @@ require_once '../app/config/dboconn.php';
         if ($posts) {
     
             foreach ($posts as $post) {
-                echo '<div class="post">';
+                echo '<div >';
             
-                echo '<div class="post-title">' . htmlspecialchars($post['blogtitle']) . '</div>';
+                echo '<div >' . htmlspecialchars($post['blogtitle']) . '</div>';
             
-                echo '<div class="post-content">' . nl2br(htmlspecialchars($post['blogcontent'])) . '</div>';
+                echo '<div >' . nl2br(htmlspecialchars($post['blogcontent'])) . '</div>';
                 
                 if (!empty($post['post_image'])) {
                     echo '<div class="post-image"><img src="' . htmlspecialchars($post['post_image']) . '" alt="Bloggbild"></div>';
