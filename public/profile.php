@@ -1,10 +1,10 @@
 <?php 
     require_once '../app/config/session_config.php';
-    require_once '../app/views/login_view.php';
+    require_once '../app/views/profile_view.php';
 
     if (!isset($_SESSION['user'])) {
 
-        header("Location: login.php");
+        header("Location: ./login.php");
         exit;
     }
 ?>
@@ -20,8 +20,11 @@
 <body>
     <main class="page-wrapper">
         <section class="account-container">
-            <h2><?= "Welcome " . $_SESSION['user']['username'] . "!" ?></h2>
-            <p><?= "User_ID: " . $_SESSION['user']['id']?></p>
+            <h2>Personuppgifter</h2>
+            <?php 
+                check_edit_mode();                
+                check_profile_update_errors();
+            ?>
         </section>
     </main>
     
