@@ -17,20 +17,8 @@
 <body>
 
     <header class="top-header">
-        <h1>GÄDDHÄNG</h1>
+        <img src="./fiskebi/8880968.jpg">
 
-
-
-        <!--<div class="profile-picture">
-                  <img src="fiskeb/dominik.jpg" alt="">
-
-
-                  <div class="login-container">
-                    <a href="#" class="login-btn">Logga in</a>
-                    <a href="#" class="register-btn">Registrera</a>
-                   
-                </div>
-        </div>-->
 
         <div class="login-banner">
             <div class="login-container">
