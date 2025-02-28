@@ -112,12 +112,13 @@ body {
 .form-gender {
     display: flex;
     flex-direction: column;
-
 }
 
 .form-button-container {
     display: flex;
     justify-content: center;
+    gap: 2rem;
+    
 
 }
 
@@ -129,12 +130,29 @@ body {
     background: var(--main-background);
     color: var(--shade-of-vanilla);
     font-weight: bold;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.2rem;
 
 }
 
 .form-button:hover {
     cursor: pointer;
     background-color: grey;
+}
+
+.acc-info-ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.acc-info-label {
+    font-weight: bold;
+}
+
+.acc-info-value {
+    font-size: 1.05rem;
+    font-style: italic;
 }
 
 .required-fields {

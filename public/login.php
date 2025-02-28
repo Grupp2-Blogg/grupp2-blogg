@@ -1,29 +1,36 @@
 <?php
-    require_once '../app/config/session_config.php';
+require_once '../app/config/session_config.php';
 
-    // require_once './app/config/session_config.php';
-    require_once '../app/views/login_view.php';
+require_once '../app/views/login_view.php';
+
+if (isset($_SESSION['user'])) {
+
+    header("Location: ../includes/login.inc.php");
+    exit;
+}
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <title>Document</title>
 </head>
+
 <body>
     <main class="page-wrapper">
         <section class="account-container">
             <?php
                 check_new_user();
-                check_login_fail(); 
+                check_login_fail();
             ?>
             <h2>Login</h2>
             <form action="../includes/login.inc.php" method="post" class="account-form">
-            <div class="form-bigtext-container">
+                <div class="form-bigtext-container">
                     Username:
                     <input type="text" name="username" placeholder="Username">
                 </div>
@@ -38,4 +45,5 @@
         </section>
     </main>
 </body>
+
 </html>
