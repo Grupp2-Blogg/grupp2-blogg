@@ -1,4 +1,4 @@
-<form action="../includes/profile.inc.php" method="post" class="account-form">
+<form action="../includes/profile_details.inc.php" method="post" class="account-form">
     <div class="form-bigtext-container">
         *Användarnamn:
         <input type="text" name="username" placeholder="Username" value="<?= htmlspecialchars($_SESSION['user']['username']) ?>">

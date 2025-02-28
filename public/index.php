@@ -1,5 +1,5 @@
 <?php
-    require_once '../app/config/session_config.php';
+require_once '../app/config/session_config.php';
 ?>
 
 
@@ -26,7 +26,7 @@
                 if ((isset($_GET['logout']) && $_GET['logout'] == 'true')) {
                     unset($_SESSION['user']);
                 }
-                
+
                 if (isset($_SESSION['user']['id'])) {
 
                     echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";

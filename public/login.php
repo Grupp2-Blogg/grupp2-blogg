@@ -25,8 +25,8 @@ if (isset($_SESSION['user'])) {
     <main class="page-wrapper">
         <section class="account-container">
             <?php
-                check_new_user();
-                check_login_fail();
+            check_new_user();
+            check_login_fail();
             ?>
             <h2>Login</h2>
             <form action="../includes/login.inc.php" method="post" class="account-form">

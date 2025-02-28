@@ -36,7 +36,7 @@ if (!isset($_SESSION['user'])) {
             }
 
             $_SESSION['user'] = ["id" => $user["id"], "username" => $user["username"]];
-            header("Location: ./profile.inc.php?login=success");
+            header("Location: ./profile_details.inc.php?login=success");
             // $stmt = null;
             // $pdo = null;
             die();

@@ -11,8 +11,8 @@ $id = $_SESSION['user']['id'];
 try {
 
     require_once '../app/config/dboconn.php';
-    require_once '../app/models/profile_model.php';
-    require_once '../app/controllers/profile_contr.php';
+    require_once '../app/models/profile_details_model.php';
+    require_once '../app/controllers/profile_details_contr.php';
 
     $errors = [];
 
@@ -35,9 +35,8 @@ try {
         if (isset($_GET['account-enter-edit'])) {
 
             $_SESSION['enter-edit'] = 'true';
-            header("Location: ../public/profile.php");
+            header("Location: ../public/profile_details.php");
             exit;
-
         }
     }
 
@@ -53,7 +52,7 @@ try {
         $gender = trim($_POST['gender']);
         $birthyear = trim($_POST['birthyear']);
 
-        
+
         if (!is_firstname_set($firstname)) {
             $firstname = null;
         }
@@ -93,17 +92,17 @@ try {
         if (!empty($errors)) {
 
             $_SESSION['errors_profile'] = $errors;
-            header("Location: ../public/profile.php");
+            header("Location: ../public/profile_details.php");
             exit;
         }
-        
+
         update_user($pdo, $id, $username, $email, $firstname, $lastname, $gender, $birthyear);
         $updatedUser = get_all_userinfo_byID($pdo, $id);
-        
+
         if ($updatedUser) {
             unset($_SESSION['enter-edit']);
             $_SESSION['user'] = $updatedUser;
-            header("Location: ../public/profile.php");
+            header("Location: ../public/profile_details.php");
             $pdo = null;
             $stmt = null;
             die();
@@ -117,11 +116,10 @@ try {
         exit;
     }
 
-    header("Location: ../public/profile.php");
+    header("Location: ../public/profile_details.php");
     $stmt = null;
     $pdo = null;
     exit;
-
 } catch (PDOException $e) {
     $stmt = null;
     $pdo = null;

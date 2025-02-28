@@ -35,7 +35,7 @@
     </li>
 </ul>
 
-<form action="../includes/profile.inc.php" method="get">
+<form action="../includes/profile_details.inc.php" method="get">
     <div class="form-button-container">
         <input type="submit" class="form-button" name="account-enter-edit" value="Redigera Uppgifter">
         <input type="submit" class="form-button" name="password-enter-edit" value="Ändra Lösenord">

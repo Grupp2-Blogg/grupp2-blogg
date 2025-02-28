@@ -1,11 +1,11 @@
 <?php
-    require_once '../app/config/session_config.php';
-    require_once '../app/views/signup_view.php';
+require_once '../app/config/session_config.php';
+require_once '../app/views/signup_view.php';
 
-    if (isset($_SESSION['user'])) {
-        header("Location: ./index.php");
-        exit;
-    }
+if (isset($_SESSION['user'])) {
+    header("Location: ./index.php");
+    exit;
+}
 
 ?>
 
@@ -61,7 +61,7 @@
                     <select name="birthyear" id="">
                         <option value="" selected>----</option>
                         <?php
-                            populate_year_select_options(110);
+                        populate_year_select_options(110);
                         ?>
                     </select>
                 </div>
@@ -75,7 +75,7 @@
             </form>
             <p class="required-fields">* required fields</p>
             <?php
-                check_signup_errors();
+            check_signup_errors();
             ?>
         </section>
     </main>
