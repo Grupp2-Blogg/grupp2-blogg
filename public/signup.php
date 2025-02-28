@@ -1,6 +1,12 @@
 <?php
     require_once '../app/config/session_config.php';
     require_once '../app/views/signup_view.php';
+
+    if (isset($_SESSION['user'])) {
+        header("Location: ./index.php");
+        exit;
+    }
+
 ?>
 
 <!DOCTYPE html>

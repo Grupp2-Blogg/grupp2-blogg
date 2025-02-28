@@ -2,24 +2,27 @@
 
 declare(strict_types=1);
 
-function db_create_user (object $pdo, string $username, string $pwd, string $email, ?string $firstname = NULL, ?string $lastname = NULL, ?string $gender = NULL, ?int $birthyear = NULL) {
+function db_update_user(object $pdo, int $id, string $username, string $email, ?string $firstname = NULL, ?string $lastname = NULL, ?string $gender = NULL, ?int $birthyear = NULL)
+{
 
     try {
-        
-        $hash_pwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-        $query = "INSERT 
-                    INTO 
-                        users (username, email, hash_pwd, firstname, lastname, gender, birthyear)
-                    VALUES 
-                        (:username, :email, :hash_pwd, :firstname, :lastname, :gender, :birthyear);";
+        $query = "UPDATE users
+                    SET username = :username,
+                        email = :email,
+                        firstname = :firstname,
+                        lastname = :lastname,
+                        gender = :gender,
+                        birthyear = :birthyear
+                    WHERE id = :id;";
 
         $stmt = $pdo->prepare($query);
 
+
+        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':hash_pwd', $hash_pwd);
         $stmt->bindParam(':email', $email);
-        
+
         if ($gender === null) {
             $stmt->bindValue(':gender', null, PDO::PARAM_NULL);
         } else {
@@ -45,14 +48,53 @@ function db_create_user (object $pdo, string $username, string $pwd, string $ema
         }
 
         $stmt->execute();
-
     } catch (PDOException $e) {
-        // die("Query failed: " . $e->getMessage());
-        error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-        header("Location: ../../public/error.php");
+        die("Query failed: " . $e->getMessage());
+    }
+}
+
+
+function db_get_all_userinfo(object $pdo, int $id)
+{
+
+    try {
+
+        $query = "SELECT 
+                    u.id,
+                    u.username,
+                    u.email,
+                    u.firstname,
+                    u.lastname,
+                    u.gender,
+                    u.birthyear,
+                    u.created_at 
+                    FROM 
+                        users as u 
+                    WHERE 
+                        id = :id;";
+
+        $stmt = $pdo->prepare($query);
+
+        $stmt->bindParam(":id", $id);
+
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+
+            return null;
+        } else {
+            return $user;
+        }
+    } catch (PDOException $e) {
+        $stmt = null;
+        $pdo = null;
+        die("Query failed: " . $e->getMessage());
+        // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
+        // header("Location: ../../public/error.php");
         exit;
     }
-
 }
 
 function db_get_username (object $pdo, string $username) {

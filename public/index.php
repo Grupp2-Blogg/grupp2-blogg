@@ -17,20 +17,8 @@
 <body>
 
     <header class="top-header">
-        <h1>GÄDDHÄNG</h1>
+        <img src="./fiskebi/8880968.jpg">
 
-
-
-        <!--<div class="profile-picture">
-                  <img src="fiskeb/dominik.jpg" alt="">
-
-
-                  <div class="login-container">
-                    <a href="#" class="login-btn">Logga in</a>
-                    <a href="#" class="register-btn">Registrera</a>
-                   
-                </div>
-        </div>-->
 
         <div class="login-banner">
             <div class="login-container">
@@ -38,10 +26,10 @@
                 if ((isset($_GET['logout']) && $_GET['logout'] == 'true')) {
                     unset($_SESSION['user']);
                 }
+                
+                if (isset($_SESSION['user']['id'])) {
 
-                if (isset($_SESSION['user'])) {
-
-                    echo "<p>Welcome " . $_SESSION['user']['username'] . "!</p>";
+                    echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
 
                     echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
                 } else {
@@ -67,6 +55,7 @@
             <li><a href="#">Hem</a></li>
             <li><a href="#">Bilder</a></li>
             <li><a href="#">Recept</a></li>
+            <li><a href="addpost.php">Inlägg</a></li>
 
         </ul>
     </nav>
