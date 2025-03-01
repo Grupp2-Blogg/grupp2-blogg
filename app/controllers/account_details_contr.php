@@ -8,6 +8,25 @@ function update_user(object $pdo, int $id, string $username, string $email, ?str
 
 }
 
+function update_pwd(object $pdo, int $id, string $new_pwd) {
+
+    db_update_pwd($pdo, $id, $new_pwd);
+
+}
+
+function confirm_pwd(object $pdo, int $id, string $old_pwd) {
+
+    return db_get_user_byID($pdo, $id, $old_pwd);
+}
+
+function is_pwd_set(string $old_pwd) {
+
+    if (empty($old_pwd)) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 function get_all_userinfo_byID (object $pdo, int $id) {
 

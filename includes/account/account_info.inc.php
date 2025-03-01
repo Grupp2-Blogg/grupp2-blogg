@@ -35,9 +35,11 @@
     </li>
 </ul>
 
-<form action="../includes/profile_details.inc.php" method="get">
+<form action="./account_redirect.php" method="get">
     <div class="form-button-container">
-        <input type="submit" class="form-button" name="account-enter-edit" value="Redigera Uppgifter">
-        <input type="submit" class="form-button" name="password-enter-edit" value="Ändra Lösenord">
+
+        <button type="submit" class="form-button" name="account-action" value="account-enter-edit">Redigera Uppgifter</button>
+        <button type="submit" class="form-button" name="account-action" value="pw-enter-confirm-old">Ändra Lösenord</button>
+
     </div>
 </form>

@@ -2,6 +2,63 @@
 
 declare(strict_types=1);
 
+function db_update_pwd(object $pdo, int $id, string $new_pwd) {
+
+    try {
+
+        $hash_pwd = password_hash($new_pwd, PASSWORD_DEFAULT);
+
+        $query = "UPDATE 
+                        users 
+                    SET 
+                        hash_pwd = :hash_pwd
+                    WHERE id = :id;";
+
+        $stmt = $pdo->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':hash_pwd', $hash_pwd);
+
+        $stmt->execute();
+
+    } catch (PDOException $e) {
+        die("Query failed: " . $e->getMessage());
+    }
+
+}
+
+function db_get_user_byID(object $pdo, int $id, string $old_pwd)
+{
+
+    try {
+
+        $query = "SELECT 
+                        u.hash_pwd 
+                    FROM 
+                        users as u 
+                    WHERE id = :id;";
+
+        $stmt = $pdo->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+
+            return null;
+        } else {
+
+            return password_verify($old_pwd, $user['hash_pwd']);
+            unset($user);
+        }
+    } catch (PDOException $e) {
+        die("Query failed: " . $e->getMessage());
+    }
+}
+
 function db_update_user(object $pdo, int $id, string $username, string $email, ?string $firstname = NULL, ?string $lastname = NULL, ?string $gender = NULL, ?int $birthyear = NULL)
 {
 
@@ -97,7 +154,8 @@ function db_get_all_userinfo(object $pdo, int $id)
     }
 }
 
-function db_get_username (object $pdo, string $username) {
+function db_get_username(object $pdo, string $username)
+{
 
     try {
 
@@ -117,17 +175,16 @@ function db_get_username (object $pdo, string $username) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $user;
-
     } catch (PDOException $e) {
         // die("Query failed: " . $e->getMessage());
         error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
         header("Location: ../../public/error.php");
         exit;
     }
-
 }
 
-function db_get_email (object $pdo, string $email) {
+function db_get_email(object $pdo, string $email)
+{
 
     try {
 
@@ -147,7 +204,6 @@ function db_get_email (object $pdo, string $email) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $user;
-
     } catch (PDOException $e) {
         $stmt = null;
         $pdo = null;
@@ -156,5 +212,4 @@ function db_get_email (object $pdo, string $email) {
         // header("Location: ../../public/error.php");
         exit;
     }
-    
 }

@@ -27,10 +27,17 @@ require_once '../app/config/session_config.php';
                     unset($_SESSION['user']);
                 }
 
-                if (isset($_SESSION['user']['id'])) {
+                if (isset($_SESSION['user'])) {
+                    
+                    if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true') {
+                        echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
+                        unset($_SESSION['recent_login']);
+                    } else {
 
-                    echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
-
+                        echo "<p>" . htmlspecialchars($_SESSION['user']['username']) . "</p>";
+                    }
+                    
+                    echo '<a href="./account_redirect.php" class="login-btn">Acc settings</a>';
                     echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
                 } else {
                     echo '<a href="./login.php" class="login-btn">Logga in</a>
@@ -41,7 +48,7 @@ require_once '../app/config/session_config.php';
                 <a href="./signup.php" class="register-btn">Registrera</a> -->
 
             </div>
-            <div class="profile-picture">
+            <div class="account-picture">
                 <img src="./fiskebi/dominik.jpg" alt="">
             </div>
         </div>
