@@ -15,5 +15,20 @@ try {
 
 } catch (PDOException $e) {
 
-    echo "DATABASE CONNECTION FAILED: " . $e->getMessage() . "<br><br>";
+    try{
+        $host = "localhost";
+        $db = "fishyblogg";
+        $username = "root";
+        $password = "";
+
+        $lokalPdo = new PDO("mysql:host=$host;dbname=$db;", $username, $password,
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
+        );
+    }
+    catch(PDOException $local_e){
+        echo "LOCAL DATABASE CONNECTION FAILED: " . $local_e->getMessage() . "<br><br>";
+        die();
+    }
+    
+    echo "BOTH LOCAL AND VIRTUAL DATABASE CONNECTION FAILED: " . $e->getMessage() . "<br><br>";
 }
