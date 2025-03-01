@@ -1,5 +1,5 @@
 <?php
-require_once '../app/config/session_config.php';
+    require_once '../app/config/session_config.php';
 ?>
 
 
@@ -29,7 +29,7 @@ require_once '../app/config/session_config.php';
 
                 if (isset($_SESSION['user']['id'])) {
 
-                    echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
+                    echo "<p>Welcome " . $_SESSION['user']['username'] . "!</p>";
 
                     echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
                 } else {

@@ -47,10 +47,7 @@ function db_create_user (object $pdo, string $username, string $pwd, string $ema
         $stmt->execute();
 
     } catch (PDOException $e) {
-        // die("Query failed: " . $e->getMessage());
-        error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-        header("Location: ../../public/error.php");
-        exit;
+        die("Query failed: " . $e->getMessage());
     }
 
 }
@@ -72,15 +69,12 @@ function db_get_username (object $pdo, string $username) {
 
         $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user_result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $user;
+        return $user_result;
 
     } catch (PDOException $e) {
-        // die("Query failed: " . $e->getMessage());
-        error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-        header("Location: ../../public/error.php");
-        exit;
+        die("Query failed: " . $e->getMessage());
     }
 
 }
@@ -102,17 +96,12 @@ function db_get_email (object $pdo, string $email) {
 
         $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user_result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $user;
+        return $user_result;
 
     } catch (PDOException $e) {
-        $stmt = null;
-        $pdo = null;
         die("Query failed: " . $e->getMessage());
-        // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-        // header("Location: ../../public/error.php");
-        exit;
     }
     
 }
