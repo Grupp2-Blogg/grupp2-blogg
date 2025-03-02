@@ -56,140 +56,14 @@ try {
 
         if (in_array($_POST['account-action'], $post_allowedValues, true)) {
 
-
             if ($_POST['account-action'] === 'pw-confirm-old') {
-
-                $old_pwd = trim($_POST['pw-confirm-old']);
-
-                if (!is_pwd_set($old_pwd)) {
-
-                    $errors['no_input'] = "Fyll i lösenord";
-                }
-                $user = confirm_pwd($pdo, $id, $old_pwd);
-                if ($user === false) {
-
-                    $errors['errors_confirm'] = "Fel lösenord - försök igen";
-                } elseif ($user === NULL) {
-
-                    $errors["invalid_fetch"] = "Kunde inte hämta användare";
-                }
-
-                if (!empty($errors)) {
-
-                    $_SESSION['errors_account'] = $errors;
-                    header("Location: ./account_details.php");
-                    exit;
-                } else {
-
-                    unset($user);
-                    $_SESSION['enter-edit'] = 'pw-enter-edit';
-                    header("Location: ./account_details.php");
-                    exit;
-                }
+                handle_pwd_confirm($pdo, $id);
             }
             if ($_POST['account-action'] === 'pw-update') {
-
-                $new_pwd = trim($_POST['pw-update']);
-                $repeat_pwd = trim($_POST['pw-update-repeat']);
-
-                if (!is_both_pwd_set($new_pwd, $repeat_pwd)) {
-
-                    $errors['no_input'] = "Fyll i båda fälten!";
-                } elseif ($new_pwd !== $repeat_pwd) {
-
-                    $errors['pw_mismatch'] = "Lösenorden matchar inte, försök igen";
-                }
-
-                if (!empty($errors)) {
-
-                    $_SESSION['errors_account'] = $errors;
-                    header("Location: ./account_details.php");
-                    exit;
-                } else {
-
-                    update_pwd($pdo, $id, $new_pwd);
-                    unset($new_pwd);
-                    unset($repeat_pwd);
-                    $_SESSION['pwd_update_complete'] = "Lösenord uppdaterat!";
-                    unset($_SESSION['enter-edit']);
-                    header("Location: ./account_details.php");
-                    $pdo = null;
-                    $stmt = null;
-                    die();
-                }
+                handle_pwd_update($pdo, $id);
             }
-
             if ($_POST['account-action'] === 'account-update') {
-
-                $username = trim($_POST['username']);
-                $email = trim($_POST['email']);
-
-                $firstname = trim($_POST['firstname']);
-                $lastname = trim($_POST['lastname']);
-                $gender = trim($_POST['gender']);
-                $birthyear = trim($_POST['birthyear']);
-
-
-                if (!is_firstname_set($firstname)) {
-                    $firstname = null;
-                }
-                if (!is_lastname_set($lastname)) {
-                    $lastname = null;
-                }
-
-                if (!is_birthyear_set($birthyear)) {
-                    $birthyear = null;
-                } else {
-                    $birthyear = (int)$birthyear;
-                }
-
-                if (!is_gender_set($gender)) {
-                    $gender = null;
-                }
-
-                if (!is_input_set($username, $email)) {
-                    $errors["no_input"] = "Fyll i de obligatoriska fälten!";
-                }
-                if (!is_valid_email($email)) {
-                    $errors["invalid_email"] = "Ogiltigt format på email!";
-                }
-                if ($_SESSION['user']['email'] !== $email) {
-
-                    if (!is_new_email($pdo, $email)) {
-                        $errors["email_taken"] = "Email-adressen är redan tagen!";
-                    }
-                }
-                if ($_SESSION['user']['username'] !== $username) {
-
-                    if (!is_new_username($pdo, $username)) {
-                        $errors["username_taken"] = "Användarnamnet är redan taget!";
-                    }
-                }
-
-                if (!empty($errors)) {
-
-                    $_SESSION['errors_account'] = $errors;
-                    header("Location: ./account_details.php");
-                    exit;
-                } else {
-
-                    update_user($pdo, $id, $username, $email, $firstname, $lastname, $gender, $birthyear);
-                    $updatedUser = get_all_userinfo_byID($pdo, $id);
-
-                    if (!$updatedUser) {
-                        $errors["invalid_fetch"] = "Kunde inte hämta användare";
-                        $_SESSION['errors_account'] = $errors;
-                        header("Location: ./login.php");
-                        exit;
-                    } else {
-                        unset($_SESSION['enter-edit']);
-                        $_SESSION['user'] = $updatedUser;
-                        header("Location: ./account_details.php");
-                        $pdo = null;
-                        $stmt = null;
-                        die();
-                    }
-                }
+                handle_account_update($pdo, $id);
             }
         }
     }
