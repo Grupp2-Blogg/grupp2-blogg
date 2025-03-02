@@ -1,8 +1,4 @@
 <?php
-// require_once '../../app/config/session_config.php';
-// $currentDir = getcwd();
-// echo $currentDir;
-// require_once '../../app/config/session_config.php';
 
 
 if (!isset($_SESSION['user'])) {
@@ -18,9 +14,7 @@ try {
     require_once '../app/controllers/account_details_contr.php';
 
 
-
-
-    // Om användaren tryckt "Redigera" knappen, sätt session variabel.
+    // Om användaren tryckt någon av "EDIT"-knapparna, sätt session variabel.
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['account-action'])) {
 
         $get_allowedValues = ['account-enter-edit', 'pw-enter-confirm-old'];
@@ -28,9 +22,8 @@ try {
         if (in_array($_GET['account-action'], $get_allowedValues, true)) {
 
             $_SESSION['enter-edit'] = $_GET['account-action'];
-            // header("Location: .././public/account_details.php");
-            header("Location: ./account_details.php");
 
+            header("Location: ./account_details.php");
             exit;
         }
     }
@@ -42,7 +35,7 @@ try {
 
     if (!$user) {
 
-        $errors["invalid_fetch"] = "Couldn't retrieve user data";
+        $errors["invalid_fetch"] = "Kunde inte hämta användare";
         $_SESSION['errors_account'] = $errors;
 
         header("Location: ./login.php");
@@ -70,15 +63,15 @@ try {
 
                 if (!is_pwd_set($old_pwd)) {
 
-                    $errors['no_input'] = "No password entered";
+                    $errors['no_input'] = "Fyll i lösenord";
                 }
                 $user = confirm_pwd($pdo, $id, $old_pwd);
                 if ($user === false) {
 
-                    $errors['errors_confirm'] = "Incorrect password";
+                    $errors['errors_confirm'] = "Fel lösenord - försök igen";
                 } elseif ($user === NULL) {
 
-                    $errors["invalid_fetch"] = "Couldn't retrieve user data";
+                    $errors["invalid_fetch"] = "Kunde inte hämta användare";
                 }
 
                 if (!empty($errors)) {
@@ -101,10 +94,10 @@ try {
 
                 if (!is_both_pwd_set($new_pwd, $repeat_pwd)) {
 
-                    $errors['errors_account'] = "Fill in both fields!";
+                    $errors['errors_account'] = "Fyll i båda fälten!";
                 } elseif ($new_pwd !== $repeat_pwd) {
 
-                    $errors['errors_account'] = "Passwords do not match, please re-enter";
+                    $errors['errors_account'] = "Lösenorden matchar inte, försök igen";
                 }
 
                 if (!empty($errors)) {
@@ -117,7 +110,7 @@ try {
                     update_pwd($pdo, $id, $new_pwd);
                     unset($new_pwd);
                     unset($repeat_pwd);
-                    $_SESSION['pwd_update_complete'] = "Password updated!";
+                    $_SESSION['pwd_update_complete'] = "Lösenord uppdaterat!";
                     unset($_SESSION['enter-edit']);
                     header("Location: ./account_details.php");
                     $pdo = null;
@@ -155,21 +148,21 @@ try {
                 }
 
                 if (!is_input_set($username, $email)) {
-                    $errors["no_input"] = "Fill in all required fields!";
+                    $errors["no_input"] = "Fyll i de obligatoriska fälten!";
                 }
                 if (!is_valid_email($email)) {
-                    $errors["invalid_email"] = "Invalid email format!";
+                    $errors["invalid_email"] = "Ogiltigt format på email!";
                 }
                 if ($_SESSION['user']['email'] !== $email) {
 
                     if (!is_new_email($pdo, $email)) {
-                        $errors["email_taken"] = "That email is already taken!";
+                        $errors["email_taken"] = "Email-adressen är redan tagen!";
                     }
                 }
                 if ($_SESSION['user']['username'] !== $username) {
 
                     if (!is_new_username($pdo, $username)) {
-                        $errors["username_taken"] = "That username is already taken!";
+                        $errors["username_taken"] = "Användarnamnet är redan taget!";
                     }
                 }
 
@@ -184,7 +177,7 @@ try {
                     $updatedUser = get_all_userinfo_byID($pdo, $id);
 
                     if (!$updatedUser) {
-                        $errors["invalid_fetch"] = "Couldn't retrieve user data";
+                        $errors["invalid_fetch"] = "Kunde inte hämta användare";
                         $_SESSION['errors_account'] = $errors;
                         header("Location: ./login.php");
                         exit;

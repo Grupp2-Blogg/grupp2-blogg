@@ -31,7 +31,9 @@ if (!isset($_SESSION['user'])) {
                 echo $_SESSION['pwd_update_complete'];
                 unset($_SESSION['pwd_update_complete']);
             }
-
+            echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
+            echo '<a href="./index.php" class="login-btn">Startsida</a>';
+            
             ?>
         </section>
     </main>

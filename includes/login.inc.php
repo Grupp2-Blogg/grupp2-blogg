@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         if (!is_input_set($username, $pwd)) {
-            $errors["no_input"] = "Fill in all required fields!";
+            $errors["no_input"] = "Fyll i de obligatoriska fälten!";
             $_SESSION['errors_login'] = $errors;
 
             header("Location: ../public/login.php");
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!$user) {
 
-            $errors["invalid_login"] = "Incorrect username or password";
+            $errors["invalid_login"] = "Inkorrekt användarnamn eller lösenord";
             $_SESSION['errors_login'] = $errors;
 
             header("Location: ../public/login.php");
