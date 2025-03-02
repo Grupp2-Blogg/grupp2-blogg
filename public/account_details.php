@@ -26,7 +26,7 @@ if (!isset($_SESSION['user'])) {
             <?php
             check_edit_mode();
             check_account_update_errors();
-
+          
             if (isset($_SESSION['pwd_update_complete'])) {
                 echo $_SESSION['pwd_update_complete'];
                 unset($_SESSION['pwd_update_complete']);

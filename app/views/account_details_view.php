@@ -23,12 +23,14 @@ function check_edit_mode()
                     break;
                 case 'pw-enter-confirm-old':
                     require_once '.././includes/account/pw_confirm_old.inc.php';
-                    unset($_SESSION['enter-edit']);
+                    // unset($_SESSION['enter-edit']);
                     break;
                 case 'pw-enter-edit':
                     require_once '.././includes/account/pw_update.inc.php';
-                    unset($_SESSION['enter-edit']);
+                    // unset($_SESSION['enter-edit']);
                     break;
+                default:
+                    unset($_SESSION['enter-edit']); break;
                  }
         } else{
 
@@ -46,8 +48,9 @@ function check_account_update_errors()
 {
 
     if (isset($_SESSION['errors_account'])) {
-
+        
         $errors = $_SESSION['errors_account'];
+        unset($_SESSION['errors_account']);
 
         echo "<br>";
 
@@ -55,6 +58,5 @@ function check_account_update_errors()
             echo '<p class="error-msg">' . $error  . '</p>';
         }
 
-        unset($_SESSION['errors_account']);
     }
 }

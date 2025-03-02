@@ -19,6 +19,15 @@ function confirm_pwd(object $pdo, int $id, string $old_pwd) {
     return db_get_user_byID($pdo, $id, $old_pwd);
 }
 
+function is_both_pwd_set(string $new_pwd, string $repeat_pwd) {
+
+    if (empty($new_pwd) || empty($repeat_pwd)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function is_pwd_set(string $old_pwd) {
 
     if (empty($old_pwd)) {

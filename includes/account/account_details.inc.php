@@ -1,7 +1,7 @@
 <?php
 // require_once '../../app/config/session_config.php';
-$currentDir = getcwd();
-echo $currentDir;
+// $currentDir = getcwd();
+// echo $currentDir;
 // require_once '../../app/config/session_config.php';
 
 
@@ -43,16 +43,15 @@ try {
     if (!$user) {
 
         $errors["invalid_fetch"] = "Couldn't retrieve user data";
-        $_SESSION['errors_login'] = $errors;
+        $_SESSION['errors_account'] = $errors;
 
         header("Location: ./login.php");
         exit;
     } else {
 
         unset($_SESSION['user']);
-        
-        $_SESSION['user'] = $user;
 
+        $_SESSION['user'] = $user;
     }
 
 
@@ -64,33 +63,31 @@ try {
 
         if (in_array($_POST['account-action'], $post_allowedValues, true)) {
 
-            
+
             if ($_POST['account-action'] === 'pw-confirm-old') {
 
                 $old_pwd = trim($_POST['pw-confirm-old']);
-                
+
                 if (!is_pwd_set($old_pwd)) {
 
-
                     $errors['no_input'] = "No password entered";
-                    header("Location: ./account_details.php");
-                    exit;
                 }
                 $user = confirm_pwd($pdo, $id, $old_pwd);
                 if ($user === false) {
 
                     $errors['errors_confirm'] = "Incorrect password";
-                    $_SESSION['errors_login'] = $errors;
-                    header("Location: ./account_details.php");
-                    exit;
-
                 } elseif ($user === NULL) {
 
                     $errors["invalid_fetch"] = "Couldn't retrieve user data";
-                    $_SESSION['errors_login'] = $errors;
+                }
+
+                if (!empty($errors)) {
+
+                    $_SESSION['errors_account'] = $errors;
                     header("Location: ./account_details.php");
                     exit;
                 } else {
+
                     unset($user);
                     $_SESSION['enter-edit'] = 'pw-enter-edit';
                     header("Location: ./account_details.php");
@@ -100,22 +97,33 @@ try {
             if ($_POST['account-action'] === 'pw-update') {
 
                 $new_pwd = trim($_POST['pw-update']);
+                $repeat_pwd = trim($_POST['pw-update-repeat']);
 
-                if (!is_pwd_set($new_pwd)) {
-                    $errors['no_input'] = "No password entered";
+                if (!is_both_pwd_set($new_pwd, $repeat_pwd)) {
+
+                    $errors['errors_account'] = "Fill in both fields!";
+                } elseif ($new_pwd !== $repeat_pwd) {
+
+                    $errors['errors_account'] = "Passwords do not match, please re-enter";
+                }
+
+                if (!empty($errors)) {
+
+                    $_SESSION['errors_account'] = $errors;
                     header("Location: ./account_details.php");
                     exit;
                 } else {
 
                     update_pwd($pdo, $id, $new_pwd);
                     unset($new_pwd);
+                    unset($repeat_pwd);
                     $_SESSION['pwd_update_complete'] = "Password updated!";
+                    unset($_SESSION['enter-edit']);
                     header("Location: ./account_details.php");
-                    exit;
+                    $pdo = null;
+                    $stmt = null;
+                    die();
                 }
-
-
-
             }
 
             if ($_POST['account-action'] === 'account-update') {
@@ -170,30 +178,28 @@ try {
                     $_SESSION['errors_account'] = $errors;
                     header("Location: ./account_details.php");
                     exit;
+                } else {
+
+                    update_user($pdo, $id, $username, $email, $firstname, $lastname, $gender, $birthyear);
+                    $updatedUser = get_all_userinfo_byID($pdo, $id);
+
+                    if (!$updatedUser) {
+                        $errors["invalid_fetch"] = "Couldn't retrieve user data";
+                        $_SESSION['errors_account'] = $errors;
+                        header("Location: ./login.php");
+                        exit;
+                    } else {
+                        unset($_SESSION['enter-edit']);
+                        $_SESSION['user'] = $updatedUser;
+                        header("Location: ./account_details.php");
+                        $pdo = null;
+                        $stmt = null;
+                        die();
+                    }
                 }
-
-                update_user($pdo, $id, $username, $email, $firstname, $lastname, $gender, $birthyear);
-                $updatedUser = get_all_userinfo_byID($pdo, $id);
-
-                if ($updatedUser) {
-                    unset($_SESSION['enter-edit']);
-                    $_SESSION['user'] = $updatedUser;
-                    header("Location: ./account_details.php");
-                    $pdo = null;
-                    $stmt = null;
-                    die();
-                }
-
-                header("Location: ./error.php");
-
-                $pdo = null;
-                $stmt = null;
-
-                exit;
             }
         }
     }
-
 
 
     header("Location: ./account_details.php");
