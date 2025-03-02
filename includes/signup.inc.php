@@ -2,14 +2,15 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $username = $_POST['username'];
-    $pwd = $_POST['pwd'];
-    $email = $_POST['email'];
+    $username = trim($_POST['username']);
+    $pwd = trim($_POST['pwd']);
+    $pwd_repeat = trim($_POST['pwd-repeat']);
+    $email = trim($_POST['email']);
 
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $gender = $_POST['gender'];
-    $birthyear = $_POST['birthyear'];
+    $firstname = trim($_POST['firstname']);
+    $lastname = trim($_POST['lastname']);
+    $gender = trim($_POST['gender']);
+    $birthyear = trim($_POST['birthyear']);
 
     try {
 
@@ -37,8 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $gender = null;
         }
 
-        if (!is_input_set($username, $pwd, $email)) {
+        if (!is_input_set($username, $pwd, $pwd_repeat, $email)) {
             $errors["no_input"] = "Fyll i de obligatoriska fälten!";
+        }
+        if ($pwd !== $pwd_repeat) {
+
+            $errors['pw_mismatch'] = "Lösenorden matchar inte, försök igen";
         }
         if (!is_valid_email($email)) {
             $errors["invalid_email"] = "Ogiltigt format på email!";

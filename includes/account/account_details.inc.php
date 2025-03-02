@@ -94,10 +94,10 @@ try {
 
                 if (!is_both_pwd_set($new_pwd, $repeat_pwd)) {
 
-                    $errors['errors_account'] = "Fyll i båda fälten!";
+                    $errors['no_input'] = "Fyll i båda fälten!";
                 } elseif ($new_pwd !== $repeat_pwd) {
 
-                    $errors['errors_account'] = "Lösenorden matchar inte, försök igen";
+                    $errors['pw_mismatch'] = "Lösenorden matchar inte, försök igen";
                 }
 
                 if (!empty($errors)) {
