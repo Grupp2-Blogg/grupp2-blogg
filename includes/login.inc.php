@@ -1,5 +1,4 @@
 <?php
-require_once '../app/config/session_config.php';
 
 if (isset($_SESSION['user'])) {
 
@@ -12,11 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pwd = trim($_POST['pwd']);
 
     try {
+    try {
 
         require_once '../app/config/dboconn.php';
         require_once '../app/models/login_model.php';
         require_once '../app/controllers/login_contr.php';
+        require_once '../app/config/dboconn.php';
+        require_once '../app/models/login_model.php';
+        require_once '../app/controllers/login_contr.php';
 
+        $errors = [];
         $errors = [];
 
 
@@ -27,14 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../public/login.php");
             exit;
         }
+            header("Location: ../public/login.php");
+            exit;
+        }
 
+        $user = authorize_login($pdo, $username, $pwd);
         $user = authorize_login($pdo, $username, $pwd);
 
         if (!$user) {
 
             $errors["invalid_login"] = "Incorrect username or password";
             $_SESSION['errors_login'] = $errors;
+            $errors["invalid_login"] = "Incorrect username or password";
+            $_SESSION['errors_login'] = $errors;
 
+            header("Location: ../public/login.php");
+            exit;
+        }
             header("Location: ../public/login.php");
             exit;
         }
@@ -53,7 +66,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // header("Location: ../public/error.php");
         exit;
     }
-} else {
-    header("Location: ../public/index.php");
-    exit;
 }

@@ -29,4 +29,14 @@ function check_login_fail() {
 
     }
 
+    // if(isset($_GET['login'])) {
+
+    //     if ($_GET['login'] == 'fail') {
+
+    //         echo "<h2>Login failed</h2><br><br>";
+    //         unset($_GET['login']);
+    //     }
+
+    // }
+
 }

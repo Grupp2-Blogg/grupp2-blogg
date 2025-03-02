@@ -1,5 +1,6 @@
 <?php
-require_once '../app/config/session_config.php';
+require_once '../app/config/dboconn.php'; 
+    require_once '../app/config/session_config.php';
 ?>
 
 
@@ -73,7 +74,6 @@ require_once '../app/config/session_config.php';
         <p>Napp och gäng, gäddhäng</p>
         <p style="height: 1500px;"></p>
     </div>
-
 
 
 
