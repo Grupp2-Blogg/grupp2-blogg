@@ -16,42 +16,46 @@
 <body>
     <main class="page-wrapper">
         <section class="account-container">
-            <h2>Signup</h2>
+            <h2>Registrering</h2>
 
             <form action="../includes/signup.inc.php" method="post" class="account-form">
                 <div class="form-bigtext-container">
-                    *Username:
+                    *Användarnamn:
                     <input type="text" name="username" placeholder="Username">
                 </div>
                 <div class="form-smalltext-container">
-                    First name:
+                    Förnamn:
                     <input type="text" name="firstname" id="" placeholder="First name">
                 </div>
                 <div class="form-smalltext-container">
-                    Last name:
+                    Efternamn:
                     <input type="text" name="lastname" id="" placeholder="Last name">
                 </div>
                 <div class="form-bigtext-container">
-                    *Password:
+                    *Lösenord:
                     <input type="password" name="pwd" id="" placeholder="Password">
+                </div>
+                <div class="form-bigtext-container">
+                    *Bekräfta lösenord:
+                    <input type="password" name="pwd-repeat" id="" placeholder="Password">
                 </div>
                 <div class="form-bigtext-container">
                     *Email:
                     <input type="text" name="email" id="" placeholder="Email">
                 </div>
                 <div class="form-gender-container">
-                    Gender:
+                    Kön:
                     <input type="radio" name="gender" id="male" value="male">
-                    <label for="male">Male</label>
+                    <label for="male">Man</label>
                     <input type="radio" name="gender" id="female" value="female">
-                    <label for="female">Female</label>
+                    <label for="female">Kvinna</label>
                     <input type="radio" name="gender" id="non-binary" value="non-binary">
-                    <label for="non-binary">Non-binary</label>
+                    <label for="non-binary">Icke-binär</label>
                     <input type="radio" name="gender" id="no-answer" value="no-answer" checked>
-                    <label for="no-answer">No answer</label>
+                    <label for="no-answer">Vill ej svara</label>
                 </div>
                 <div class="form-birthyear-container">
-                    Year of birth:
+                    Födelseår:
                     <select name="birthyear" id="">
                         <option value="" selected>----</option>
                         <?php
@@ -60,14 +64,14 @@
                     </select>
                 </div>
                 <div class="tc-checkbox-container">
-                    <input type="checkbox" name="tc" id="">*I have read and accept T&C
+                    <input type="checkbox" name="tc" id="">*Jag har läst och accepterar villkoren
                 </div>
                 <div class="form-button-container">
                     <input type="submit" name="submit" value="Register" class="form-button">
                 </div>
 
             </form>
-            <p class="required-fields">* required fields</p>
+            <p class="required-fields">* obligatoriska fält</p>
             <?php
                 check_signup_errors();
             ?>

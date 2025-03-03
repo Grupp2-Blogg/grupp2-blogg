@@ -1,15 +1,16 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $username = $_POST['username'];
-    $pwd = $_POST['pwd'];
-    $email = $_POST['email'];
+    $username = trim($_POST['username']);
+    $pwd = trim($_POST['pwd']);
+    $pwd_repeat = trim($_POST['pwd-repeat']);
+    $email = trim($_POST['email']);
 
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $gender = $_POST['gender'];
-    $birthyear = $_POST['birthyear'];
+    $firstname = trim($_POST['firstname']);
+    $lastname = trim($_POST['lastname']);
+    $gender = trim($_POST['gender']);
+    $birthyear = trim($_POST['birthyear']);
 
     try {
 
@@ -37,20 +38,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $gender = null;
         }
 
-        if (!is_input_set($username, $pwd, $email)) {
-            $errors["no_input"] = "Fill in all required fields!";
+        if (!is_input_set($username, $pwd, $pwd_repeat, $email)) {
+            $errors["no_input"] = "Fyll i de obligatoriska fälten!";
+        }
+        if ($pwd !== $pwd_repeat) {
+
+            $errors['pw_mismatch'] = "Lösenorden matchar inte, försök igen";
         }
         if (!is_valid_email($email)) {
-            $errors["invalid_email"] = "Invalid email format!";
+            $errors["invalid_email"] = "Ogiltigt format på email!";
         }
         if (!is_new_username($pdo, $username)) {
-            $errors["username_taken"] = "That username is already taken!";
+            $errors["username_taken"] = "Användarnamnet är redan taget!";
         }
         if (!is_new_email($pdo, $email)) {
-            $errors["email_taken"] = "That email is already taken!";
+            $errors["email_taken"] = "Email-adressen är redan tagen!";
         }
         if (!isset($_POST['tc'])) {
-            $errors["tc_nocheck"] = "You need to accept the Terms & Service!";
+            $errors["tc_nocheck"] = "Du behöver acceptera villkoren!";
         }
 
         require_once '../app/config/session_config.php';
@@ -74,14 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         } else {
             create_new_user($pdo, $username, $pwd, $email, $firstname, $lastname, $gender, $birthyear);
-            header("Location: ../public/login.php?signup=success");
+            $_SESSION['signup'] = 'success';
+            header("Location: ../public/login.php");
 
             $pdo = null;
             $stmt = null;
-
             die();
         }
-        // die();
+
     } catch (PDOException $e) {
         die("Query failed: " .  $e->getMessage());
     }

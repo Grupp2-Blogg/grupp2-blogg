@@ -46,9 +46,9 @@ function create_new_user(object $pdo, string $username, string $pwd, string $ema
 
 }
 
-function is_input_set (string $username, string $pwd, string $email) {
+function is_input_set (string $username, string $pwd, string $pwd_repeat, string $email) {
 
-    if (empty($username) || empty($pwd) || empty($email)) {
+    if (empty($username) || empty($pwd) || empty($email) || empty($pwd_repeat)) {
         return false;
     }
     else {
