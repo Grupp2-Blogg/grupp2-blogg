@@ -107,7 +107,7 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
                     
                     <div>
                         <span>By <?= htmlspecialchars($post['username'])?></span>
-                        <span><?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
+                        <span>| Created <?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
                     </div>
 
                     <?php
