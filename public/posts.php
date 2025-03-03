@@ -107,16 +107,7 @@ if(!$post){
                     <span>| Created <?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
                 </div>
 
-                <?php
-                    $content = $post['blogcontent'];
-                    $words = explode(' ', strip_tags($content));
-                    $excerpt = implode(' ', array_slice($words, 0, 20));
-                    if (count($words) > 20){
-                        $excerpt .= ' - Click to read more...';
-                    }
-                ?>
-
-                <p><?= htmlspecialchars($excerpt) ?></p>
+                <p><?= htmlspecialchars($post['blogcontent']) ?></p>
             </div>
         </div>
     
