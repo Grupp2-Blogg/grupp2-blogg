@@ -6,7 +6,6 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-
 try {
 
     require_once '../app/config/dboconn.php';
@@ -48,8 +47,7 @@ try {
     }
 
 
-
-    //     // Om användaren tryckt "Spara ändringar" knappen. Kör insert till databas(efter massa validering)
+    // Om användaren tryckt "Spara ändringar" knappen. Kör insert till databas(efter massa validering)
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['account-action'])) {
 
         $post_allowedValues = ['account-update', 'pw-confirm-old', 'pw-update'];

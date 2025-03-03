@@ -1,6 +1,12 @@
 <?php
 require_once '../app/config/dboconn.php';
 require_once '../app/config/session_config.php';
+
+if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
+    session_unset();
+    session_destroy();
+}
+
 ?>
 
 
@@ -24,10 +30,6 @@ require_once '../app/config/session_config.php';
         <div class="login-banner">
             <div class="login-container">
                 <?php
-                if ((isset($_GET['logout']) && $_GET['logout'] == 'true')) {
-                    unset($_SESSION['user']);
-                }
-
                 if (isset($_SESSION['user'])) {
 
                     if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true') {

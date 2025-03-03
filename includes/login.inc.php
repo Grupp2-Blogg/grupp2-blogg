@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $errors = [];
 
-
         if (!is_input_set($username, $pwd)) {
             $errors["no_input"] = "Fyll i de obligatoriska fälten!";
             $_SESSION['errors_login'] = $errors;
@@ -42,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user'] = ["id" => $user["id"], "username" => $user["username"]];
         $_SESSION['recent_login'] = "true";
         header("Location: ../public/index.php");
-        // $stmt = null;
-        // $pdo = null;
+        $stmt = null;
+        $pdo = null;
         die();
     } catch (PDOException $e) {
         $stmt = null;
