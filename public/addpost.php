@@ -3,7 +3,7 @@ require '../app/config/dboconn.php';
 require '../app/config/session_config.php';
 
 if(!isset($_SESSION['user']['id'])){
-    die("Error: You must be logged in on your profile to post.");
+    die("Error: Du måste vara inloggad för att skapa inlägg.");
 }
 
 
@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $imagePath = $targetFilePath;
         }
         else{
-            echo "Error: Couldn't upload the image!";
+            echo "Error: Kunde inte ladda upp bilden!";
         }
     }
 
@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $stmt = $pdo->prepare("INSERT INTO blogposts (blogtitle, blogcontent, user_id) VALUES (?,?,?)");
         $stmt->execute([$title, $content, $user_id]);
 
-        echo "Your post has been uploaded!";
+        echo "Ditt inlägg har blivit uppladdat!";
     }
     catch (PDOException $e){
         echo "Error: " . $e->getMessage();
@@ -39,12 +39,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
 
-
-
-<h2>Add a new post to your blog</h2>
-<form method="POST" enctype="multipart/form-data">
-    <input type="text" name="blogtitle" placeholder="Post Title" required>
-    <textarea name="blogcontent" placeholder="Write here..." required></textarea>
-    <input type = "file" name="post_image" accept="image/*">
-    <button type="submit">Publish Post</button>
-</form>
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skapa ett nytt inlägg</title>
+    <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+<div class="addpost-container">
+    <h2>Gör ett nytt inlägg</h2>
+    <form method="POST" enctype="multipart/form-data" class="addpost-form">
+        <input type="text" name="blogtitle" placeholder="Titel" required>
+        <textarea name="blogcontent" placeholder="Skriv här..." required></textarea>
+        <input type="file" name="post_image" accept="image/*">
+        <button type="submit">Publicera</button>
+    </form>
+</div>
