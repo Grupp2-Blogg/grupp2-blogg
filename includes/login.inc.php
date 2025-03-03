@@ -1,9 +1,15 @@
 <?php
+require_once '../app/config/session_config.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_SESSION['user'])) {
 
-    $username = $_POST['username'];
-    $pwd = $_POST['pwd'];
+    header("Location: ./index.php");
+    exit;
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $username = trim($_POST['username']);
+    $pwd = trim($_POST['pwd']);
 
     try {
 
@@ -13,10 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $errors = [];
 
-        require_once '../app/config/session_config.php';
-        
         if (!is_input_set($username, $pwd)) {
-            $errors["no_input"] = "Fill in all required fields!";
+            $errors["no_input"] = "Fyll i de obligatoriska fälten!";
             $_SESSION['errors_login'] = $errors;
 
             header("Location: ../public/login.php");
@@ -25,23 +29,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $user = authorize_login($pdo, $username, $pwd);
 
-        if (empty($user) || !isset($user) || $user === NULL) {
+        if (!$user) {
 
-            $errors["invalid_login"] = "Incorrect username or password";
+            $errors["invalid_login"] = "Inkorrekt användarnamn eller lösenord";
             $_SESSION['errors_login'] = $errors;
 
             header("Location: ../public/login.php");
             exit;
         }
 
-        $_SESSION["user"] = ["id" => $user["id"], "username" => $user["username"]];
-        header("Location: ../public/index.php?login=success");
-
+        $_SESSION['user'] = ["id" => $user["id"], "username" => $user["username"]];
+        $_SESSION['recent_login'] = "true";
+        header("Location: ../public/index.php");
         $stmt = null;
         $pdo = null;
-
         die();
     } catch (PDOException $e) {
+        $stmt = null;
+        $pdo = null;
         die("Query failed: " .  $e->getMessage());
+        // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
+        // header("Location: ../public/error.php");
+        exit;
     }
+} else {
+    header("Location: ../public/index.php");
+    exit;
 }
