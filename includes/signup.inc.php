@@ -18,45 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         require_once '../app/models/signup_model.php';
         require_once '../app/controllers/signup_contr.php';
 
-        // ERROR HANDLERS
-        $errors = [];
+        // ERROR- OCH VALIDERINGSFUNKTIONER
+        validate_optional_fields($firstname, $lastname, $birthyear, $gender);
 
-        if (!is_firstname_set($firstname)) {
-            $firstname = null;
-        }
-        if (!is_lastname_set($lastname)) {
-            $lastname = null;
-        }
-
-        if (!is_birthyear_set($birthyear)) {
-            $birthyear = null;
-        } else {
-            $birthyear = (int)$birthyear;
-        }
-
-        if (!is_gender_set($gender)) {
-            $gender = null;
-        }
-
-        if (!is_input_set($username, $pwd, $pwd_repeat, $email)) {
-            $errors["no_input"] = "Fyll i de obligatoriska fälten!";
-        }
-        if ($pwd !== $pwd_repeat) {
-
-            $errors['pw_mismatch'] = "Lösenorden matchar inte, försök igen";
-        }
-        if (!is_valid_email($email)) {
-            $errors["invalid_email"] = "Ogiltigt format på email!";
-        }
-        if (!is_new_username($pdo, $username)) {
-            $errors["username_taken"] = "Användarnamnet är redan taget!";
-        }
-        if (!is_new_email($pdo, $email)) {
-            $errors["email_taken"] = "Email-adressen är redan tagen!";
-        }
-        if (!isset($_POST['tc'])) {
-            $errors["tc_nocheck"] = "Du behöver acceptera villkoren!";
-        }
+        $errors = validate_required_fields($pdo, $username, $pwd, $pwd_repeat, $email);
 
         require_once '../app/config/session_config.php';
 

@@ -3,6 +3,54 @@
 declare(strict_types=1);
 
 
+function validate_optional_fields(?string &$firstname, ?string &$lastname, string|int|null &$birthyear, ?string &$gender) {
+
+    if (!is_firstname_set($firstname)) {
+        $firstname = null;
+    }
+    if (!is_lastname_set($lastname)) {
+        $lastname = null;
+    }
+
+    if (!is_birthyear_set($birthyear)) {
+        $birthyear = null;
+    } else {
+        $birthyear = (int)$birthyear;
+    }
+
+    if (!is_gender_set($gender)) {
+        $gender = null;
+    }
+
+}
+
+function validate_required_fields(object $pdo, string $username, string $pwd, string $pwd_repeat, string $email) {
+
+    $errors = [];
+
+    if (!is_input_set($username, $pwd, $pwd_repeat, $email)) {
+        $errors["no_input"] = "Fyll i de obligatoriska fälten!";
+    }
+    if ($pwd !== $pwd_repeat) {
+
+        $errors['pw_mismatch'] = "Lösenorden matchar inte, försök igen";
+    }
+    if (!is_valid_email($email)) {
+        $errors["invalid_email"] = "Ogiltigt format på email!";
+    }
+    if (!is_new_username($pdo, $username)) {
+        $errors["username_taken"] = "Användarnamnet är redan taget!";
+    }
+    if (!is_new_email($pdo, $email)) {
+        $errors["email_taken"] = "Email-adressen är redan tagen!";
+    }
+    if (!isset($_POST['tc'])) {
+        $errors["tc_nocheck"] = "Du behöver acceptera villkoren!";
+    }
+
+    return $errors;
+}
+
 function is_firstname_set(string $firstname) {
 
     if (empty($firstname)) {

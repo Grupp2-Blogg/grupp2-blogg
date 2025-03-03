@@ -27,25 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $user = authorize_login($pdo, $username, $pwd);
-
-        if (!$user) {
-
-            $errors["invalid_login"] = "Inkorrekt användarnamn eller lösenord";
-            $_SESSION['errors_login'] = $errors;
-
-            header("Location: ../public/login.php");
-            exit;
-            
-        } else {
-            
-            $_SESSION['user'] = $user;
-            $_SESSION['recent_login'] = "true";
-            header("Location: ../public/index.php");
-            $stmt = null;
-            $pdo = null;
-            die();
-        }
+        handle_user_login($pdo, $username, $pwd);
+        
 
     } catch (PDOException $e) {
         $stmt = null;
