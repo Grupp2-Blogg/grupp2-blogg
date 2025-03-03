@@ -12,13 +12,18 @@ try {
     require_once '../app/models/account_details_model.php';
     require_once '../app/controllers/account_details_contr.php';
 
+    $id = $_SESSION['user']['id'];
 
     // Om användaren tryckt någon av "EDIT"-knapparna, sätt session variabel.
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['account-action'])) {
 
-        $get_allowedValues = ['account-enter-edit', 'pw-enter-confirm-old'];
+        $get_allowedValues = ['account-enter-edit', 'pw-enter-confirm-old', 'account-enter-delete', 'account-destroy'];
 
         if (in_array($_GET['account-action'], $get_allowedValues, true)) {
+
+            if ($_GET['account-action'] === 'account-destroy') {
+                handle_account_destroy($pdo, $id);
+            }
 
             $_SESSION['enter-edit'] = $_GET['account-action'];
 
@@ -28,7 +33,7 @@ try {
     }
 
 
-    $id = $_SESSION['user']['id'];
+    
     $user = get_all_userinfo_byID($pdo, $id);
     $errors = [];
 

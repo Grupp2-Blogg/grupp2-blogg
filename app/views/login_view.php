@@ -8,7 +8,7 @@ function check_new_user()
     if (isset($_SESSION['signup']) && $_SESSION['signup'] === 'success') {
 
         echo "<h2>Registration Complete!</h2><br><br>";
-        $_SESSION['signup'];
+        unset($_SESSION['signup']);
     }
 }
 

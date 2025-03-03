@@ -26,7 +26,7 @@ function db_get_user_by_username(object $pdo, string $username, string $pwd)
             
             $isValidPwd = password_verify($pwd, $user['hash_pwd']);
             if ($isValidPwd) {
-                return $user;
+                return $user = ["id" => $user["id"], "username" => $user["username"]];
             } else {
                 return null;
             }

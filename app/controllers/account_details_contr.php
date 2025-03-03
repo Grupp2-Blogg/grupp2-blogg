@@ -136,12 +136,22 @@ function handle_pwd_confirm(object $pdo, int $id)
         header("Location: ./account_details.php");
         exit;
     } else {
-
+        
         unset($user);
-        $_SESSION['enter-edit'] = 'pw-enter-edit';
+
+        if (isset($_SESSION['delete-pw-confirm']) && $_SESSION['delete-pw-confirm'] === 'true') {
+            $_SESSION['enter-edit'] = 'account-enter-destroy';
+        } else {
+            
+            $_SESSION['enter-edit'] = 'pw-enter-edit';
+        }
         header("Location: ./account_details.php");
         exit;
     }
+}
+
+function handle_account_destroy(object $pdo, int $id) {
+    db_delete_user($pdo, $id);
 }
 
 

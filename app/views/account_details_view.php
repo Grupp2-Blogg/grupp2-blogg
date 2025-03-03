@@ -12,7 +12,7 @@ function check_edit_mode()
 
     if (isset($_SESSION['enter-edit'])) {
 
-        $allowedValues = ['account-enter-edit', 'pw-enter-confirm-old', 'pw-enter-edit'];
+        $allowedValues = ['account-enter-edit', 'pw-enter-confirm-old', 'pw-enter-edit', 'account-enter-delete', 'account-enter-destroy', 'account-destroy'];
 
         if (in_array($_SESSION['enter-edit'], $allowedValues, true)) {
             
@@ -27,6 +27,17 @@ function check_edit_mode()
                 case 'pw-enter-edit':
                     require_once '.././includes/account/pw_update.inc.php';
                     break;
+                case 'account-enter-delete':
+                    $_SESSION['delete-pw-confirm'] = 'true';
+                    require_once '.././includes/account/pw_confirm_old.inc.php';
+                    break;
+                case 'account-enter-destroy':
+                    require_once '.././includes/account/acc_enter_destroy.inc.php';
+                    break;
+                case 'account-destroy':
+                    $_SESSION['account-deleted'] = 'true';
+                    header("Location: ./index.php");
+                    exit; 
                 default:
                     unset($_SESSION['enter-edit']); 
                     break;

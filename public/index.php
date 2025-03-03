@@ -30,6 +30,12 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         <div class="login-banner">
             <div class="login-container">
                 <?php
+                if (isset($_SESSION['account-deleted']) && $_SESSION['account-deleted'] === 'true') {
+                    echo "<h3>Account deleted!</h3>";
+                    unset($_SESSION['account-deleted']);
+                    session_unset();
+                    session_destroy();
+                }
                 if (isset($_SESSION['user'])) {
 
                     if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true') {

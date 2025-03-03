@@ -40,6 +40,7 @@
 
         <button type="submit" class="form-button" name="account-action" value="account-enter-edit">Redigera Uppgifter</button>
         <button type="submit" class="form-button" name="account-action" value="pw-enter-confirm-old">Ändra Lösenord</button>
+        <button type="submit" class="form-button" name="account-action" value="account-enter-delete">Ta bort konto</button>
 
     </div>
 </form>

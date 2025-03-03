@@ -2,6 +2,27 @@
 
 declare(strict_types=1);
 
+function db_delete_user(object $pdo, int $id) {
+
+    try {
+
+        $query = "DELETE FROM 
+                        users
+                    WHERE id = :id;";
+
+        $stmt = $pdo->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        
+    } catch (PDOException $e) {
+        die("Query failed: " . $e->getMessage());
+    }
+
+}
+
 function db_update_pwd(object $pdo, int $id, string $new_pwd) {
 
     try {

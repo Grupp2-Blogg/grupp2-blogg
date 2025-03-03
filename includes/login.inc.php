@@ -36,14 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             header("Location: ../public/login.php");
             exit;
+            
+        } else {
+            
+            $_SESSION['user'] = $user;
+            $_SESSION['recent_login'] = "true";
+            header("Location: ../public/index.php");
+            $stmt = null;
+            $pdo = null;
+            die();
         }
 
-        $_SESSION['user'] = ["id" => $user["id"], "username" => $user["username"]];
-        $_SESSION['recent_login'] = "true";
-        header("Location: ../public/index.php");
-        $stmt = null;
-        $pdo = null;
-        die();
     } catch (PDOException $e) {
         $stmt = null;
         $pdo = null;
