@@ -61,15 +61,51 @@ require_once '../app/config/dboconn.php';
         </ul>
     </nav>
 
-    <div class="content">
+    <!-- <div class="content">
         <h2>GÄDDHÄNG!</h2>
         <p>kungligaste bloggen</p>
         <p>Napp och gäng, gäddhäng</p>
         <p style="height: 1500px;"></p>
-    </div>
+    </div> -->
 
 
+    <?php
+        $stmt = $pdo->prepare('
+        SELECT * FROM (
+            SELECT B.id AS blogpost_id, B.blogtitle, B.blogcontent, B.image_path, B.created_at AS post_created_at,
+                   U.id AS user_id, U.username, U.created_at AS user_created_at
+            FROM blogposts AS B 
+            LEFT JOIN users AS U ON B.user_id = U.id
+            UNION
+            SELECT B.id AS blogpost_id, B.blogtitle, B.blogcontent, B.image_path, B.created_at AS post_created_at,
+                   U.id AS user_id, U.username, U.created_at AS user_created_at
+            FROM blogposts AS B 
+            RIGHT JOIN users AS U ON B.user_id = U.id
+        ) AS combined_results
+        WHERE blogpost_id IS NOT NULL
+        ORDER BY COALESCE(post_created_at, user_created_at);
+        ');
 
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ?>
+    <?php foreach ($posts as $post): ?>
+        <a href="#?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
+            <div>
+                <img src="<?= htmlspecialchars($post['image_path'] ?? './fiskebi/dominik.jpg') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
+                <div>
+                    <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
+                    
+                    <div>
+                        <span>By <?= htmlspecialchars($post['username'])?></span>
+                        <span><?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
+                    </div>
+
+                    <p><?= htmlspecialchars($post['blogcontent']) ?></p>
+                </div>
+            </div>
+        </a>
+    <?php endforeach ?>
 
 
 
