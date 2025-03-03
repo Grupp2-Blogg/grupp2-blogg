@@ -99,25 +99,31 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <?php foreach ($posts as $post): ?>
-        <a href="#?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
-            <div>
-                <img src="<?= htmlspecialchars($post['image_path'] ?? './fiskebi/dominik.jpg') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
-                <div>
+        <a class="div--inlägg-container" href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
+            <div >
+                <img src="<?= htmlspecialchars($post['image_path'] ?? '') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
+                <div class="div--inlägg-container--headers">
                     <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
                     
                     <div>
                         <span>By <?= htmlspecialchars($post['username'])?></span>
-                        <span><?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
+                        <span>| Created <?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
                     </div>
 
-                    <p><?= htmlspecialchars($post['blogcontent']) ?></p>
+                    <?php
+                        $content = $post['blogcontent'];
+                        $words = explode(' ', strip_tags($content));
+                        $excerpt = implode(' ', array_slice($words, 0, 20));
+                        if (count($words) > 20){
+                            $excerpt .= ' - Click to read more...';
+                        }
+                    ?>
+
+                    <p><?= htmlspecialchars($excerpt) ?></p>
                 </div>
             </div>
         </a>
     <?php endforeach ?>
-
-
-
 
 </body>
 
