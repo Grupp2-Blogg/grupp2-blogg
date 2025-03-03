@@ -99,7 +99,7 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <?php foreach ($posts as $post): ?>
-        <a class="div--inlägg-container" href="#?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
+        <a class="div--inlägg-container" href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
             <div >
                 <img src="<?= htmlspecialchars($post['image_path'] ?? '') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
                 <div class="div--inlägg-container--headers">
