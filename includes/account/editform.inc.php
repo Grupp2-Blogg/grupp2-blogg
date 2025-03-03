@@ -1,4 +1,4 @@
-<form action="../includes/profile.inc.php" method="post" class="account-form">
+<form action="./account_redirect.php" method="post" class="account-form">
     <div class="form-bigtext-container">
         *Användarnamn:
         <input type="text" name="username" placeholder="Username" value="<?= htmlspecialchars($_SESSION['user']['username']) ?>">
@@ -42,7 +42,7 @@
     </div>
 
     <div class="form-button-container">
-        <input type="submit" name="submit" value="Spara ändringar" class="form-button">
+        <button type="submit" class="form-button" name="account-action" value="account-update">Spara ändringar</button>
     </div>
     <p class="required-fields">* Obligatoriska fält</p>
 </form>

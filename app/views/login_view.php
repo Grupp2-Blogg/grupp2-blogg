@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-function check_new_user() {
+function check_new_user()
+{
 
-    if (isset($_GET['signup'])) {
+    if (isset($_SESSION['signup']) && $_SESSION['signup'] === 'success') {
 
-        if ($_GET['signup'] == 'success') {
-            echo "<h2>Registration Complete!</h2><br><br>";
-            unset($_GET['signup']);
-        }
+        echo "<h2>Registration Complete!</h2><br><br>";
+        $_SESSION['signup'];
     }
 }
 
-function check_login_fail() {
+function check_login_fail()
+{
 
     if (isset($_SESSION['errors_login'])) {
 
@@ -26,7 +26,5 @@ function check_login_fail() {
         }
 
         unset($_SESSION['errors_login']);
-
     }
-
 }
