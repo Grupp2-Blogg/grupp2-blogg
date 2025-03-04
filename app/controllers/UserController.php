@@ -17,6 +17,65 @@ class UserController
         $this->user = new User($pdo);
     }
 
+
+public function login() {
+
+
+if (isset($_SESSION['user'])) {
+
+    header("Location: ../../public/index.php");
+    exit;
+
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $username = trim($_POST['username']);
+    $pwd = trim($_POST['pwd']);
+
+    try {
+
+
+        $errors = [];
+
+        if (!is_input_set($username, $pwd)) {
+            $errors["no_input"] = "Fyll i de obligatoriska fälten!";
+            $_SESSION['errors_login'] = $errors;
+
+            header("Location: ../../public/login.php");
+            exit;
+        }
+
+        handleLogin($this->pdo, $username, $pwd);
+        
+
+    } catch (PDOException $e) {
+        $pdo = null;
+        die("Query failed: " .  $e->getMessage());
+        // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
+        // header("Location: ../public/error.php");
+        exit;
+    }
+} else {
+    header("Location:"Location: ../../public/index.php");
+    exit;
+}}
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function register(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -40,12 +99,12 @@ class UserController
 
                 if (!empty($errors)) {
                     $_SESSION['errors_signup'] = $errors;
-                    header("Location: ../public/signup.php");
+                    header("Location: ../../public/signup.php");
                     exit;
                 } else {
                     $user->create($pdo, $username, $pwd, $email, $firstname, $lastname, $gender, $birthyear);
                     $_SESSION['signup'] = 'success';
-                    header("Location: ../public/login.php");
+                    header("Location: ../../public/login.php");
                     $pdo = null;
                     die();
                 }
