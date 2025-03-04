@@ -31,4 +31,5 @@ try {
     }
     
     echo "BOTH LOCAL AND VIRTUAL DATABASE CONNECTION FAILED: " . $e->getMessage() . "<br><br>";
+    die();
 }
