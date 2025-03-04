@@ -97,16 +97,16 @@ if(!$post){
     </nav>
 
 
-        <div >
+        <div class="blog-posts">
             <img src="<?= htmlspecialchars($post['image_path'] ?? '') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
-            <div>
-                <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
-                
-                <div>
-                    <span>By <?= htmlspecialchars($post['username'])?></span>
-                    <span>| Created <?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
-                </div>
 
+            <div class="blog-posts--headers">
+                <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
+                <p>Av: <?= htmlspecialchars($post['username'])?></p>
+                <p>Skapad: <?= date('F j, Y', strtotime($post['post_created_at'])) ?></p>
+            </div>
+
+            <div class="blog-posts--contents">
                 <p><?= htmlspecialchars($post['blogcontent']) ?></p>
             </div>
         </div>
