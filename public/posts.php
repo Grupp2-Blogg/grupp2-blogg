@@ -97,26 +97,17 @@ if(!$post){
     </nav>
 
 
-        <div >
+        <div class="blog-posts">
             <img src="<?= htmlspecialchars($post['image_path'] ?? '') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
-            <div>
+
+            <div class="blog-posts--headers">
                 <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
-                
-                <div>
-                    <span>By <?= htmlspecialchars($post['username'])?></span>
-                    <span>| Created <?= date('F j, Y', strtotime($post['post_created_at'])) ?></span>
-                </div>
+                <p>Av: <?= htmlspecialchars($post['username'])?></p>
+                <p>Skapad: <?= date('F j, Y', strtotime($post['post_created_at'])) ?></p>
+            </div>
 
-                <?php
-                    $content = $post['blogcontent'];
-                    $words = explode(' ', strip_tags($content));
-                    $excerpt = implode(' ', array_slice($words, 0, 20));
-                    if (count($words) > 20){
-                        $excerpt .= ' - Click to read more...';
-                    }
-                ?>
-
-                <p><?= htmlspecialchars($excerpt) ?></p>
+            <div class="blog-posts--contents">
+                <p><?= htmlspecialchars($post['blogcontent']) ?></p>
             </div>
         </div>
     

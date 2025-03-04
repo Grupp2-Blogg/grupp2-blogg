@@ -166,6 +166,7 @@ a:hover
     display: block;
 }
 
+/* Home page - Posts */
 
 .div--inlägg-container{
     display: flex;
@@ -218,6 +219,68 @@ a:hover
     max-width: 100%;
     box-sizing: border-box;
 }
+
+/* Posts.php - Enskilda inlägg */
+
+.blog-posts{
+    background-color: var(--shade-of-vanilla);
+    border-radius: 15px;
+    border: 2px solid black;
+    width: 80%;
+    height: 100%;
+    max-height: 90%;
+    max-width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: black;
+    padding: 20px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.blog-posts img{
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border: 2px solid black;
+}
+
+.blog-posts img[src=""]{
+    display: none;
+}
+
+.blog-posts--headers{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    padding-top: 10px;
+    gap: 20px;
+    border-bottom: 2px solid black;
+}
+
+.blog-posts--headers h2{
+    font-size: calc(0.65em + 2vmin);
+    line-height: 1;
+}
+.blog-posts--headers p{
+    font-size: calc(0.45em + 1vmin);
+    line-height: 1.2;
+    color: gray;
+}
+
+.blog-posts--headers h2,
+.blog-posts--headers p{
+    margin: 0;
+}
+
 
 /* MEDIA QUERIES */
 @media only screen and (max-width: 600px) {
