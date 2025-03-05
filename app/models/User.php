@@ -68,7 +68,7 @@ class User
     
     }
     
-    function getUserByID(int $id, string $old_pwd)
+    function auth_PwdUpdate(int $id, string $old_pwd)
     {
     
         try {
@@ -79,27 +79,13 @@ class User
                             users as u 
                         WHERE id = :id;";
     
-            $stmt = $pdo->prepare($query);
+            $stmt = $this->pdo->prepare($query);
     
             $stmt->bindParam(':id', $id);
     
             $stmt->execute();
     
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-
-            if (!$user) {
-
-                return null;
-            } else {
-
-                $isValidPwd = password_verify($pwd, $user['hash_pwd']);
-                if ($isValidPwd) {
-                    return $user = ["id" => $user["id"], "username" => $user["username"]];
-                } else {
-                    return null;
-                }
-            }
 
             if (!$user) {
     
@@ -113,7 +99,7 @@ class User
         }
     }
     
-    function updateUserInfo(object $pdo, int $id, string $username, string $email, ?string $firstname = NULL, ?string $lastname = NULL, ?string $gender = NULL, ?int $birthyear = NULL)
+    function updateUserInfo(int $id, string $username, string $email, ?string $firstname = NULL, ?string $lastname = NULL, ?string $gender = NULL, ?int $birthyear = NULL)
     {
     
         try {
@@ -127,7 +113,7 @@ class User
                             birthyear = :birthyear
                         WHERE id = :id;";
     
-            $stmt = $pdo->prepare($query);
+            $stmt = $this->pdo->prepare($query);
     
     
             $stmt->bindParam(':id', $id);
@@ -208,65 +194,8 @@ class User
         }
     }
     
-    function db_get_username(object $pdo, string $username)
-    {
-    
-        try {
-    
-            $query = "SELECT 
-                            u.username 
-                        FROM 
-                            users as u 
-                        WHERE 
-                            username = :username;";
-    
-            $stmt = $pdo->prepare($query);
-    
-            $stmt->bindParam(":username", $username);
-    
-            $stmt->execute();
-    
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            return $user;
-        } catch (PDOException $e) {
-            // die("Query failed: " . $e->getMessage());
-            error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-            header("Location: ../../public/error.php");
-            exit;
-        }
-    }
-    
-    function db_get_email(object $pdo, string $email)
-    {
-    
-        try {
-    
-            $query = "SELECT 
-                            u.email 
-                        FROM 
-                            users as u 
-                        WHERE 
-                            email = :email;";
-    
-            $stmt = $pdo->prepare($query);
-    
-            $stmt->bindParam(":email", $email);
-    
-            $stmt->execute();
-    
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            return $user;
-        } catch (PDOException $e) {
-            $stmt = null;
-            $pdo = null;
-            die("Query failed: " . $e->getMessage());
-            // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-            // header("Location: ../../public/error.php");
-            exit;
-        }
-    }
+
+
     
 #region klara grejer
     public function auth_Login(string $username, string $pwd)

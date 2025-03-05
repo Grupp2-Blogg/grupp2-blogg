@@ -100,7 +100,7 @@ class UserController
             if (in_array($_GET['account-action'], $get_allowedValues, true)) {
 
                 if ($_GET['account-action'] === 'account-destroy') {
-                    handle_account_destroy($id);
+                    $this->user->delete($id);
                 }
 
                 $_SESSION['enter-edit'] = $_GET['account-action'];
@@ -109,12 +109,6 @@ class UserController
                 exit;
             }
         }
-    }
-
-    private function handleDeleteUser($id)
-    {
-
-        $this->user->delete($id);
     }
 
     private function handlePwdConfirm(int $id)
@@ -126,7 +120,7 @@ class UserController
 
             $errors['no_input'] = "Fyll i lösenord";
         }
-        $user = $this->user->getUserByID($id, $old_pwd);
+        $user = $this->user->auth_PwdUpdate($id, $old_pwd);
         if ($user === false) {
 
             $errors['errors_confirm'] = "Fel lösenord - försök igen";
@@ -241,7 +235,7 @@ class UserController
             exit;
         } else {
 
-            $this->user->updateUserInfo($pdo, $id, $username, $email, $firstname, $lastname, $gender, $birthyear);
+            $this->user->updateUserInfo($id, $username, $email, $firstname, $lastname, $gender, $birthyear);
             $updatedUser = $this->user->getAllInfoByID($id);
 
             if (!$updatedUser) {
@@ -261,7 +255,7 @@ class UserController
 
 
     #region klara grejer
-    public function login()
+    private function login()
     {
         if (isset($_SESSION['user'])) {
 
@@ -318,7 +312,7 @@ class UserController
     }
 
 
-    public function register(): void
+    private function register(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
