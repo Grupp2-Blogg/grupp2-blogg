@@ -82,8 +82,9 @@ a {
     font-size: 18px;
 }
 
-
-a:hover
+.register-btn:hover,
+.login-btn:hover,
+.navbar a:hover
 {
     background-color: #afa8a5;
     color: black;
@@ -188,6 +189,7 @@ a:hover
     padding: 20px;
     text-decoration: none;
     box-sizing: border-box;
+    transition: 1s;
 }
 
 .div--inlägg-container a{
@@ -199,6 +201,8 @@ a:hover
 
 .div--inlägg-container:hover{
     background-color: #fff8e8b6;
+    transform: scale(1.05);
+    transition: 1s;
 }
 
 .div--inlägg-container img{
