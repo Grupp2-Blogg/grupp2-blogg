@@ -52,7 +52,8 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
                     // echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
                     require_once '../includes/account/index_acc_buttons_after.inc.php';
                 } else {
-                    require_once '../includes/account/index_acc_buttons_before.inc.php';
+                    echo '<a href="./login.php" class="login-btn">Logga in</a>
+                          <a href="./signup.php" class="register-btn">Registrera</a>';
                 }
                 ?>
                 <!-- <a href="./login.php" class="login-btn">Logga in</a>

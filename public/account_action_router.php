@@ -16,18 +16,6 @@ try {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['account-action'])) {
 
-                $_SESSION['editmode'] = $_GET['account-action'];
-                
-                if ($_GET['account-action'] === 'login-redirect') {
-                    
-                    header("Location: ./login.php");
-                    exit;
-                }
-                if ($_GET['account-action'] === 'register-redirect') {
-
-                    header("Location: ./signup.php");
-                    exit;
-                }
                 if ($_GET['account-action'] === 'account-details-redirect') {
 
                     
@@ -88,6 +76,8 @@ try {
 
             if (in_array($_GET['account-action'], $GET_allowedValues, true)) {
 
+                $_SESSION['enter-edit'] = $_GET['account-action'];
+
                 switch ($_GET['account-action']) {
 
                     case 'account-enter-edit':
@@ -109,9 +99,9 @@ try {
                         header("Location: ./index.php");
                         break;
                 }
+                header("Location: ./account_details.php");
+                exit;
             }
-            header("Location: ./account_details.php");
-            exit;
         }
     }
 
