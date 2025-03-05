@@ -190,6 +190,11 @@ a:hover
     box-sizing: border-box;
 }
 
+.div--inlägg-container a{
+    text-decoration: none !important;
+    color: black;
+}
+
 .div--inlägg-container:hover{
     background-color: #fff8e8b6;
 }
