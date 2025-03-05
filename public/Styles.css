@@ -405,3 +405,30 @@ a:hover
         font-size: 14px;
     }
 }
+
+
+
+.post-buttons {
+    display: flex;
+    justify-content: right;  /* Aligns buttons to the right */
+    gap: 10px; /* Adds spacing between buttons */
+    padding: 10px;
+}
+
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.edit-button {
+    background-color: var(--shade-of-green);
+    color: black;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+}
+
