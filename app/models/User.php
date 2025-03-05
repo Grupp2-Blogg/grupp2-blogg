@@ -65,7 +65,7 @@ class User
         }
     }
 
-    public function auth_PwdUpdate(int $id, string $old_pwd)
+    public function auth_PwdUpdate(int $id, string $old_pwd): bool
     {
 
         try {
@@ -84,13 +84,10 @@ class User
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$user) {
+           
+            return password_verify($old_pwd, $user['hash_pwd']);
 
-                return null;
-            } else {
-
-                return password_verify($old_pwd, $user['hash_pwd']);
-            }
+           
         } catch (PDOException $e) {
             die("Query failed: " . $e->getMessage());
         }

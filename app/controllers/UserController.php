@@ -27,14 +27,10 @@ class UserController
 
             $errors['no_input'] = "Fyll i lösenord";
         }
-        $user = $this->user->auth_PwdUpdate($id, $old_pwd);
-        if ($user === false) {
+        $isValid = $this->user->auth_PwdUpdate($id, $old_pwd);
+        if (!$isValid) {
 
             $errors['errors_confirm'] = "Fel lösenord - försök igen";
-        }
-        if ($user === NULL) {
-
-            $errors["invalid_fetch"] = "Kunde inte hämta användare";
         }
 
         if (!empty($errors)) {
