@@ -214,7 +214,7 @@ a {
     border-radius: 15px;
 }
 
-.div--inlägg-container img[src=""]{
+.div--inlägg-container img[src="/"]{
     display: none;
 }
 
