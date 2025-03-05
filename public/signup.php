@@ -1,6 +1,6 @@
 <?php
     require_once '../app/config/session_config.php';
-    require_once '../app/views/signup_view.php';
+    require_once '../app/views/UserView';
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
         <section class="account-container">
             <h2>Registrering</h2>
 
-            <form action="../includes/signup.inc.php" method="post" class="account-form">
+            <form action="../app/controllers/UserController.php" method="post" class="account-form">
                 <div class="form-bigtext-container">
                     *Användarnamn:
                     <input type="text" name="username" placeholder="Username">
@@ -59,7 +59,7 @@
                     <select name="birthyear" id="">
                         <option value="" selected>----</option>
                         <?php
-                            populate_year_select_options(110);
+                            displayYearSelectOptions(110);
                         ?>
                     </select>
                 </div>
@@ -73,7 +73,7 @@
             </form>
             <p class="required-fields">* obligatoriska fält</p>
             <?php
-                check_signup_errors();
+                checkForSignupErrors();
             ?>
         </section>
     </main>

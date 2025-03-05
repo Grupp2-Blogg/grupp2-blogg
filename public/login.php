@@ -2,7 +2,7 @@
     require_once '../app/config/session_config.php';
 
     // require_once './app/config/session_config.php';
-    require_once '../app/views/login_view.php';
+    require_once '../app/views/UserView';
 
 ?>
 
@@ -18,11 +18,15 @@
     <main class="page-wrapper">
         <section class="account-container">
             <?php
-                check_new_user();
-                check_login_fail(); 
+                checkForNewUser();
+                checkForLoginFail();
+                
+                if (isset($_SESSION['user'])) {
+                    echo $_SESSION['user']['id'];
+                }
             ?>
             <h2>Login</h2>
-            <form action="../includes/login.inc.php" method="post" class="account-form">
+            <form action="../app/controllers/UserController.php" method="post" class="account-form">
             <div class="form-bigtext-container">
                     Username:
                     <input type="text" name="username" placeholder="Username">
