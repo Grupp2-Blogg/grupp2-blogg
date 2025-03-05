@@ -71,13 +71,6 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         </ul>
     </nav>
 
-    <!-- <div class="content">
-        <h2>GÄDDHÄNG!</h2>
-        <p>kungligaste bloggen</p>
-        <p>Napp och gäng, gäddhäng</p>
-        <p style="height: 1500px;"></p>
-    </div> -->
-
 
     <?php
         $stmt = $pdo->prepare('
@@ -118,7 +111,7 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
                         $words = explode(' ', strip_tags($content));
                         $excerpt = implode(' ', array_slice($words, 0, 20));
                         if (count($words) > 20){
-                            $excerpt .= ' - Click to read more...';
+                            $excerpt .= ' - Klicka för att läsa mer...';
                         }
                     ?>
 
