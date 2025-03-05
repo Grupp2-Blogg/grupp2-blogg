@@ -1,8 +1,6 @@
 <?php
     require_once '../app/config/session_config.php';
-
-    // require_once './app/config/session_config.php';
-    require_once '../app/views/UserView';
+    require_once '../app/views/UserView.php';
 
 ?>
 
@@ -21,12 +19,9 @@
                 checkForNewUser();
                 checkForLoginFail();
                 
-                if (isset($_SESSION['user'])) {
-                    echo $_SESSION['user']['id'];
-                }
             ?>
             <h2>Login</h2>
-            <form action="../app/controllers/UserController.php" method="post" class="account-form">
+            <form action="./account_action_router.php" method="post" class="account-form">
             <div class="form-bigtext-container">
                     Username:
                     <input type="text" name="username" placeholder="Username">
@@ -36,7 +31,9 @@
                     <input type="password" name="pwd" id="" placeholder="Password">
                 </div>
                 <div class="form-button-container">
-                    <input type="submit" name="submit" value="Login" class="form-button">
+                    <!-- <input type="submit" name="account-action" value="Login" class="form-button">
+                      -->
+                      <button type="submit" class="form-button" name="account-action" value="account-login">Login</button>
                 </div>
             </form>
         </section>

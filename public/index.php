@@ -1,6 +1,8 @@
 <?php
-require_once '../app/config/dboconn.php';
+// require_once '../app/config/dboconn.php';
 require_once '../app/config/session_config.php';
+
+
 
 if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_unset();
@@ -46,11 +48,11 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
                         echo "<p>" . htmlspecialchars($_SESSION['user']['username']) . "</p>";
                     }
 
-                    echo '<a href="./account_redirect.php" class="login-btn">Acc settings</a>';
-                    echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
+                    // echo '<a href="./account_redirect.php" class="login-btn">Acc settings</a>';
+                    // echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
+                    require_once '../includes/account/index_acc_buttons_after.inc.php';
                 } else {
-                    echo '<a href="./login.php" class="login-btn">Logga in</a>
-                          <a href="./signup.php" class="register-btn">Registrera</a>';
+                    require_once '../includes/account/index_acc_buttons_before.inc.php';
                 }
                 ?>
                 <!-- <a href="./login.php" class="login-btn">Logga in</a>

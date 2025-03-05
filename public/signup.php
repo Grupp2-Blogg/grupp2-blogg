@@ -1,6 +1,6 @@
 <?php
     require_once '../app/config/session_config.php';
-    require_once '../app/views/UserView';
+    require_once '../app/views/UserView.php';
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
         <section class="account-container">
             <h2>Registrering</h2>
 
-            <form action="../app/controllers/UserController.php" method="post" class="account-form">
+            <form action="./account_action_router.php" method="post" class="account-form">
                 <div class="form-bigtext-container">
                     *Användarnamn:
                     <input type="text" name="username" placeholder="Username">
@@ -67,7 +67,8 @@
                     <input type="checkbox" name="tc" id="">*Jag har läst och accepterar villkoren
                 </div>
                 <div class="form-button-container">
-                    <input type="submit" name="submit" value="Register" class="form-button">
+                    <!-- <input type="submit" name="account-action" value="account-register" class="form-button"> -->
+                     <button type="submit" name="account-action" value="account-register" class="form-button">Registrera</button>
                 </div>
 
             </form>

@@ -22,88 +22,85 @@ class User
     }
 
 
-    function delete(int $id) {
+    public function delete(int $id)
+    {
 
         try {
-    
+
             $query = "DELETE FROM 
                             users
                         WHERE id = :id;";
-    
+
             $stmt = $this->pdo->prepare($query);
-    
+
             $stmt->bindParam(':id', $id);
-    
+
             $stmt->execute();
-    
-            
         } catch (PDOException $e) {
             die("Query failed: " . $e->getMessage());
         }
-    
     }
-    
-    function updateUserPwd(int $id, string $new_pwd) {
-    
+
+    public function updateUserPwd(int $id, string $new_pwd)
+    {
+
         try {
-    
+
             $hash_pwd = password_hash($new_pwd, PASSWORD_DEFAULT);
-    
+
             $query = "UPDATE 
                             users 
                         SET 
                             hash_pwd = :hash_pwd
                         WHERE id = :id;";
-    
+
             $stmt = $this->pdo->prepare($query);
-    
+
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':hash_pwd', $hash_pwd);
-    
+
             $stmt->execute();
-    
         } catch (PDOException $e) {
             die("Query failed: " . $e->getMessage());
         }
-    
     }
-    
-    function auth_PwdUpdate(int $id, string $old_pwd)
+
+    public function auth_PwdUpdate(int $id, string $old_pwd)
     {
-    
+
         try {
-    
+
             $query = "SELECT 
                             u.hash_pwd 
                         FROM 
                             users as u 
                         WHERE id = :id;";
-    
+
             $stmt = $this->pdo->prepare($query);
-    
+
             $stmt->bindParam(':id', $id);
-    
+
             $stmt->execute();
-    
+
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (!$user) {
-    
+
                 return null;
             } else {
-    
+
                 return password_verify($old_pwd, $user['hash_pwd']);
             }
         } catch (PDOException $e) {
             die("Query failed: " . $e->getMessage());
         }
     }
-    
-    function updateUserInfo(int $id, string $username, string $email, ?string $firstname = NULL, ?string $lastname = NULL, ?string $gender = NULL, ?int $birthyear = NULL)
+
+    public function updateUserInfo(int $id, string $username, string $email, ?string $firstname = NULL, ?string $lastname = NULL, ?string $gender = NULL, ?int $birthyear = NULL)
     {
-    
+
         try {
-    
+
             $query = "UPDATE users
                         SET username = :username,
                             email = :email,
@@ -112,50 +109,50 @@ class User
                             gender = :gender,
                             birthyear = :birthyear
                         WHERE id = :id;";
-    
+
             $stmt = $this->pdo->prepare($query);
-    
-    
+
+
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':email', $email);
-    
+
             if ($gender === null) {
                 $stmt->bindValue(':gender', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':gender', $gender, PDO::PARAM_STR);
             }
-    
+
             if ($firstname === null) {
                 $stmt->bindValue(':firstname', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':firstname', $firstname);
             }
-    
+
             if ($lastname === null) {
                 $stmt->bindValue(':lastname', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':lastname', $lastname);
             }
-    
+
             if ($birthyear === null) {
                 $stmt->bindValue(':birthyear', $birthyear, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':birthyear', $birthyear);
             }
-    
+
             $stmt->execute();
         } catch (PDOException $e) {
             die("Query failed: " . $e->getMessage());
         }
     }
-    
-    
-    function getAllInfoByID(int $id)
+
+
+    public function getAllInfoByID(int $id)
     {
-    
+
         try {
-    
+
             $query = "SELECT 
                         u.id,
                         u.username,
@@ -169,17 +166,17 @@ class User
                             users as u 
                         WHERE 
                             id = :id;";
-    
+
             $stmt = $this->pdo->prepare($query);
-    
+
             $stmt->bindParam(":id", $id);
-    
+
             $stmt->execute();
-    
+
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             if (!$user) {
-    
+
                 return null;
             } else {
                 return $user;
@@ -193,11 +190,11 @@ class User
             exit;
         }
     }
-    
 
 
-    
-#region klara grejer
+
+
+    #region klara grejer
     public function auth_Login(string $username, string $pwd)
     {
 
@@ -275,8 +272,7 @@ class User
             }
 
             $stmt->execute();
-            return (int)$this->pdo->lastInsertId();
-            // return true;
+
         } catch (PDOException $e) {
             die("Query failed: " . $e->getMessage());
         }

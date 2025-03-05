@@ -1,4 +1,4 @@
-<form action="./account_redirect.php" method="post" class="account-form">
+<form action="./account_action_router.php" method="post" class="account-form">
 
     <div class="form-bigtext-container">
         *Välj nytt lösenord:

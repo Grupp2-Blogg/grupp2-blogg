@@ -1,8 +1,9 @@
 <?php
 
 declare(strict_types=1);
-require_once '../config/session_config.php';
-require_once '../models/User.php';
+// require_once '../app/config/session_config.php';
+require_once '../app/models/User.php';
+// require_once '../app/config/dboconn.php';
 
 
 class UserController
@@ -14,104 +15,10 @@ class UserController
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->user = new User($pdo);
-        $this->checkAccountAction();
+        $this->user = new User($this->pdo);
     }
 
-
-    private function checkAccountAction()
-    {
-        if (!isset($_SESSION['user'])) {
-            header("Location: ./login.php");
-            exit;
-        }
-
-        try {
-
-            $id = $_SESSION['user']['id'];
-
-            // Om användaren tryckt någon av "EDIT"-knapparna, sätt session variabel.
-            $this->GET_CHECK($id);
-
-
-            $user = $this->user->getAllInfoByID($id);
-            $errors = [];
-
-            if (!$user) {
-
-                $errors["invalid_fetch"] = "Kunde inte hämta användare";
-                $_SESSION['errors_account'] = $errors;
-
-                header("Location: ./login.php");
-                exit;
-            } else {
-
-                unset($_SESSION['user']);
-
-                $_SESSION['user'] = $user;
-            }
-
-
-            // Om användaren tryckt "Spara ändringar" knappen. Kör insert till databas(efter massa validering)
-            $this->POST_CHECK($id);
-
-
-            header("Location: ./account_details.php");
-            // $pdo = null;
-            exit;
-        } catch (PDOException $e) {
-            $stmt = null;
-            $pdo = null;
-            die("Query failed: " .  $e->getMessage());
-
-            // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-            // header("Location: ../public/error.php");
-            exit;
-        }
-    }
-
-    private function POST_CHECK(int $id) {
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['account-action'])) {
-
-            $post_allowedValues = ['account-update', 'pw-confirm-old', 'pw-update'];
-
-            if (in_array($_POST['account-action'], $post_allowedValues, true)) {
-
-                if ($_POST['account-action'] === 'pw-confirm-old') {
-                    $this->handlePwdConfirm($id);
-                }
-                if ($_POST['account-action'] === 'pw-update') {
-                    $this->handlePwdUpdate($id);
-                }
-                if ($_POST['account-action'] === 'account-update') {
-                    $this->handleAccInfoUpdate($id);
-                }
-            }
-        }
-    }
-
-    private function GET_CHECK(int $id)
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['account-action'])) {
-
-            $get_allowedValues = ['account-enter-edit', 'pw-enter-confirm-old', 'account-enter-delete', 'account-destroy'];
-
-            if (in_array($_GET['account-action'], $get_allowedValues, true)) {
-
-                if ($_GET['account-action'] === 'account-destroy') {
-                    $this->user->delete($id);
-                }
-
-                $_SESSION['enter-edit'] = $_GET['account-action'];
-
-                header("Location: ./account_details.php");
-                exit;
-            }
-        }
-    }
-
-    private function handlePwdConfirm(int $id)
+    public function handlePwdConfirm(int $id)
     {
 
         $old_pwd = trim($_POST['pw-confirm-old']);
@@ -150,9 +57,13 @@ class UserController
         }
     }
 
+    public function handleDelete(int $id)
+    {
 
+        $this->user->delete($id);
+    }
 
-    private function handlePwdUpdate(int $id)
+    public function handlePwdUpdate(int $id)
     {
 
         $new_pwd = trim($_POST['pw-update']);
@@ -185,7 +96,7 @@ class UserController
         }
     }
 
-    private function handleAccInfoUpdate(int $id)
+    public function handleAccInfoUpdate(int $id)
     {
 
         $username = trim($_POST['username']);
@@ -201,7 +112,7 @@ class UserController
 
         $lastname = !empty($lastname) ? $lastname : null;
 
-        $birthyear = empty($birthyear) ? null : (int)$birthyear;
+        $birthyear = $birthyear === '' ? null : (int)$birthyear;
 
 
         $gender = !empty($gender) ? $gender : null;
@@ -253,66 +164,54 @@ class UserController
         }
     }
 
+    public function getUserInfo($id)
+    {
+
+        return $this->user->getAllInfoByID($id);
+    }
+
 
     #region klara grejer
-    private function login()
+    public function login()
     {
-        if (isset($_SESSION['user'])) {
 
-            header("Location: ../../public/index.php");
-            exit;
-        }
+        $username = trim($_POST['username']);
+        $pwd = trim($_POST['pwd']);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        try {
 
-            $username = trim($_POST['username']);
-            $pwd = trim($_POST['pwd']);
+            $errors = [];
+            if (!(empty($username) || empty($pwd))) {
 
-            try {
+                $user = $this->user->auth_Login($username, $pwd);
 
-                $this->handleLogin($username, $pwd);
-            } catch (PDOException $e) {
+                if (!$user) {
 
-                // $pdo = null;
-                die("Query failed: " .  $e->getMessage());
-                // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
-                // header("Location: ../public/error.php");
-                exit;
+                    $errors["invalid_login"] = "Inkorrekt användarnamn eller lösenord";
+                    $_SESSION['errors_login'] = $errors;
+
+                    header("Location: ../public/login.php");
+                    exit;
+                } else {
+
+                    $_SESSION['user'] = $user;
+                    $_SESSION['recent_login'] = "true";
+                    header("Location: ../public/index.php");
+                    // $pdo = null;
+                    die();
+                }
             }
-        } else {
+        } catch (PDOException $e) {
 
-            header("Location: ../../public/index.php");
+            // $pdo = null;
+            die("Query failed: " .  $e->getMessage());
+            // error_log($e->getMessage(), 3, 'C:/xampp/htdocs/myCode/grupp2-blogg/error.log');
+            // header("Location: ../public/error.php");
             exit;
         }
     }
 
-    private function handleLogin(string $username, string $pwd)
-    {
-        $errors = [];
-        if (!(empty($username) || empty($pwd))) {
-
-            $user = $this->user->auth_Login($username, $pwd);
-
-            if (!$user) {
-
-                $errors["invalid_login"] = "Inkorrekt användarnamn eller lösenord";
-                $_SESSION['errors_login'] = $errors;
-
-                header("Location: ../public/login.php");
-                exit;
-            } else {
-
-                $_SESSION['user'] = $user;
-                $_SESSION['recent_login'] = "true";
-                header("Location: ../public/index.php");
-                // $pdo = null;
-                die();
-            }
-        }
-    }
-
-
-    private function register(): void
+    public function register(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -325,10 +224,10 @@ class UserController
             $lastname = trim($_POST['lastname']);
             $gender = trim($_POST['gender']);
             $birthyear = trim($_POST['birthyear']);
+            $birthyear = $birthyear === '' ? null : (int)$birthyear;
 
             try {
 
-                require_once '../app/config/dboconn.php';
 
                 // ERROR- OCH VALIDERINGSFUNKTIONER
                 $errors = $this->validateReqFields($username, $pwd, $pwd_repeat, $email);
@@ -338,7 +237,7 @@ class UserController
                     header("Location: ../../public/signup.php");
                     exit;
                 } else {
-                    $_SESSION['user'] = ["id" => $user->create($pdo, $username, $pwd, $email, $firstname, $lastname, $gender, $birthyear)];
+                    $this->user->create($username, $pwd, $email, $firstname, $lastname, $gender, $birthyear);
                     $_SESSION['signup'] = 'success';
                     header("Location: ../../public/login.php");
                     $pdo = null;

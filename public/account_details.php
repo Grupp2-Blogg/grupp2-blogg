@@ -1,6 +1,6 @@
 <?php
 require_once '../app/config/session_config.php';
-require_once '../app/views/account_details_view.php';
+require_once '../app/views/UserView.php';
 
 if (!isset($_SESSION['user'])) {
 
@@ -24,9 +24,10 @@ if (!isset($_SESSION['user'])) {
         <section class="account-container">
             <h2>Personuppgifter</h2>
             <?php
-            check_edit_mode();
-            check_account_update_errors();
-          
+            checkAccUpdateErrors();
+
+            require_once '../includes/account/account_info.inc.php';
+
             if (isset($_SESSION['pwd_update_complete'])) {
                 echo $_SESSION['pwd_update_complete'];
                 unset($_SESSION['pwd_update_complete']);

@@ -35,7 +35,7 @@
     </li>
 </ul>
 
-<form action="./account_redirect.php" method="get">
+<form action="./account_action_router.php" method="get">
     <div class="form-button-container">
 
         <button type="submit" class="form-button" name="account-action" value="account-enter-edit">Redigera Uppgifter</button>

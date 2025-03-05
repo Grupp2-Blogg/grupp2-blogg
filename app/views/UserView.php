@@ -2,6 +2,26 @@
 
 declare(strict_types=1);
 
+
+// Funktionen kollar efter errors vid uppdatering av konto - och visar dem.
+function checkAccUpdateErrors()
+{
+
+    if (isset($_SESSION['errors_account'])) {
+
+        $errors = $_SESSION['errors_account'];
+        unset($_SESSION['errors_account']);
+
+        echo "<br>";
+
+        foreach ($errors as $error) {
+            echo '<p class="error-msg">' . $error  . '</p>';
+        }
+    }
+}
+
+
+
 function checkForSignupErrors()
 {
 
