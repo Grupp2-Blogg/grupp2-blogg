@@ -96,7 +96,7 @@ if(!$post){
 
 
         <div class="blog-posts">
-            <img src="<?= htmlspecialchars($post['image_path'] ?? '') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
+            <img src="/<?= htmlspecialchars($post['image_path']) ?? ''?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
 
             <div class="blog-posts--headers">
                 <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
