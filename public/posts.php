@@ -73,8 +73,6 @@ if(!$post){
                           <a href="./signup.php" class="register-btn">Registrera</a>';
                 }
                 ?>
-                <!-- <a href="./login.php" class="login-btn">Logga in</a>
-                <a href="./signup.php" class="register-btn">Registrera</a> -->
 
             </div>
             <div class="account-picture">
