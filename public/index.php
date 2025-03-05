@@ -7,6 +7,7 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_destroy();
 }
 
+
 ?>
 
 
@@ -99,10 +100,12 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <?php foreach ($posts as $post): ?>
-        <a class="div--inlägg-container" href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
-            <div >
+        <div class="div--inlägg-container">
+            <a  href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
+                <div >
                 <img src="<?= htmlspecialchars($post['image_path'] ?? '') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
                 <div class="div--inlägg-container--headers">
+
                     <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
                     
                     <div>
@@ -119,10 +122,23 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
                         }
                     ?>
 
+
+
                     <p><?= htmlspecialchars($excerpt) ?></p>
-                </div>
+                </div>      
             </div>
         </a>
+
+
+
+        <?php if (isset($_SESSION['user']['id']) && $_SESSION['user']['id'] == $post['user_id']): ?>
+            <div class="post-buttons">
+                <a href="editpost.php?id=<?= $post['blogpost_id'] ?>" class="edit-button">Redigera</a>
+                <a href="deletepost.php?id=<?= $post['blogpost_id'] ?>" class="delete-button">Ta Bort</a>
+            </div>
+        <?php endif; ?>
+    </div>
+
     <?php endforeach ?>
 
 </body>
