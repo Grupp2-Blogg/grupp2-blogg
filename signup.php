@@ -1,6 +1,35 @@
 <?php
-    require_once '../app/config/session_config.php';
-    require_once '../app/views/UserView.php';
+
+declare(strict_types=1);
+
+function checkForSignupErrors()
+{
+
+    if (isset($_SESSION['errors_signup'])) {
+
+        $errors = $_SESSION['errors_signup'];
+
+        echo "<br>";
+
+        foreach ($errors as $error) {
+            echo '<p class="error-msg">' . $error  . '</p>';
+        }
+
+        unset($_SESSION['errors_signup']);
+    }
+}
+
+function displayYearSelect(int $yearsback)
+{
+
+    $currentYear = date("Y");
+    $earliestYear = $currentYear - $yearsback;
+
+    for ($i = $currentYear; $i >= $earliestYear; $i--) {
+
+        echo "<option value='{$i}'>{$i}</option>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +38,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./style.css">
     <title>Bloggsajt</title>
 </head>
 
@@ -18,7 +47,7 @@
         <section class="account-container">
             <h2>Registrering</h2>
 
-            <form action="./account_action_router.php" method="post" class="account-form">
+            <form action="./router.php" method="post" class="account-form">
                 <div class="form-bigtext-container">
                     *Användarnamn:
                     <input type="text" name="username" placeholder="Username">
@@ -59,7 +88,7 @@
                     <select name="birthyear" id="">
                         <option value="" selected>----</option>
                         <?php
-                            displayYearSelectOptions(110);
+                        displayYearSelect(110);
                         ?>
                     </select>
                 </div>
@@ -67,14 +96,13 @@
                     <input type="checkbox" name="tc" id="">*Jag har läst och accepterar villkoren
                 </div>
                 <div class="form-button-container">
-                    <!-- <input type="submit" name="account-action" value="account-register" class="form-button"> -->
-                     <button type="submit" name="account-action" value="account-register" class="form-button">Registrera</button>
+                    <input type="submit" name="action" value="register" class="form-button">
                 </div>
 
             </form>
             <p class="required-fields">* obligatoriska fält</p>
             <?php
-                checkForSignupErrors();
+            checkForSignupErrors();
             ?>
         </section>
     </main>

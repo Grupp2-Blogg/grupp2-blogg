@@ -1,3 +1,5 @@
+
+
 <h3><?= $_SESSION['user']['username'] ?></h3>
 
 <ul class="acc-info-ul">
@@ -35,12 +37,9 @@
     </li>
 </ul>
 
-<form action="./account_action_router.php" method="get">
-    <div class="form-button-container">
+<div class="form-button-container">
+    <a href="accountDetails.php?mode=account-enter-edit" class="form-button">Redigera Konto</a>
+    <a href="accountDetails.php?mode=pw-enter-confirm-old" class="form-button">Ändra Lösenord</a>
+    <a href="accountDetails.php?mode=account-enter-delete" class="form-button">Radera Konto</a>
 
-        <button type="submit" class="form-button" name="account-action" value="account-enter-edit">Redigera Uppgifter</button>
-        <button type="submit" class="form-button" name="account-action" value="pw-enter-confirm-old">Ändra Lösenord</button>
-        <button type="submit" class="form-button" name="account-action" value="account-enter-delete">Ta bort konto</button>
-
-    </div>
-</form>
+</div>
