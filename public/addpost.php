@@ -13,13 +13,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $user_id = $_SESSION['user']['id'];
 
     $imagePath = NULL;
+    $uploadDir = __DIR__ . '/../uploads/';
     if (isset($_FILES['post_image'])&& $_FILES['post_image']['error'] === UPLOAD_ERR_OK){
-        $uploadDir = "uploads/";
-        $fileName = basename($_FILES['post_image']['name']);
-        $targetFilePath = $uploadDir . time() . "_" . $fileName;
+        
+        $fileName = time() . "_" . basename($_FILES['post_image']['name']);
+        $targetFilePath = $uploadDir . $fileName;
 
         if (move_uploaded_file($_FILES['post_image']['tmp_name'], $targetFilePath)){
-            $imagePath = $targetFilePath;
+            $imagePath = "uploads/" . $fileName;
         }
         else{
             echo "Error: Kunde inte ladda upp bilden!";
@@ -28,8 +29,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
     try{
-        $stmt = $pdo->prepare("INSERT INTO blogposts (blogtitle, blogcontent, user_id) VALUES (?,?,?)");
-        $stmt->execute([$title, $content, $user_id]);
+        $stmt = $pdo->prepare("INSERT INTO blogposts (blogtitle, blogcontent, user_id, image_path) VALUES (?,?,?,?)");
+        $stmt->execute([$title, $content, $user_id, $imagePath]);
 
         echo "Ditt inlägg har blivit uppladdat!";
     }

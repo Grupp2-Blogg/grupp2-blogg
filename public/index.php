@@ -95,7 +95,8 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         <div class="div--inlägg-container">
             <a  href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
                 <div >
-                <img src="<?= htmlspecialchars($post['image_path'] ?? '') ?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
+                <img src="/<?= htmlspecialchars($post['image_path']) ?? ''?>" alt="<?= htmlspecialchars($post['blogtitle']) ?>">
+
                 <div class="div--inlägg-container--headers">
 
                     <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
