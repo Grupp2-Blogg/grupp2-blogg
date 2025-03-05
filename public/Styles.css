@@ -193,6 +193,8 @@ a:hover
 .div--inlägg-container a{
     text-decoration: none !important;
     color: black;
+    width: 100%;
+    height: 100%;
 }
 
 .div--inlägg-container:hover{

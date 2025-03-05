@@ -7,6 +7,13 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_destroy();
 }
 
+if (isset($_SESSION['user'])){
+    $user_id = array($_SESSION['user']['id']);
+
+    $user_search = $pdo->prepare('SELECT image_path from users WHERE id = ?');
+    $user_search->execute($user_id);
+    $user = $user_search->fetch();
+}
 
 ?>
 
@@ -50,9 +57,13 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
                 ?>
 
             </div>
-            <div class="account-picture">
-                <img src="./fiskebi/dominik.jpg" alt="">
-            </div>
+
+            <?php if (isset($_SESSION['user'])): ?>
+                <div class="account-picture">
+                    <img src="<?= htmlspecialchars($user['image_path'] ?? '') ?>">
+                </div>
+                
+            <?php endif?>
         </div>
 
 
@@ -84,7 +95,7 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
             RIGHT JOIN users AS U ON B.user_id = U.id
         ) AS combined_results
         WHERE blogpost_id IS NOT NULL
-        ORDER BY COALESCE(post_created_at, user_created_at);
+        ORDER BY COALESCE(post_created_at, user_created_at) DESC;
         ');
 
         $stmt->execute();
