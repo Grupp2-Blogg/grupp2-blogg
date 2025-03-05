@@ -264,7 +264,7 @@ a {
     border: 2px solid black;
 }
 
-.blog-posts img[src=""]{
+.blog-posts img[src="/"]{
     display: none;
 }
 
