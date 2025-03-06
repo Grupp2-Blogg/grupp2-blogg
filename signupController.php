@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 require_once './session_config.php';
-require_once './userModel.php';
+require_once './UserModel.php';
 require_once './helperFunctions.php';
 
 
@@ -11,12 +11,12 @@ class SignupController
 {
 
     private PDO $pdo;
-    private User $userModel;
+    private UserModel $userModel;
 
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->userModel = new User($this->pdo);
+        $this->userModel = new UserModel($this->pdo);
     }
 
     public function registerUser(): bool
@@ -74,5 +74,34 @@ class SignupController
         }
 
         return $errors;
+    }
+
+    public function checkForSignupErrors()
+    {
+
+        if (isset($_SESSION['errors_signup'])) {
+
+            $errors = $_SESSION['errors_signup'];
+
+            echo "<br>";
+
+            foreach ($errors as $error) {
+                echo '<p class="error-msg">' . $error  . '</p>';
+            }
+
+            unset($_SESSION['errors_signup']);
+        }
+    }
+
+    public function displayYearSelect(int $yearsback)
+    {
+
+        $currentYear = date("Y");
+        $earliestYear = $currentYear - $yearsback;
+
+        for ($i = $currentYear; $i >= $earliestYear; $i--) {
+
+            echo "<option value='{$i}'>{$i}</option>";
+        }
     }
 }

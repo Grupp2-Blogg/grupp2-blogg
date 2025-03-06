@@ -22,7 +22,6 @@ if (!$user) {
     exit;
 }
 $_SESSION['user'] = $user;
-// $_SESSION['user'] = array_merge($_SESSION['user'], $user);
 
 
 // ✅ Hantera POST-förfrågningar (uppdatering, lösenordsbekräftelse, kontoborttagning)
@@ -49,5 +48,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['account-action'])) {
     }
 }
 
-header("Location: ./accountDetails.php");
+header("Location: ./account_details.php");
 exit;

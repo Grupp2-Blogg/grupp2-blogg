@@ -39,6 +39,16 @@ body {
     gap: 1.2rem;
 }
 
+.account-container a {
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.account-container a:visited {
+    color: var(--shade-of-vanilla);
+
+}
+
 .account-container > h2 {
     align-self: center;
 }
@@ -58,6 +68,8 @@ body {
 .account-form * {
     border-radius: 0.2rem;
 }
+
+
 
 .form-email-container {
     display: flex;
@@ -118,12 +130,15 @@ body {
 .form-button-container {
     display: flex;
     justify-content: center;
+    gap: 1rem;
 
 }
 
 .form-button {
+    border-radius: 0.25rem;
+    padding: 0.4rem 0.75rem;
     justify-self: center;
-    min-width: 35%;
+    /* min-width: 35%; */
     min-height: 1.75rem;
     /* background-color: #C2BAB7; */
     background: var(--main-background);

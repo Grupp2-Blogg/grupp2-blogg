@@ -3,33 +3,8 @@
 declare(strict_types=1);
 
 require_once './session_config.php';
-
-function checkForNewUser()
-{
-
-    if (isset($_SESSION['signup']) && $_SESSION['signup'] === 'success') {
-
-        echo "<h2>Registration Complete!</h2><br><br>";
-        unset($_SESSION['signup']);
-    }
-}
-
-function checkForLoginErrors()
-{
-
-    if (isset($_SESSION['errors_login'])) {
-
-        $errors = $_SESSION['errors_login'];
-
-        echo "<br>";
-
-        foreach ($errors as $error) {
-            echo '<p class="error-msg">' . $error  . '</p>';
-        }
-
-        unset($_SESSION['errors_login']);
-    }
-}
+require_once './dboconn.php';
+require_once './LoginController.php';
 
 ?>
 
@@ -47,8 +22,9 @@ function checkForLoginErrors()
     <main class="page-wrapper">
         <section class="account-container">
             <?php
-            checkForNewUser();
-            checkForLoginErrors();
+            $controller = new LoginController($pdo);
+            $controller->checkForNewUser();
+            $controller->checkForLoginErrors();
             ?>
             <h2>Login</h2>
             <form action="./router.php" method="post" class="account-form">

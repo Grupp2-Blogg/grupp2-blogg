@@ -1,9 +1,8 @@
 <?php
 require_once './session_config.php';
 require_once './dboconn.php';
-require_once './AccountDetailsController.php';
-require_once './loginController.php';
-require_once './signupController.php';
+require_once './LoginController.php';
+require_once './SignupController.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,6 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     
 } else {
-    header("Location: ./accountDetails.php");
+    header("Location: ./account_details.php");
     exit;
 }

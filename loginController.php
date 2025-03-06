@@ -9,7 +9,7 @@ require_once './helperFunctions.php';
 class LoginController
 {
 
-    private User $userModel;
+    private UserModel $userModel;
     private PDO $pdo;
 
 
@@ -17,7 +17,7 @@ class LoginController
     {
 
         $this->pdo = $pdo;
-        $this->userModel = new User($this->pdo);
+        $this->userModel = new UserModel($this->pdo);
     }
 
     public function loginUser()
@@ -59,5 +59,31 @@ class LoginController
         header("Location: ./index.php");
         // $pdo = null;
         exit;
+    }
+    public function checkForNewUser()
+    {
+
+        if (isset($_SESSION['signup']) && $_SESSION['signup'] === 'success') {
+
+            echo "<h2>Registration Complete!</h2><br><br>";
+            unset($_SESSION['signup']);
+        }
+    }
+
+    public function checkForLoginErrors()
+    {
+
+        if (isset($_SESSION['errors_login'])) {
+
+            $errors = $_SESSION['errors_login'];
+
+            echo "<br>";
+
+            foreach ($errors as $error) {
+                echo '<p class="error-msg">' . $error  . '</p>';
+            }
+
+            unset($_SESSION['errors_login']);
+        }
     }
 }

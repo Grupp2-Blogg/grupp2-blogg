@@ -1,5 +1,3 @@
-
-
 <h3><?= $_SESSION['user']['username'] ?></h3>
 
 <ul class="acc-info-ul">
@@ -38,8 +36,7 @@
 </ul>
 
 <div class="form-button-container">
-    <a href="accountDetails.php?mode=account-enter-edit" class="form-button">Redigera Konto</a>
-    <a href="accountDetails.php?mode=pw-enter-confirm-old" class="form-button">Ändra Lösenord</a>
-    <a href="accountDetails.php?mode=account-enter-delete" class="form-button">Radera Konto</a>
-
+    <a href="account_details.php?mode=account-enter-edit" class="form-button">Redigera Konto</a>
+    <a href="account_details.php?mode=pw-enter-confirm-old" class="form-button">Ändra Lösenord</a>
+    <a href="account_details.php?mode=account-enter-delete" class="form-button">Radera Konto</a>
 </div>
