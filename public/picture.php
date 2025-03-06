@@ -110,15 +110,15 @@
         </ul>
     </nav>
 
-    <?php foreach ($pictures as $pic): ?>
-        <div class="testpic">
-            <a href="posts.php?id=<?= htmlspecialchars($pic['id']) ?>">
+    <div class="main--picture-div">
+        <?php foreach ($pictures as $pic): ?>
+            <a href="posts.php?id=<?= htmlspecialchars($pic['id']) ?>" class="picture--container">
                 <div class="picture--div">
                     <img src="/<?= htmlspecialchars($pic['image_path']) ?? ''?>">
                 </div>
             </a>
-        </div>
         <?php endforeach?>
+    </div>
     
 </body>
 </html>
