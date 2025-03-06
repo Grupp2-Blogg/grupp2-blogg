@@ -109,7 +109,7 @@ foreach ($commentsResults as $row){
     <nav class="navbar">
         <ul>
             <li><a href="index.php">Hem</a></li>
-            <li><a href="#">Bilder</a></li>
+            <li><a href="picture.php">Bilder</a></li>
             <li><a href="#">Recept</a></li>
             <li><a href="addpost.php">Inlägg</a></li>
 
@@ -139,7 +139,6 @@ foreach ($commentsResults as $row){
     ?>
     <?php foreach ($posts as $post): ?>
         <div class="div--inlägg-container">
-            <?php var_dump($post['image_path'])?>
             <a href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
                 <div>
                     <img src="/<?= htmlspecialchars($post['image_path']) ?? '' ?>" alt="<?= htmlspecialchars($post['blogtitle']) ?>">

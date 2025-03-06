@@ -240,7 +240,7 @@ a {
     width: 80%;
     height: 100%;
     max-height: 90%;
-    max-width: 90%;
+    max-width: 70%;
     margin: 0 auto;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -252,7 +252,7 @@ a {
 
 .blog-posts img{
     width: 100%;
-    max-width: 800px;
+    max-width: 500px;
     height: auto;
     object-fit: contain;
     margin-bottom: 15px;
@@ -292,6 +292,51 @@ a {
     margin: 0;
 }
 
+/* picture.php - Bilder sidan */
+
+.main--picture-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+}
+
+.picture--container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 250px;
+    background-color: var(--shade-of-vanilla);
+    border-radius: 15px;
+    flex-wrap: wrap;
+    height: 100%;
+    max-height: 500px;
+    transition: 1s;
+    justify-content: center;
+}
+
+.picture--div{
+    padding: 10px;
+}
+
+.picture--div img{
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+.picture--div img[src="/"]{
+    display: none;
+}
+
+.picture--container:hover{
+    transform: scale(1.02);
+    transition: 1s;
+}
 
 /* MEDIA QUERIES */
 @media only screen and (max-width: 600px) {
