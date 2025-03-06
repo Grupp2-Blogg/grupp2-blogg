@@ -16,7 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['last_regeneration'])) {
-    
+
     session_regenerate_id(true);
     $_SESSION['last_regeneration'] = time();
 } else {

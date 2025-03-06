@@ -1,4 +1,4 @@
-<form action="./account_redirect.php" method="post" class="account-form">
+<form action="./account_details_router.php" method="post" class="account-form">
     <div class="form-bigtext-container">
         *Användarnamn:
         <input type="text" name="username" placeholder="Username" value="<?= htmlspecialchars($_SESSION['user']['username']) ?>">

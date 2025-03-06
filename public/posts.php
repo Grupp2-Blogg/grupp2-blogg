@@ -1,6 +1,6 @@
 <?php
-require_once '../app/config/dboconn.php';
-require_once '../app/config/session_config.php';
+require_once '../config/dboconn.php';
+require_once '../config/session_config.php';
 
 if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_unset();
@@ -9,8 +9,8 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
 
 $post_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-if (!$post_id){
-    header("Location: index.php");
+if (!$post_id) {
+    header("Location: ../public/index.php");
     exit;
 }
 
@@ -30,8 +30,8 @@ $get = $pdo->prepare("SELECT * FROM (
 $get->execute([$post_id]);
 $post = $get->fetch();
 
-if(!$post){
-    header("Location: index.php");
+if (!$post) {
+    header("Location: ../public/index.php");
     exit;
 }
 
@@ -41,42 +41,49 @@ if(!$post){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($post["blogtitle"]) ?></title>
-    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="../Styles.css">
 </head>
+
 <body>
 
-<header class="top-header">
-        <img src="./fiskebi/8880968.jpg">
+    <header class="top-header">
+        <img src="../fiskebi/8880968.jpg">
 
 
         <div class="login-banner">
             <div class="login-container">
-                <?php
-                if (isset($_SESSION['user'])) {
-
-                    if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true') {
-                        echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
-                        unset($_SESSION['recent_login']);
-                    } else {
-
-                        echo "<p>" . htmlspecialchars($_SESSION['user']['username']) . "</p>";
-                    }
-
-                    echo '<a href="./account_redirect.php" class="login-btn">Acc settings</a>';
-                    echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
-                } else {
-                    echo '<a href="./login.php" class="login-btn">Logga in</a>
-                          <a href="./signup.php" class="register-btn">Registrera</a>';
-                }
-                ?>
+                <?php if (isset($_SESSION['user'])): ?>
+                    <?php if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true'): ?>
+                        <p>Welcome <?= htmlspecialchars($_SESSION['user']['username']); ?>!</p>
+                        <?php unset($_SESSION['recent_login']); ?>
+                    <?php else: ?>
+                        <p><?= htmlspecialchars($_SESSION['user']['username']); ?></p>
+                    <?php endif; ?>
+                    <form action="./logout.php" method="post">
+                        <div class="form-button-container">
+                            <button type="submit" class="form-button">Logga ut</button>
+                        </div>
+                    </form>
+                    <div class="form-button-container">
+                        <a href="./account_details_router.php" class="form-button">Acc Settings</a>
+                    </div>
+                <?php else: ?>
+                    <div class="form-button-container">
+                        <a href="./login.php" class="form-button">Logga in</a>
+                    </div>
+                    <div class="form-button-container">
+                        <a href="./signup.php" class="form-button">Registrera</a>
+                    </div>
+                <?php endif; ?>
 
             </div>
             <div class="account-picture">
-                <img src="./fiskebi/dominik.jpg" alt="">
+                <img src="../fiskebi/dominik.jpg" alt="">
             </div>
         </div>
 
@@ -95,19 +102,20 @@ if(!$post){
     </nav>
 
 
-        <div class="blog-posts">
-            <img src="/<?= htmlspecialchars($post['image_path']) ?? ''?>" alt="<?= htmlspecialchars($post['blogtitle'])?>">
+    <div class="blog-posts">
+        <img src="/<?= htmlspecialchars($post['image_path']) ?? '' ?>" alt="<?= htmlspecialchars($post['blogtitle']) ?>">
 
-            <div class="blog-posts--headers">
-                <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
-                <p>Av: <?= htmlspecialchars($post['username'])?></p>
-                <p>Skapad: <?= date('F j, Y', strtotime($post['post_created_at'])) ?></p>
-            </div>
-
-            <div class="blog-posts--contents">
-                <p><?= htmlspecialchars($post['blogcontent']) ?></p>
-            </div>
+        <div class="blog-posts--headers">
+            <h2><?= htmlspecialchars($post['blogtitle']) ?></h2>
+            <p>Av: <?= htmlspecialchars($post['username']) ?></p>
+            <p>Skapad: <?= date('F j, Y', strtotime($post['post_created_at'])) ?></p>
         </div>
-    
+
+        <div class="blog-posts--contents">
+            <p><?= htmlspecialchars($post['blogcontent']) ?></p>
+        </div>
+    </div>
+
 </body>
+
 </html>
