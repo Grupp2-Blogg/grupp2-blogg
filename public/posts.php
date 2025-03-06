@@ -1,6 +1,7 @@
 <?php
 require_once '../config/dboconn.php';
 require_once '../config/session_config.php';
+require_once '../models/Comment.php';
 
 if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_unset();
@@ -37,6 +38,28 @@ if (!$post) {
 
 // Lägg in för kommentarer och likes sedan.
 
+$commentDel = new Comment($pdo);
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment'])){
+    if(!isset($_SESSION['user']['id'])){
+        echo "Error: Du måste vara inloggad för att kunna kommentera";
+    }
+    else{
+        $commentText = trim($_POST['comment']);
+        $user_id = $_SESSION['user']['id'];
+
+        if(!empty($commentText)){
+            $commentDel->addComment($post_id, $user_id, $commentText);
+            header("Location: posts.php?id=" . $post_id);
+            exit();
+        }
+
+        else{
+            echo "Kommentarsfältet får inte vara tomt";
+        }
+    }
+}
+
+$comments = $commentDel->commentsPostId($post_id);
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +75,7 @@ if (!$post) {
 <body>
 
     <header class="top-header">
-        <img src="../fiskebi/8880968.jpg">
+        <img src="./fiskebi/Logga.png">
 
 
         <div class="login-banner">
@@ -66,18 +89,18 @@ if (!$post) {
                     <?php endif; ?>
                     <form action="./logout.php" method="post">
                         <div class="form-button-container">
-                            <button type="submit" class="form-button">Logga ut</button>
+                            <a href="./logout.php" class="login-btn">Logga ut</a>
                         </div>
                     </form>
                     <div class="form-button-container">
-                        <a href="./account_details_router.php" class="form-button">Acc Settings</a>
+                        <a href="./account_details_router.php" class="login-btn">Acc Settings</a>
                     </div>
                 <?php else: ?>
                     <div class="form-button-container">
-                        <a href="./login.php" class="form-button">Logga in</a>
+                        <a href="./login.php" class="login-btn">Logga in</a>
                     </div>
                     <div class="form-button-container">
-                        <a href="./signup.php" class="form-button">Registrera</a>
+                        <a href="./signup.php" class="register-btn">Registrera</a>
                     </div>
                 <?php endif; ?>
 
@@ -94,7 +117,7 @@ if (!$post) {
     <nav class="navbar">
         <ul>
             <li><a href="index.php">Hem</a></li>
-            <li><a href="#">Bilder</a></li>
+            <li><a href="picture.php">Bilder</a></li>
             <li><a href="#">Recept</a></li>
             <li><a href="addpost.php">Inlägg</a></li>
 
@@ -111,11 +134,37 @@ if (!$post) {
             <p>Skapad: <?= date('F j, Y', strtotime($post['post_created_at'])) ?></p>
         </div>
 
-        <div class="blog-posts--contents">
-            <p><?= htmlspecialchars($post['blogcontent']) ?></p>
+            <div class="blog-posts--contents">
+                <p><?= htmlspecialchars($post['blogcontent']) ?></p>
+            </div>
         </div>
-    </div>
 
+
+<div class="comments-section">
+    <h3>Kommentarer</h3>
+    <?php if (!empty($comments)): ?>
+        <?php foreach ($comments as $comment): ?>
+            <div class ="comment">
+                <p><strong><?= htmlspecialchars($comment['username']) ?></strong></p>
+                <p><?=nl2br(htmlspecialchars($comment['content'])) ?></p>
+                <small><?= $comment['created_at'] ?></small>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Inga kommentarer än. Var först med att kommentera!</p>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['user']['id'])): ?>
+        <form method="POST" class="comment-form">
+            <textarea name="comment" placeholder="Skriv kommentaren här... " required></textarea>
+            <button type="submit">Skicka</button>
+        </form>
+    <?php else: ?>
+        <p><a href="login.php">Logga in</a> för att kommentera</p>
+    <?php endif; ?>
+
+</div>
+    
 </body>
 
 </html>
