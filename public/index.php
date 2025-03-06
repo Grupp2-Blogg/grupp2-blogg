@@ -15,6 +15,17 @@ if (isset($_SESSION['user'])){
     $user = $user_search->fetch();
 }
 
+//Hämtar antalet kommentarer per inlägg
+
+$commentsCount = [];
+$commentsQuery = $pdo->prepare("SELECT post_id, COUNT(*) as count FROM comments GROUP BY post_id");
+$commentsQuery->execute();
+$commentsResults = $commentsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($commentsResults as $row){
+    $commentsCount[$row['post_id']] = $row['count'];
+}
+
 ?>
 
 
@@ -128,6 +139,8 @@ if (isset($_SESSION['user'])){
 
 
                     <p><?= htmlspecialchars($excerpt) ?></p>
+
+                    <p class="comments-count"> <?= $commentsCount[$post['blogpost_id']] ?? 0 ?> kommentarer</p>
                 </div>      
             </div>
         </a>

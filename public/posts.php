@@ -1,6 +1,7 @@
 <?php
 require_once '../app/config/dboconn.php';
 require_once '../app/config/session_config.php';
+require_once '../app/models/Comment.php';
 
 if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_unset();
@@ -37,6 +38,28 @@ if(!$post){
 
 // Lägg in för kommentarer och likes sedan.
 
+$commentDel = new Comment($pdo);
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment'])){
+    if(!isset($_SESSION['user']['id'])){
+        echo "Error: Du måste vara inloggad för att kunna kommentera";
+    }
+    else{
+        $commentText = trim($_POST['comment']);
+        $user_id = $_SESSION['user']['id'];
+
+        if(!empty($commentText)){
+            $commentDel->addComment($post_id, $user_id, $commentText);
+            header("Location: posts.php?id=" . $post_id);
+            exit();
+        }
+
+        else{
+            echo "Kommentarsfältet får inte vara tomt";
+        }
+    }
+}
+
+$comments = $commentDel->commentsPostId($post_id);
 ?>
 
 <!DOCTYPE html>
@@ -108,6 +131,32 @@ if(!$post){
                 <p><?= htmlspecialchars($post['blogcontent']) ?></p>
             </div>
         </div>
+
+
+<div class="comments-section">
+    <h3>Kommentarer</h3>
+    <?php if (!empty($comments)): ?>
+        <?php foreach ($comments as $comment): ?>
+            <div class ="comment">
+                <p><strong><?= htmlspecialchars($comment['username']) ?></strong></p>
+                <p><?=nl2br(htmlspecialchars($comment['content'])) ?></p>
+                <small><?= $comment['created_at'] ?></small>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Inga kommentarer än. Var först med att kommentera!</p>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['user']['id'])): ?>
+        <form method="POST" class="comment-form">
+            <textarea name="comment" placeholder="Skriv kommentaren här... " required></textarea>
+            <button type="submit">Skicka</button>
+        </form>
+    <?php else: ?>
+        <p><a href="login.php">Logga in</a> för att kommentera</p>
+    <?php endif; ?>
+
+</div>
     
 </body>
 </html>
