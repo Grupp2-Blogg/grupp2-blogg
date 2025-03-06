@@ -1,6 +1,6 @@
 <?php
-require'../app/config/dboconn.php';
-require'../app/config/session_config.php';
+require'../config/dboconn.php';
+require'../config/session_config.php';
 
 if(!isset($_SESSION['user']['id'])){
     die("Error: Du måste vara inloggad");
@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <form method="POST">
         <button type="submit">Ja</button>
     </form>
-    <a href="index.php">Avbryt</a>
+    <a href="./index.php">Avbryt</a>
 </div>
 </body>
 </html>
