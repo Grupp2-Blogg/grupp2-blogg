@@ -128,7 +128,7 @@ if (isset($_SESSION['user'])) {
     ?>
     <?php foreach ($posts as $post): ?>
         <div class="div--inlägg-container">
-            <?php var_dump($post['image_path'])?>
+            
             <a href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
                 <div>
                     <img src="/<?= htmlspecialchars($post['image_path']) ?? '' ?>" alt="<?= htmlspecialchars($post['blogtitle']) ?>">
