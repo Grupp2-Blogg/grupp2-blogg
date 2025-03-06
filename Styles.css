@@ -6,6 +6,11 @@ body
     
 }
 
+
+a {
+    text-decoration: none !important;
+}
+
 :root{
     --main-background: #7b583d;
     --shade-of-green: #AAB396;
@@ -77,8 +82,9 @@ body
     font-size: 18px;
 }
 
-
-a:hover
+.register-btn:hover,
+.login-btn:hover,
+.navbar a:hover
 {
     background-color: #afa8a5;
     color: black;
@@ -161,6 +167,132 @@ a:hover
     display: block;
 }
 
+/* Home page - Posts */
+
+.div--inlägg-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: var(--shade-of-vanilla);
+    border-radius: 15px;
+    border: 2px solid black;
+    width: 80%;
+    height: 100%;
+    max-height: 800px;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: black;
+    padding: 20px;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: 1s;
+}
+
+.div--inlägg-container a{
+    text-decoration: none !important;
+    color: black;
+    width: 100%;
+    height: 100%;
+}
+
+.div--inlägg-container:hover{
+    background-color: #fff8e8b6;
+    transform: scale(1.05);
+    transition: 1s;
+}
+
+.div--inlägg-container img{
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+.div--inlägg-container img[src="/"]{
+    display: none;
+}
+
+.div--inlägg-container--headers{
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+.div--inlägg-container--headers h2, .div--inlägg-container--headers p, .div--inlägg-container--headers div{
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Posts.php - Enskilda inlägg */
+
+.blog-posts{
+    background-color: var(--shade-of-vanilla);
+    border-radius: 15px;
+    border: 2px solid black;
+    width: 80%;
+    height: 100%;
+    max-height: 90%;
+    max-width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: black;
+    padding: 20px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.blog-posts img{
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border: 2px solid black;
+}
+
+.blog-posts img[src="/"]{
+    display: none;
+}
+
+.blog-posts--headers{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    padding-top: 10px;
+    gap: 20px;
+    border-bottom: 2px solid black;
+}
+
+.blog-posts--headers h2{
+    font-size: calc(0.65em + 2vmin);
+    line-height: 1;
+}
+.blog-posts--headers p{
+    font-size: calc(0.45em + 1vmin);
+    line-height: 1.2;
+    color: gray;
+}
+
+.blog-posts--headers h2,
+.blog-posts--headers p{
+    margin: 0;
+}
+
+
 /* MEDIA QUERIES */
 @media only screen and (max-width: 600px) {
     .account-picture{
@@ -200,7 +332,114 @@ a:hover
         justify-content: center;
         align-items: center;
         padding: 10px;
+    } 
+}
+
+    /*Här börjar min kod, hejhej*/
+
+
+.addpost-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--shade-of-green);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+.addpost-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.addpost-form input,
+.addpost-form textarea {
+    width: 100%;
+    max-width: 90%;
+    padding: 12px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: var(--shade-of-sand);
+    color: black;
+    transition: all 0.3s ease-in-out;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+
+.addpost-form textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+
+.addpost-form button {
+    background-color: var(--main-color-green);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.addpost-form button:hover {
+    background-color: var(--shade-of-green);
+}
+
+
+@media only screen and (max-width: 600px) {
+    .addpost-container {
+        width: 90%;
+        padding: 15px;
     }
 
-  }
-  
+    .addpost-form input,
+    .addpost-form textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .addpost-form button {
+        font-size: 14px;
+    }
+}
+
+
+
+.post-buttons {
+    display: flex;
+    justify-content: right;  /* Aligns buttons to the right */
+    gap: 10px; /* Adds spacing between buttons */
+    padding: 10px;
+}
+
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.edit-button {
+    background-color: var(--shade-of-green);
+    color: black;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+}
+
