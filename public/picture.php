@@ -8,7 +8,7 @@
         session_destroy();
     }
 
-    $get_pic = $pdo->prepare('SELECT image_path from blogposts WHERE image_path is not NULL');
+    $get_pic = $pdo->prepare('SELECT image_path, id from blogposts WHERE image_path is not NULL');
     $get_pic->execute();
     $pictures = $get_pic->fetchAll(PDO::FETCH_ASSOC);
 
@@ -78,7 +78,13 @@
     </nav>
 
     <?php foreach ($pictures as $pic): ?>
-        <img src="/<?= htmlspecialchars($pic['image_path']) ?? ''?>">
+        <!-- <a href="posts.php?id=<?= htmlspecialchars($pic['id']) ?>"> -->
+        <div class="testpic">
+            <div class="picture--div">
+                <img src="/<?= htmlspecialchars($pic['image_path']) ?? ''?>">
+            </div>
+        </div>
+        <!-- </a> -->
     <?php endforeach?>
     
 </body>
