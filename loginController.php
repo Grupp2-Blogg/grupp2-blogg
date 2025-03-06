@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 require_once './session_config.php';
-require_once './userModel.php';
+require_once './UserModel.php';
 require_once './helperFunctions.php';
 
 class LoginController
