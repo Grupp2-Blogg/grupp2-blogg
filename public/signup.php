@@ -2,34 +2,11 @@
 
 declare(strict_types=1);
 
-function checkForSignupErrors()
-{
+require_once '../config/dboconn.php';
+require_once '../controllers/SignupController.php';
 
-    if (isset($_SESSION['errors_signup'])) {
+$controller = new SignupController($pdo);
 
-        $errors = $_SESSION['errors_signup'];
-
-        echo "<br>";
-
-        foreach ($errors as $error) {
-            echo '<p class="error-msg">' . $error  . '</p>';
-        }
-
-        unset($_SESSION['errors_signup']);
-    }
-}
-
-function displayYearSelect(int $yearsback)
-{
-
-    $currentYear = date("Y");
-    $earliestYear = $currentYear - $yearsback;
-
-    for ($i = $currentYear; $i >= $earliestYear; $i--) {
-
-        echo "<option value='{$i}'>{$i}</option>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +15,7 @@ function displayYearSelect(int $yearsback)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Bloggsajt</title>
 </head>
 
@@ -88,7 +65,7 @@ function displayYearSelect(int $yearsback)
                     <select name="birthyear" id="">
                         <option value="" selected>----</option>
                         <?php
-                        displayYearSelect(110);
+                        $controller->displayYearSelect(110);
                         ?>
                     </select>
                 </div>
@@ -102,7 +79,7 @@ function displayYearSelect(int $yearsback)
             </form>
             <p class="required-fields">* obligatoriska fält</p>
             <?php
-            checkForSignupErrors();
+            $controller->checkForSignupErrors();
             ?>
         </section>
     </main>

@@ -1,7 +1,7 @@
 <?php
-require_once './session_config.php';
-require_once './dboconn.php';
-require_once './AccountDetailsController.php';
+require_once '../config/session_config.php';
+require_once '../config/dboconn.php';
+require_once '../controllers/AccountDetailsController.php';
 
 
 if (!isset($_SESSION['user']['id'])) {

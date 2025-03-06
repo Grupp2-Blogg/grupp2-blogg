@@ -2,34 +2,11 @@
 
 declare(strict_types=1);
 
-require_once './session_config.php';
+require_once '../config/session_config.php';
+require_once '../config/dboconn.php';
+require_once '../controllers/LoginController.php';
 
-function checkForNewUser()
-{
-
-    if (isset($_SESSION['signup']) && $_SESSION['signup'] === 'success') {
-
-        echo "<h2>Registration Complete!</h2><br><br>";
-        unset($_SESSION['signup']);
-    }
-}
-
-function checkForLoginErrors()
-{
-
-    if (isset($_SESSION['errors_login'])) {
-
-        $errors = $_SESSION['errors_login'];
-
-        echo "<br>";
-
-        foreach ($errors as $error) {
-            echo '<p class="error-msg">' . $error  . '</p>';
-        }
-
-        unset($_SESSION['errors_login']);
-    }
-}
+$controller = new LoginController($pdo);
 
 ?>
 
@@ -39,7 +16,7 @@ function checkForLoginErrors()
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Document</title>
 </head>
 
@@ -47,8 +24,8 @@ function checkForLoginErrors()
     <main class="page-wrapper">
         <section class="account-container">
             <?php
-            checkForNewUser();
-            checkForLoginErrors();
+            $controller->checkForNewUser();
+            $controller->checkForLoginErrors();
             ?>
             <h2>Login</h2>
             <form action="./router.php" method="post" class="account-form">

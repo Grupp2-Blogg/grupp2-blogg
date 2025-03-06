@@ -1,7 +1,8 @@
 <?php
 
 declare(strict_types=1);
-require_once './userModel.php';
+require_once '../config/session_config.php';
+require_once '../models/UserModel.php';
 
 class AccountDetailsController
 {
@@ -48,7 +49,7 @@ class AccountDetailsController
         // Om fel uppstått, skicka tillbaka användaren
         if (!empty($errors)) {
             $_SESSION['errors_account'] = $errors;
-            header("Location: ./accountDetails.php?mode=account-enter-edit");
+            header("Location: ../public/accountDetails.php?mode=account-enter-edit");
             exit;
         }
 
@@ -59,13 +60,13 @@ class AccountDetailsController
         $updatedUser = $this->userModel->getAllInfoByID($id);
         if (!$updatedUser) {
             $_SESSION['errors_account'] = ["invalid_fetch" => "Kunde inte hämta användare"];
-            header("Location: ./login.php");
+            header("Location: ../public/login.php");
             exit;
         }
 
         // Uppdatera sessionen och skicka tillbaka användaren
         $_SESSION['user'] = $updatedUser;
-        header("Location: ./accountDetails.php");
+        header("Location: ../public/accountDetails.php");
         exit;
     }
 
@@ -86,14 +87,14 @@ class AccountDetailsController
 
         if (!empty($errors)) {
             $_SESSION['errors_account'] = $errors;
-            header("Location: ./accountDetails.php?mode=pw-enter-edit");
+            header("Location: ../public/accountDetails.php?mode=pw-enter-edit");
             exit;
         }
 
         // Uppdatera lösenord
         $this->userModel->updateUserPwd($id, $newPwd);
         $_SESSION['pwd_update_complete'] = "Lösenord uppdaterat!";
-        header("Location: ./accountDetails.php");
+        header("Location: ../public/accountDetails.php");
         exit;
     }
 
@@ -118,7 +119,7 @@ class AccountDetailsController
 
         if (!empty($errors)) {
             $_SESSION['errors_account'] = $errors;
-            header("Location: ./account_details.php?mode=pw-enter-confirm-old");
+            header("Location: ../public/accountDetails.php?mode=pw-enter-confirm-old");
             exit;
         }
 
@@ -131,7 +132,7 @@ class AccountDetailsController
             $mode = 'pw-enter-edit';
         }
 
-        header("Location: ./accountDetails.php?mode=" . $mode);
+        header("Location: ../public/accountDetails.php?mode=" . $mode);
         exit;
     }
 
@@ -142,7 +143,7 @@ class AccountDetailsController
     {
         $this->userModel->delete($id);
         session_destroy();
-        header("Location: ./index.php");
+        header("Location: ../public/index.php");
         exit;
     }
 
@@ -152,5 +153,71 @@ class AccountDetailsController
     public function getUserInfo(int $id): array
     {
         return $this->userModel->getAllInfoByID($id);
+    }
+
+    // Funktionen kollar vilket läge/format som account_details.php ska visas.
+    public function checkEditMode()
+    {
+        if (!isset($_SESSION['user'])) {
+
+            header("Location: ./login.php");
+            exit;
+        }
+
+        $allowedValues = ['account-enter-edit', 'pw-enter-confirm-old', 'pw-enter-edit', 'account-enter-delete', 'account-enter-destroy', 'account-destroy'];
+
+        // Hämta 'mode' från GET (om den finns), annars sätt den till standard ('account-info')
+        $mode = $_GET['mode'] ?? 'account-info';
+
+        if ($mode !== 'account-enter-destroy' && isset($_SESSION['delete-pw-confirm'])) {
+            unset($_SESSION['delete-pw-confirm']);
+        }
+
+        if (in_array($mode, $allowedValues, true)) {
+            switch ($mode) {
+                case 'account-enter-edit':
+                    require_once './account_form_includes/editform.inc.php';
+                    break;
+                case 'pw-enter-confirm-old':
+                    require_once './account_form_includes/pw_confirm_old.inc.php';
+                    break;
+                case 'pw-enter-edit':
+                    require_once './account_form_includes/pw_update.inc.php';
+                    break;
+                case 'account-enter-delete':
+                    $_SESSION['delete-pw-confirm'] = 'true';
+                    require_once './account_form_includes/pw_confirm_old.inc.php';
+                    break;
+                case 'account-enter-destroy':
+                    require_once './account_form_includes/acc_enter_destroy.inc.php';
+                    break;
+                case 'account-destroy':
+                    $_SESSION['account-deleted'] = 'true';
+                    header("Location: ./index.php");
+                    exit;
+                default:
+                    header("Location: ./error.php"); // Felaktigt mode, skicka till error-sida
+                    exit;
+            }
+        } else {
+
+            require_once './account_form_includes/account_info.inc.php'; // Standardvy om 'mode' saknas eller är ogiltigt
+        }
+    }
+    // Funktionen kollar efter errors vid uppdatering av konto - och visar dem.
+    public function checkAccountUpdateErrors()
+    {
+
+        if (isset($_SESSION['errors_account'])) {
+
+            $errors = $_SESSION['errors_account'];
+            unset($_SESSION['errors_account']);
+
+            echo "<br>";
+
+            foreach ($errors as $error) {
+                echo '<p class="error-msg">' . $error  . '</p>';
+            }
+        }
     }
 }

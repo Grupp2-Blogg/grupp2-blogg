@@ -1,9 +1,9 @@
 <?php
-require_once './session_config.php';
-require_once './dboconn.php';
-require_once './AccountDetailsController.php';
-require_once './loginController.php';
-require_once './signupController.php';
+require_once '../config/session_config.php';
+require_once '../config/dboconn.php';
+require_once '../controllers/AccountDetailsController.php';
+require_once '../controllers/LoginController.php';
+require_once '../controllers/SignupController.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

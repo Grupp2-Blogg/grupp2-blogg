@@ -22,8 +22,6 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
 <body>
 
     <header class="top-header">
-        <?php echo isset($_SESSION['user']); ?>
-
         <img src="./fiskebi/8880968.jpg">
 
         <div class="login-banner">
