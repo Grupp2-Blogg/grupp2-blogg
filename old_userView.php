@@ -22,7 +22,7 @@ function checkAccUpdateErrors()
 
 
 
-function checkForSignupErrors()
+function check_ForSignupErrors()
 {
 
     if (isset($_SESSION['errors_signup'])) {
