@@ -71,7 +71,7 @@
                     <?php endif; ?>
                     <form action="./logout.php" method="post">
                         <div class="form-button-container">
-                            <button type="submit" class="login-btn">Logga ut</button>
+                            <a href="./logout.php" class="login-btn">Logga ut</a>
                         </div>
                     </form>
                     <div class="form-button-container">
