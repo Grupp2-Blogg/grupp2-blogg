@@ -24,7 +24,7 @@ $commentsQuery = $pdo->prepare("SELECT post_id, COUNT(*) as count FROM comments 
 $commentsQuery->execute();
 $commentsResults = $commentsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($commentsResults as $row){
+foreach ($commentsResults as $row) {
     $commentsCount[$row['post_id']] = $row['count'];
 }
 
@@ -45,29 +45,11 @@ foreach ($commentsResults as $row){
 <body>
 
     <header class="top-header">
-        <img src="../fiskebi/8880968.jpg">
+        <img src="./fiskebi/Logga.png">
 
 
         <div class="login-banner">
             <div class="login-container">
-
-                <!-- // if (isset($_SESSION['user'])) {
-
-                //     if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true') {
-                //         echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
-                //         unset($_SESSION['recent_login']);
-                //     } else {
-
-                //         echo "<p>" . htmlspecialchars($_SESSION['user']['username']) . "</p>";
-                //     }
-
-                //     echo '<a href="./account_redirect.php" class="login-btn">Acc settings</a>';
-                //     echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
-                // } else {
-                //     echo '<a href="./login.php" class="login-btn">Logga in</a>
-                //           <a href="./signup.php" class="register-btn">Registrera</a>';
-                // }
-                //  -->
                 <?php if (isset($_SESSION['user'])): ?>
                     <?php if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true'): ?>
                         <p>Welcome <?= htmlspecialchars($_SESSION['user']['username']); ?>!</p>
@@ -139,7 +121,7 @@ foreach ($commentsResults as $row){
     ?>
     <?php foreach ($posts as $post): ?>
         <div class="div--inlägg-container">
-            <?php var_dump($post['image_path'])?>
+            <?php var_dump($post['image_path']) ?>
             <a href="posts.php?id=<?= htmlspecialchars($post['blogpost_id']) ?>">
                 <div>
                     <img src="/<?= htmlspecialchars($post['image_path']) ?? '' ?>" alt="<?= htmlspecialchars($post['blogtitle']) ?>">
@@ -164,12 +146,12 @@ foreach ($commentsResults as $row){
 
 
 
-                    <p><?= htmlspecialchars($excerpt) ?></p>
+                        <p><?= htmlspecialchars($excerpt) ?></p>
 
-                    <p class="comments-count"> <?= $commentsCount[$post['blogpost_id']] ?? 0 ?> kommentarer</p>
-                </div>      
-            </div>
-        </a>
+                        <p class="comments-count"> <?= $commentsCount[$post['blogpost_id']] ?? 0 ?> kommentarer</p>
+                    </div>
+                </div>
+            </a>
 
 
 
