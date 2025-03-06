@@ -1,29 +1,35 @@
 <?php
-    require_once '../app/config/session_config.php';
 
-    // require_once './app/config/session_config.php';
-    require_once '../app/views/login_view.php';
+declare(strict_types=1);
+
+require_once '../config/session_config.php';
+require_once '../config/dboconn.php';
+require_once '../controllers/LoginController.php';
+
+$controller = new LoginController($pdo);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Document</title>
 </head>
+
 <body>
     <main class="page-wrapper">
         <section class="account-container">
             <?php
-                check_new_user();
-                check_login_fail(); 
+            $controller->checkForNewUser();
+            $controller->checkForLoginErrors();
             ?>
             <h2>Login</h2>
-            <form action="../includes/login.inc.php" method="post" class="account-form">
-            <div class="form-bigtext-container">
+            <form action="./router.php" method="post" class="account-form">
+                <div class="form-bigtext-container">
                     Username:
                     <input type="text" name="username" placeholder="Username">
                 </div>
@@ -32,10 +38,11 @@
                     <input type="password" name="pwd" id="" placeholder="Password">
                 </div>
                 <div class="form-button-container">
-                    <input type="submit" name="submit" value="Login" class="form-button">
+                    <input type="submit" name="action" value="login" class="form-button">
                 </div>
             </form>
         </section>
     </main>
 </body>
+
 </html>

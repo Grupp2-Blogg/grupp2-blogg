@@ -1,6 +1,12 @@
 <?php
-    require_once '../app/config/session_config.php';
-    require_once '../app/views/signup_view.php';
+
+declare(strict_types=1);
+
+require_once '../config/dboconn.php';
+require_once '../controllers/SignupController.php';
+
+$controller = new SignupController($pdo);
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Bloggsajt</title>
 </head>
 
@@ -18,7 +24,7 @@
         <section class="account-container">
             <h2>Registrering</h2>
 
-            <form action="../includes/signup.inc.php" method="post" class="account-form">
+            <form action="./router.php" method="post" class="account-form">
                 <div class="form-bigtext-container">
                     *Användarnamn:
                     <input type="text" name="username" placeholder="Username">
@@ -59,7 +65,7 @@
                     <select name="birthyear" id="">
                         <option value="" selected>----</option>
                         <?php
-                            populate_year_select_options(110);
+                        $controller->displayYearSelect(110);
                         ?>
                     </select>
                 </div>
@@ -67,13 +73,13 @@
                     <input type="checkbox" name="tc" id="">*Jag har läst och accepterar villkoren
                 </div>
                 <div class="form-button-container">
-                    <input type="submit" name="submit" value="Register" class="form-button">
+                    <input type="submit" name="action" value="register" class="form-button">
                 </div>
 
             </form>
             <p class="required-fields">* obligatoriska fält</p>
             <?php
-                check_signup_errors();
+            $controller->checkForSignupErrors();
             ?>
         </section>
     </main>
