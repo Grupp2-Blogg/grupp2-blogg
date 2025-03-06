@@ -1,6 +1,7 @@
 <?php
 require_once '../config/dboconn.php';
 require_once '../config/session_config.php';
+require_once '../models/Comment.php';
 
 if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_unset();
