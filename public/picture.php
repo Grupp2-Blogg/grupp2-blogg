@@ -3,6 +3,7 @@
     require_once '../config/session_config.php';
     require_once '../config/dboconn.php';
 
+
     if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         session_unset();
         session_destroy();
@@ -37,13 +38,30 @@
 
 <body>
 
-<header class="top-header">
-        <img src="../fiskebi/8880968.jpg">
+    <header class="top-header">
+        <img src="../public/fiskebi/Logga.png">
 
 
         <div class="login-banner">
             <div class="login-container">
 
+                <!-- // if (isset($_SESSION['user'])) {
+
+                //     if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true') {
+                //         echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
+                //         unset($_SESSION['recent_login']);
+                //     } else {
+
+                //         echo "<p>" . htmlspecialchars($_SESSION['user']['username']) . "</p>";
+                //     }
+
+                //     echo '<a href="./account_redirect.php" class="login-btn">Acc settings</a>';
+                //     echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
+                // } else {
+                //     echo '<a href="./login.php" class="login-btn">Logga in</a>
+                //           <a href="./signup.php" class="register-btn">Registrera</a>';
+                // }
+                //  -->
                 <?php if (isset($_SESSION['user'])): ?>
                     <?php if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true'): ?>
                         <p>Welcome <?= htmlspecialchars($_SESSION['user']['username']); ?>!</p>
@@ -81,6 +99,7 @@
 
     </header>
 
+
     <nav class="navbar">
         <ul>
             <li><a href="index.php">Hem</a></li>
@@ -92,14 +111,14 @@
     </nav>
 
     <?php foreach ($pictures as $pic): ?>
-        <!-- <a href="posts.php?id=<?= htmlspecialchars($pic['id']) ?>"> -->
         <div class="testpic">
-            <div class="picture--div">
-                <img src="/<?= htmlspecialchars($pic['image_path']) ?? ''?>">
-            </div>
+            <a href="posts.php?id=<?= htmlspecialchars($pic['id']) ?>">
+                <div class="picture--div">
+                    <img src="/<?= htmlspecialchars($pic['image_path']) ?? ''?>">
+                </div>
+            </a>
         </div>
-        <!-- </a> -->
-    <?php endforeach?>
+        <?php endforeach?>
     
 </body>
 </html>
