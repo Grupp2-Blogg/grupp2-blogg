@@ -89,7 +89,7 @@ $comments = $commentDel->commentsPostId($post_id);
                     <?php endif; ?>
                     <form action="./logout.php" method="post">
                         <div class="form-button-container">
-                            <button type="submit" class="login-btn">Logga ut</button>
+                            <a href="./logout.php" class="login-btn">Logga ut</a>
                         </div>
                     </form>
                     <div class="form-button-container">
@@ -100,7 +100,7 @@ $comments = $commentDel->commentsPostId($post_id);
                         <a href="./login.php" class="login-btn">Logga in</a>
                     </div>
                     <div class="form-button-container">
-                        <a href="./signup.php" class="login-btn">Registrera</a>
+                        <a href="./signup.php" class="register-btn">Registrera</a>
                     </div>
                 <?php endif; ?>
 
@@ -117,7 +117,7 @@ $comments = $commentDel->commentsPostId($post_id);
     <nav class="navbar">
         <ul>
             <li><a href="index.php">Hem</a></li>
-            <li><a href="#">Bilder</a></li>
+            <li><a href="picture.php">Bilder</a></li>
             <li><a href="#">Recept</a></li>
             <li><a href="addpost.php">Inlägg</a></li>
 
