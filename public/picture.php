@@ -33,12 +33,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GÄDDHÄNG</title>
     <link rel="stylesheet" href="../Styles.css">
+    <script src="../darktheme.js"></script>
 </head>
 
 
 <body>
 
     <header class="top-header">
+        <div class="theme-mode">
+            <label>
+                <input type="radio" name="scheme" value="light" id="light-mode">
+                Light Mode
+            </label>
+            <label>
+                <input type="radio" name="scheme" value="dark" id="dark-mode">
+                Dark Mode
+            </label>
+        </div>
+
         <img src="../public/fiskebi/Logga.png">
 
 
