@@ -82,6 +82,36 @@ a {
     font-size: 18px;
 }
 
+.search-header {
+    display: flex;
+    justify-content: center;
+}
+.search-bar-container {
+    align-self: center;
+    max-width: 8rem;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+.search-bar-container > form {
+    display: flex;
+    flex-direction: row;
+}
+
+.search-result-cell {
+    border: 1px solid black;
+    padding: none;
+}
+
+.search-result-cell:hover {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+.search-result-cell > p {
+    padding: none;
+}
+
 .register-btn:hover,
 .login-btn:hover,
 .navbar a:hover

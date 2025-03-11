@@ -13,39 +13,41 @@ function getPostsAndUsersBySearch(PDO $pdo)
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
 
-        $searchTerm = "%" . $_POST['search'] . "%";
-        $query = "SELECT
-                        u.id as user_id,
-                        u.username,
-                        bp.id as blogpost_id,
-                        bp.blogtitle
-                    FROM
-                        users as u
-                    LEFT JOIN
-                        blogposts as bp ON
-                        u.id = bp.user_id
-                    WHERE
-                        u.username LIKE :search OR
-                        bp.blogtitle LIKE :search;";
+        if (!empty($_POST['search'])) {
 
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
 
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $searchTerm = "%" . $_POST['search'] . "%";
+
+            $query = "SELECT DISTINCT
+                users.id AS entity_id, 
+                users.username AS name, 
+                'user' AS type
+            FROM users
+            WHERE users.username LIKE :search
+            UNION ALL
+            SELECT 
+                blogposts.id AS entity_id, 
+                blogposts.blogtitle AS name, 
+                'blogpost' AS type
+            FROM blogposts
+            WHERE blogposts.blogtitle LIKE :search;";
+
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 }
 
 if (isset($_SESSION['user'])) {
     $user_id = array($_SESSION['user']['id']);
-
     $user_search = $pdo->prepare('SELECT image_path from users WHERE id = ?');
     $user_search->execute($user_id);
     $user = $user_search->fetch();
 }
 
-//Hämtar antalet kommentarer per inlägg
-
+//Hämtar antalet kommentarer per inlägg 
 $commentsCount = [];
 $commentsQuery = $pdo->prepare("SELECT post_id, COUNT(*) as count FROM comments GROUP BY post_id");
 $commentsQuery->execute();
@@ -122,29 +124,32 @@ foreach ($commentsResults as $row) {
             <li><a href="#">Recept</a></li>
             <li><a href="addpost.php">Inlägg</a></li>
 
+
         </ul>
-        <div>
+    </nav>
+    <div class="search-header">
 
+
+        <div class="search-bar-container">
             <form action="" method="post">
-
                 <input type="search" name="search" id="">
                 <input type="submit" value="SÖK">
             </form>
-            <?php $results = getPostsAndUsersBySearch($pdo);
-
-            if ($results) {
-                foreach ($results as $result) {
-                    echo "User: " . htmlspecialchars($result['username']) . " - Blog: " . htmlspecialchars($result['blogtitle']) . "<br>";
-                }
-            }
-
-            ?>
-
+            <?php $results = getPostsAndUsersBySearch($pdo); ?>
+            <?php if ($results): ?>
+                <?php foreach ($results as $result): ?>
+                    <div class="search-result-cell">
+                        <?php if ($result['type'] === 'user'): ?>
+                            <p>User: <?= htmlspecialchars($result['name']) ?></p>
+                        <?php elseif ($result['type'] === 'blogpost'): ?>
+                            <a href="./posts.php?id=<?= $result['entity_id'] ?>">Blogg: <?= htmlspecialchars($result['name']) ?></a>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
 
         </div>
-
-    </nav>
-
+    </div>
 
     <?php
     $stmt = $pdo->prepare('
