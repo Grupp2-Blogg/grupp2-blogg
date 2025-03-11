@@ -9,6 +9,33 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_destroy();
 }
 
+function getPostsAndUsersBySearch(PDO $pdo)
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+
+        $searchTerm = "%" . $_POST['search'] . "%";
+        $query = "SELECT
+                        u.id as user_id,
+                        u.username,
+                        bp.id as blogpost_id,
+                        bp.blogtitle
+                    FROM
+                        users as u
+                    LEFT JOIN
+                        blogposts as bp ON
+                        u.id = bp.user_id
+                    WHERE
+                        u.username LIKE :search OR
+                        bp.blogtitle LIKE :search;";
+
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
 if (isset($_SESSION['user'])) {
     $user_id = array($_SESSION['user']['id']);
 
@@ -96,6 +123,26 @@ foreach ($commentsResults as $row) {
             <li><a href="addpost.php">Inlägg</a></li>
 
         </ul>
+        <div>
+
+            <form action="" method="post">
+
+                <input type="search" name="search" id="">
+                <input type="submit" value="SÖK">
+            </form>
+            <?php $results = getPostsAndUsersBySearch($pdo);
+
+            if ($results) {
+                foreach ($results as $result) {
+                    echo "User: " . htmlspecialchars($result['username']) . " - Blog: " . htmlspecialchars($result['blogtitle']) . "<br>";
+                }
+            }
+
+            ?>
+
+
+        </div>
+
     </nav>
 
 
