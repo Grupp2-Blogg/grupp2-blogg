@@ -2,6 +2,7 @@
 require_once '../config/dboconn.php';
 require_once '../config/session_config.php';
 require_once '../models/Comment.php';
+require_once '../models/Like.php';
 
 if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_unset();
@@ -59,7 +60,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment'])){
     }
 }
 
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['like'])) {
+    if(!isset($_SESSION['user']['id'])){
+        echo "Error: Du måste vara inloggad för att gilla inlägg.";
+    } else {
+        $user_id = $_SESSION['user']['id'];
+        $post_id = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
+
+        if ($post_id) {
+            $like = new Like($pdo);
+            $like->toggleLike($user_id, $post_id);
+            header("Location: posts.php?id=" . $post_id);
+            exit();
+        }
+    }
+}
+
+//kollar om vi har en kommentar eller om inlägget redan har gillats
 $comments = $commentDel->commentsPostId($post_id);
+$like = new Like($pdo);
+$hasLiked = isset($_SESSION['user']['id']) ? $like->hasLiked($_SESSION['user']['id'], $post_id) : false;
+
 ?>
 
 <!DOCTYPE html>
@@ -137,6 +158,17 @@ $comments = $commentDel->commentsPostId($post_id);
             <div class="blog-posts--contents">
                 <p><?= htmlspecialchars($post['blogcontent']) ?></p>
             </div>
+
+            <div class="like-section">
+                <form method="POST" class="like-form">
+                    <input type="hidden" name="post_id" value="<?= $post_id ?>">
+                    <button type="submit" name="like" class="like-button" <? $hasLiked ? 'liked' : '' ?>
+                        <?= $hasLiked ? '❤️' : '🤍' ?> Gilla
+                    </button>
+                </form>
+            </div>
+
+
         </div>
 
 

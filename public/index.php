@@ -47,7 +47,8 @@ if (isset($_SESSION['user'])) {
     $user = $user_search->fetch();
 }
 
-//Hämtar antalet kommentarer per inlägg 
+//Hämtar antalet kommentarer och likes per inlägg
+
 $commentsCount = [];
 $commentsQuery = $pdo->prepare("SELECT post_id, COUNT(*) as count FROM comments GROUP BY post_id");
 $commentsQuery->execute();
@@ -56,6 +57,17 @@ $commentsResults = $commentsQuery->fetchAll(PDO::FETCH_ASSOC);
 foreach ($commentsResults as $row) {
     $commentsCount[$row['post_id']] = $row['count'];
 }
+
+$likesCount = [];
+$likesQuery = $pdo->prepare("SELECT post_id, COUNT(*) as count FROM likes GROUP BY post_id");
+$likesQuery->execute();
+$likesResults = $likesQuery->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($likesResults as $row) {
+    $likesCount[$row['post_id']] = $row['count'];
+}
+
+
 
 ?>
 
@@ -206,13 +218,15 @@ foreach ($commentsResults as $row) {
 
                         <p><?= htmlspecialchars($excerpt) ?></p>
 
-                        <p class="comments-count"> <?= $commentsCount[$post['blogpost_id']] ?? 0 ?> kommentarer</p>
-                    </div>
-                </div>
-            </a>
+                    <p class="comments-count"> <?= $commentsCount[$post['blogpost_id']] ?? 0 ?> kommentarer</p>
+                    <p class="likes-count">🐟 <?= $likesCount[$post['blogpost_id']] ?? 0 ?> gillningar</p>
+
+                </div>      
+            </div>
+        </a>
 
 
-
+            <!--Regigera och ta bort knaparna för inläggen-->
             <?php if (isset($_SESSION['user']['id']) && $_SESSION['user']['id'] == $post['user_id']): ?>
                 <div class="post-buttons">
                     <a href="editpost.php?id=<?= $post['blogpost_id'] ?>" class="edit-button">Redigera</a>
