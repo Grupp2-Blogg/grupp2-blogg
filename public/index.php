@@ -126,30 +126,37 @@ foreach ($commentsResults as $row) {
 
 
         </ul>
-    </nav>
-    <div class="search-header">
-
-
-        <div class="search-bar-container">
-            <form action="" method="post">
-                <input type="search" name="search" id="">
-                <input type="submit" value="SÖK">
-            </form>
-            <?php $results = getPostsAndUsersBySearch($pdo); ?>
-            <?php if ($results): ?>
-                <?php foreach ($results as $result): ?>
-                    <div class="search-result-cell">
-                        <?php if ($result['type'] === 'user'): ?>
-                            <p>User: <?= htmlspecialchars($result['name']) ?></p>
-                        <?php elseif ($result['type'] === 'blogpost'): ?>
-                            <a href="./posts.php?id=<?= $result['entity_id'] ?>">Blogg: <?= htmlspecialchars($result['name']) ?></a>
-                        <?php endif; ?>
+        <div class="search-header">
+            <div class="search-bar-container">
+                <form action="" method="post">
+                    <input type="search" name="search" id="">
+                    <input type="submit" value="Sök" class="srch-btn">
+                </form>
+                <?php $results = getPostsAndUsersBySearch($pdo); ?>
+                <?php if ($results): ?>
+                    <div class="search-results"> <!-- Lägg alla resultat i en wrapper -->
+                        <?php foreach ($results as $result): ?>
+                            <div class="search-result-cell">
+                                <?php if ($result['type'] === 'user'): ?>
+                                    <a href="#">
+                                        <img src="../icons/profile-user.png" alt="" class="search-result-icon">
+                                        <?= htmlspecialchars($result['name']) ?>
+                                    </a>
+                                <?php elseif ($result['type'] === 'blogpost'): ?>
+                                    <a href="./posts.php?id=<?= $result['entity_id'] ?>">
+                                        <img src="../icons/communication.png" alt="" class="search-result-icon">
+                                        <?= htmlspecialchars($result['name']) ?>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
+    </nav>
+
+
 
     <?php
     $stmt = $pdo->prepare('
