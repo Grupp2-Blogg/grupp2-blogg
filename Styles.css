@@ -467,8 +467,8 @@ a {
 
 .post-buttons {
     display: flex;
-    justify-content: right;  /* Aligns buttons to the right */
-    gap: 10px; /* Adds spacing between buttons */
+    justify-content: right;
+    gap: 10px;
     padding: 10px;
 }
 
@@ -566,4 +566,25 @@ a {
     color: #666;
     margin-top: 5px;
     display: block;
+}
+
+.like-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.like-btn {
+    border: none;
+    background-color: var(--main-color-green);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.like-btn.liked {
+    background-color: red;
 }
