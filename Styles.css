@@ -104,7 +104,7 @@ a {
 }
 
 .search-result-cell:hover {
-    background-color: blue;
+    background-color: rgb(3, 38, 212);
     color: white;
     cursor: pointer;
 }
