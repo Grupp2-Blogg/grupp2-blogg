@@ -82,6 +82,144 @@ a {
     font-size: 18px;
 }
 
+.search-header {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.search-header * {
+    border-radius: 0.2rem;
+    text-align: start;
+}
+
+.search-bar-container {
+    align-self: center;
+    max-width: 20rem; /* Öka om det behövs */
+    min-width: 16rem;
+    display: flex;
+    flex-direction: column;
+    /* background-color: white; */
+    position: relative; /* Viktigt för att positionera sökresultaten */
+    
+}
+
+.search-bar-container > form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.search-bar-container > form > input[type="search"] {
+    flex: 9;
+}
+
+.srch-btn {
+    font-weight: bold;
+    flex: 1.5;
+    color: white;
+    background-color: var(--shade-of-green);
+    width: 3.5rem;
+    height: 1.75rem;
+    align-self: center;
+    border: 1px solid var(--main-color-green);
+    text-align: center;
+    
+}
+
+.srch-btn:hover {
+    cursor: pointer;
+    background-color: #afa8a5;
+    color: black;
+    box-shadow: 0 0 5px #afa8a5,
+                0 0 25px #afa8a5,
+                0 0 50px #afa8a5,
+                0 0 200px #afa8a5
+}
+
+/* Wrappa sökresultaten */
+.search-results {
+    display: none;
+    position: absolute;
+    top: 100%; /* Direkt under sökrutan */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+
+.search-bar-container:hover {
+    .search-results {
+        display: block;
+    }
+}
+
+.search-result-cell {
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+.search-result-icon {
+    width: 16px; /* Justera storlek */
+    height: 16px;
+    margin-right: 5px; /* Mellanrum mellan ikon och text */
+    vertical-align: middle;
+}
+
+.search-result-cell a {
+    color: black;
+}
+
+.search-result-cell a:visited {
+    text-decoration: none;
+    color: black;
+
+}
+
+.search-result-cell:hover {
+    background-color: rgb(3, 38, 212);
+    cursor: pointer;
+    
+}
+
+.search-result-cell:hover a {
+    color: white;
+}
+
+
+/* .search-header {
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar-container {
+    align-self: center;
+    max-width: 8rem;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.search-bar-container > form {
+    display: flex;
+    flex-direction: row;
+}
+
+.search-result-cell {
+    border: 1px solid black;
+    padding: 0.5rem 0.5rem;
+}
+
+.search-result-cell:hover {
+    background-color: rgb(3, 38, 212);
+    color: white;
+    cursor: pointer;
+} */
+
 .register-btn:hover,
 .login-btn:hover,
 .navbar a:hover
