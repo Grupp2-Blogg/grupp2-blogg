@@ -77,9 +77,9 @@ $posts = $posts ?? [];
                     <?php else: ?>
                         <p><?= htmlspecialchars($_SESSION['user']['username']); ?></p>
                     <?php endif; ?>
-                    <form action="./logout.php" method="post">
+                    <form action="../public/logout.php" method="post">
                         <div class="form-button-container">
-                            <a href="./logout.php" class="login-btn">Logga ut</a>
+                            <a href="../public/logout.php" class="login-btn">Logga ut</a>
                         </div>
                     </form>
                     <div class="form-button-container">
@@ -111,7 +111,7 @@ $posts = $posts ?? [];
     <nav class="navbar">
         <ul>
             <li><a href="../public/index.php">Hem</a></li>
-            <li><a href="../picture.php">Bilder</a></li>
+            <li><a href="../public/picture.php">Bilder</a></li>
             <li><a href="#">Recept</a></li>
             <li><a href="../public/addpost.php">Inlägg</a></li>
 
