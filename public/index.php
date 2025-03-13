@@ -92,7 +92,7 @@ foreach ($likesResults as $row) {
                         </div>
                     </form>
                     <div class="form-button-container">
-                        <a href="./account_details_router.php" class="login-btn">Acc Settings</a>
+                    <a href="/gaddhang/grupp2-blogg/profiles/profile.php" class="login-btn">Mitt Konto</a>     <!--Ändrat här //anders-->
                     </div>
                 <?php else: ?>
                     <div class="form-button-container">
