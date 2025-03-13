@@ -83,7 +83,7 @@ $posts = $posts ?? [];
                         </div>
                     </form>
                     <div class="form-button-container">
-                    <a href="/gaddhang/grupp2-blogg/profiles/profile.php" class="login-btn">Mitt Konto</a>     <!--Ändrat här //anders-->
+                    <a href="../profiles/profile.php" class="login-btn">Mitt Konto</a>     <!--Ändrat här //anders-->
                     </div>
                 <?php else: ?>
                     <div class="form-button-container">
@@ -110,10 +110,10 @@ $posts = $posts ?? [];
 
     <nav class="navbar">
         <ul>
-            <li><a href="/gaddhang/grupp2-blogg//public/index.php">Hem</a></li>
-            <li><a href="/gaddhang/grupp2-blogg/picture.php">Bilder</a></li>
+            <li><a href="../public/index.php">Hem</a></li>
+            <li><a href="../picture.php">Bilder</a></li>
             <li><a href="#">Recept</a></li>
-            <li><a href="addpost.php">Inlägg</a></li>
+            <li><a href="../public/addpost.php">Inlägg</a></li>
 
         </ul>
     </nav>
@@ -145,7 +145,7 @@ $posts = $posts ?? [];
 
         
             <div class="settings-icon">
-                <a href="/gaddhang/grupp2-blogg/public/account_details_router.php">
+                <a href="../public/account_details_router.php">
                 <i class="fa-solid fa-gear"></i>
                 </a>
              </div> 
