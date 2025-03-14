@@ -101,7 +101,7 @@ $hasLiked = isset($_SESSION['user']['id']) ? $like->hasLiked($_SESSION['user']['
 
         <div class="login-banner">
             <div class="login-container">
-                <?php if (isset($_SESSION['user'])): ?>
+            <?php if (isset($_SESSION['user'])): ?>
                     <?php if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true'): ?>
                         <p>Welcome <?= htmlspecialchars($_SESSION['user']['username']); ?>!</p>
                         <?php unset($_SESSION['recent_login']); ?>
