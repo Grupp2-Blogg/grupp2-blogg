@@ -150,7 +150,7 @@ foreach ($likesResults as $row) {
                         <?php foreach ($results as $result): ?>
                             <div class="search-result-cell">
                                 <?php if ($result['type'] === 'user'): ?>
-                                    <a href="#">
+                                    <a href="../profiles/profile.php?id=<?= $result['entity_id'] ?>">
                                         <img src="../icons/profile-user.png" alt="" class="search-result-icon">
                                         <?= htmlspecialchars($result['name']) ?>
                                     </a>

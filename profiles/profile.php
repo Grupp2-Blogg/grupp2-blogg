@@ -8,7 +8,15 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$user_id = $_SESSION['user']['id']; 
+
+if (!isset($_GET['id'])) {
+    
+    $user_id = $_SESSION['user']['id']; 
+} else {
+    $user_id = $_GET['id'];
+}   
+
+
 
 
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :user_id");
