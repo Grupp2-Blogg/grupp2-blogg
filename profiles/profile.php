@@ -55,7 +55,7 @@ $posts = $posts ?? [];
 <body>
 
 <header class="top-header">
-        <img src="./fiskebi/Logga.png">
+        <img src="../public/fiskebi/Logga.png">
 
 
         <div class="login-banner">
@@ -144,7 +144,8 @@ $posts = $posts ?? [];
            
 
             <div class="profile-picture-container">
-                <img src="../uploads/<?= htmlspecialchars($user['profile_picture'] ?? 'default.jpg') ?>" alt="Profilbild" class="profile-pic">
+                <img src="../uploads/1741173716_Character.png" alt="" srcset="">
+                
                 <a href="edit_profile.php" class="edit-btn">Ändra Profilbild</a>
             </div>
 
