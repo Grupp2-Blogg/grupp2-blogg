@@ -37,9 +37,9 @@
     </li>
 </ul>
 
-<div class="form-button-container">
-    <a href="accountDetails.php?mode=account-enter-edit" class="form-button">Redigera Konto</a>
-    <a href="accountDetails.php?mode=pw-enter-confirm-old" class="form-button">Ändra Lösenord</a>
-    <a href="accountDetails.php?mode=account-enter-delete" class="form-button">Radera Konto</a>
+<div class="form-button-container-a">
+    <a href="accountDetails.php?mode=account-enter-edit" class="form-button-a">Redigera Konto</a>
+    <a href="accountDetails.php?mode=pw-enter-confirm-old" class="form-button-a">Ändra Lösenord</a>
+    <a href="accountDetails.php?mode=account-enter-delete" class="form-button-a">Radera Konto</a>
 
 </div>

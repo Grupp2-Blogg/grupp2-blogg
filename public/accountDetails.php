@@ -37,8 +37,10 @@ $controller = new AccountDetailsController($pdo);
                 echo $_SESSION['pwd_update_complete'];
                 unset($_SESSION['pwd_update_complete']);
             }
-            echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
-            echo '<a href="./index.php" class="login-btn">Startsida</a>';
+            echo '<div class="form-button-container-a">';
+            echo '<a href="./index.php?logout=true" class="form-button-a">Logga ut</a>';
+            echo '<a href="./index.php" class="form-button-a">Startsida</a>';
+            echo '</div>';
 
             ?>
         </section>
