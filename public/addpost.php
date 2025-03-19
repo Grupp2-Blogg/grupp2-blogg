@@ -33,6 +33,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $stmt->execute([$title, $content, $user_id, $imagePath]);
 
         echo "Ditt inlägg har blivit uppladdat!";
+        echo '<meta http-equiv="refresh" content="2;url=./index.php">';
+        exit();
     }
     catch (PDOException $e){
         echo "Error: " . $e->getMessage();

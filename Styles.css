@@ -588,3 +588,81 @@ a {
 .like-btn.liked {
     background-color: red;
 }
+
+.editpost-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--shade-of-green);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.editpost-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.editpost-form input,
+.editpost-form textarea {
+    width: 100%;
+    max-width: 90%;
+    padding: 12px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: var(--shade-of-sand);
+    color: black;
+    transition: all 0.3s ease-in-out;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.editpost-form textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.editpost-form button {
+    background-color: var(--main-color-green);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.editpost-form button:hover {
+    background-color: var(--shade-of-green);
+}
+
+/* Så de funkar för mobil */
+@media only screen and (max-width: 600px) {
+    .editpost-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .editpost-form input,
+    .editpost-form textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .editpost-form button {
+        font-size: 14px;
+    }
+}
+
+
