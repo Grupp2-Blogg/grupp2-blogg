@@ -120,7 +120,6 @@ $posts = $posts ?? [];
         <ul>
             <li><a href="../public/index.php">Hem</a></li>
             <li><a href="../public/picture.php">Bilder</a></li>
-            <li><a href="#">Recept</a></li>
             <li><a href="../public/addpost.php">Inlägg</a></li>
 
         </ul>

@@ -3,7 +3,6 @@ body
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: var(--main-background);
-    
 }
 
 
@@ -17,6 +16,18 @@ a {
     --shade-of-vanilla: #F7EED3;
     --shade-of-sand: #FFF8E8;
     --main-color-green: #7b794c;
+
+    --comment-color: gray;
+}
+
+:root[data-theme="dark"]{
+    color-scheme: light dark;
+    --main-background: #393939;
+    --shade-of-green: #4f5345;
+    --shade-of-vanilla: #888888;
+    --shade-of-sand: #807f7e;
+    --main-color-green: #343320;
+    --comment-color: black;
 }
 
 .top-header 
@@ -39,6 +50,15 @@ a {
 .top-header img{
     height: 15vh;
     width: 8vh;
+}
+
+.theme-mode{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    left: 0;
 }
 
 .content 
@@ -660,7 +680,7 @@ a {
 
 .comment small {
     display: block;
-    color: gray;
+    color: var(--comment-color);
     font-size: 0.8rem;
     margin-top: 5px;
 }
@@ -705,6 +725,8 @@ a {
     margin-top: 5px;
     display: block;
 }
+
+
 
 .like-container {
     display: flex;

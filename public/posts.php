@@ -139,7 +139,6 @@ $hasLiked = isset($_SESSION['user']['id']) ? $like->hasLiked($_SESSION['user']['
         <ul>
             <li><a href="index.php">Hem</a></li>
             <li><a href="picture.php">Bilder</a></li>
-            <li><a href="#">Recept</a></li>
             <li><a href="addpost.php">Inlägg</a></li>
 
         </ul>
