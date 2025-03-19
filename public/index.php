@@ -9,9 +9,39 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
     session_destroy();
 }
 
+function getPostsAndUsersBySearch(PDO $pdo)
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+
+        if (!empty($_POST['search'])) {
+
+
+            $searchTerm = "%" . $_POST['search'] . "%";
+
+            $query = "SELECT DISTINCT
+                users.id AS entity_id, 
+                users.username AS name, 
+                'user' AS type
+            FROM users
+            WHERE users.username LIKE :search
+            UNION ALL
+            SELECT 
+                blogposts.id AS entity_id, 
+                blogposts.blogtitle AS name, 
+                'blogpost' AS type
+            FROM blogposts
+            WHERE blogposts.blogtitle LIKE :search;";
+
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+}
+
 if (isset($_SESSION['user'])) {
     $user_id = array($_SESSION['user']['id']);
-
     $user_search = $pdo->prepare('SELECT image_path from users WHERE id = ?');
     $user_search->execute($user_id);
     $user = $user_search->fetch();
@@ -24,7 +54,7 @@ $commentsQuery = $pdo->prepare("SELECT post_id, COUNT(*) as count FROM comments 
 $commentsQuery->execute();
 $commentsResults = $commentsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($commentsResults as $row){
+foreach ($commentsResults as $row) {
     $commentsCount[$row['post_id']] = $row['count'];
 }
 
@@ -61,24 +91,6 @@ foreach ($likesResults as $row) {
 
         <div class="login-banner">
             <div class="login-container">
-
-                <!-- // if (isset($_SESSION['user'])) {
-
-                //     if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true') {
-                //         echo "<p>Welcome " . htmlspecialchars($_SESSION['user']['username']) . "!</p>";
-                //         unset($_SESSION['recent_login']);
-                //     } else {
-
-                //         echo "<p>" . htmlspecialchars($_SESSION['user']['username']) . "</p>";
-                //     }
-
-                //     echo '<a href="./account_redirect.php" class="login-btn">Acc settings</a>';
-                //     echo '<a href="./index.php?logout=true" class="login-btn">Logga ut</a>';
-                // } else {
-                //     echo '<a href="./login.php" class="login-btn">Logga in</a>
-                //           <a href="./signup.php" class="register-btn">Registrera</a>';
-                // }
-                //  -->
                 <?php if (isset($_SESSION['user'])): ?>
                     <?php if (isset($_SESSION['recent_login']) && $_SESSION['recent_login'] === 'true'): ?>
                         <p>Welcome <?= htmlspecialchars($_SESSION['user']['username']); ?>!</p>
@@ -92,7 +104,7 @@ foreach ($likesResults as $row) {
                         </div>
                     </form>
                     <div class="form-button-container">
-                        <a href="./account_details_router.php" class="login-btn">Acc Settings</a>
+                    <a href="../profiles/profile.php" class="login-btn">Mitt Konto</a>     <!--Ändrat här //anders-->
                     </div>
                 <?php else: ?>
                     <div class="form-button-container">
@@ -124,8 +136,38 @@ foreach ($likesResults as $row) {
             <li><a href="#">Recept</a></li>
             <li><a href="addpost.php">Inlägg</a></li>
 
+
         </ul>
+        <div class="search-header">
+            <div class="search-bar-container">
+                <form action="" method="post">
+                    <input type="search" name="search" id="">
+                    <input type="submit" value="Sök" class="srch-btn">
+                </form>
+                <?php $results = getPostsAndUsersBySearch($pdo); ?>
+                <?php if ($results): ?>
+                    <div class="search-results"> <!-- Lägg alla resultat i en wrapper -->
+                        <?php foreach ($results as $result): ?>
+                            <div class="search-result-cell">
+                                <?php if ($result['type'] === 'user'): ?>
+                                    <a href="../profiles/profile.php?id=<?= $result['entity_id'] ?>">
+                                        <img src="../icons/profile-user.png" alt="" class="search-result-icon">
+                                        <?= htmlspecialchars($result['name']) ?>
+                                    </a>
+                                <?php elseif ($result['type'] === 'blogpost'): ?>
+                                    <a href="./posts.php?id=<?= $result['entity_id'] ?>">
+                                        <img src="../icons/communication.png" alt="" class="search-result-icon">
+                                        <?= htmlspecialchars($result['name']) ?>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
     </nav>
+
 
 
     <?php
@@ -174,7 +216,7 @@ foreach ($likesResults as $row) {
 
 
 
-                    <p><?= htmlspecialchars($excerpt) ?></p>
+                        <p><?= htmlspecialchars($excerpt) ?></p>
 
                     <p class="comments-count"> <?= $commentsCount[$post['blogpost_id']] ?? 0 ?> kommentarer</p>
                     <p class="likes-count">🐟 <?= $likesCount[$post['blogpost_id']] ?? 0 ?> gillningar</p>
