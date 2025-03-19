@@ -62,7 +62,6 @@ if ((isset($_GET['logout']) && $_GET['logout'] === 'true')) {
         <ul>
             <li><a href="#">Hem</a></li>
             <li><a href="#">Bilder</a></li>
-            <li><a href="#">Recept</a></li>
             <li><a href="addpost.php">Inlägg</a></li>
 
         </ul>
