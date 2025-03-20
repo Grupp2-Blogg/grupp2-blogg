@@ -3,7 +3,6 @@ body
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: var(--main-background);
-    
 }
 
 
@@ -17,6 +16,18 @@ a {
     --shade-of-vanilla: #F7EED3;
     --shade-of-sand: #FFF8E8;
     --main-color-green: #7b794c;
+
+    --comment-color: gray;
+}
+
+:root[data-theme="dark"]{
+    color-scheme: light dark;
+    --main-background: #393939;
+    --shade-of-green: #4f5345;
+    --shade-of-vanilla: #888888;
+    --shade-of-sand: #807f7e;
+    --main-color-green: #343320;
+    --comment-color: black;
 }
 
 .top-header 
@@ -39,6 +50,15 @@ a {
 .top-header img{
     height: 15vh;
     width: 8vh;
+}
+
+.theme-mode{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    left: 0;
 }
 
 .content 
@@ -81,6 +101,144 @@ a {
     text-decoration: none;
     font-size: 18px;
 }
+
+.search-header {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.search-header * {
+    border-radius: 0.2rem;
+    text-align: start;
+}
+
+.search-bar-container {
+    align-self: center;
+    max-width: 20rem; /* Öka om det behövs */
+    min-width: 16rem;
+    display: flex;
+    flex-direction: column;
+    /* background-color: white; */
+    position: relative; /* Viktigt för att positionera sökresultaten */
+    
+}
+
+.search-bar-container > form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.search-bar-container > form > input[type="search"] {
+    flex: 9;
+}
+
+.srch-btn {
+    font-weight: bold;
+    flex: 1.5;
+    color: white;
+    background-color: var(--shade-of-green);
+    width: 3.5rem;
+    height: 1.75rem;
+    align-self: center;
+    border: 1px solid var(--main-color-green);
+    text-align: center;
+    
+}
+
+.srch-btn:hover {
+    cursor: pointer;
+    background-color: #afa8a5;
+    color: black;
+    box-shadow: 0 0 5px #afa8a5,
+                0 0 25px #afa8a5,
+                0 0 50px #afa8a5,
+                0 0 200px #afa8a5
+}
+
+/* Wrappa sökresultaten */
+.search-results {
+    display: none;
+    position: absolute;
+    top: 100%; /* Direkt under sökrutan */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+
+.search-bar-container:hover {
+    .search-results {
+        display: block;
+    }
+}
+
+.search-result-cell {
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+.search-result-icon {
+    width: 16px; /* Justera storlek */
+    height: 16px;
+    margin-right: 5px; /* Mellanrum mellan ikon och text */
+    vertical-align: middle;
+}
+
+.search-result-cell a {
+    color: black;
+}
+
+.search-result-cell a:visited {
+    text-decoration: none;
+    color: black;
+
+}
+
+.search-result-cell:hover {
+    background-color: rgb(3, 38, 212);
+    cursor: pointer;
+    
+}
+
+.search-result-cell:hover a {
+    color: white;
+}
+
+
+/* .search-header {
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar-container {
+    align-self: center;
+    max-width: 8rem;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.search-bar-container > form {
+    display: flex;
+    flex-direction: row;
+}
+
+.search-result-cell {
+    border: 1px solid black;
+    padding: 0.5rem 0.5rem;
+}
+
+.search-result-cell:hover {
+    background-color: rgb(3, 38, 212);
+    color: white;
+    cursor: pointer;
+} */
 
 .register-btn:hover,
 .login-btn:hover,
@@ -522,7 +680,7 @@ a {
 
 .comment small {
     display: block;
-    color: gray;
+    color: var(--comment-color);
     font-size: 0.8rem;
     margin-top: 5px;
 }
@@ -568,6 +726,8 @@ a {
     display: block;
 }
 
+
+
 .like-container {
     display: flex;
     align-items: center;
@@ -588,3 +748,81 @@ a {
 .like-btn.liked {
     background-color: red;
 }
+
+.editpost-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--shade-of-green);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.editpost-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.editpost-form input,
+.editpost-form textarea {
+    width: 100%;
+    max-width: 90%;
+    padding: 12px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: var(--shade-of-sand);
+    color: black;
+    transition: all 0.3s ease-in-out;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.editpost-form textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.editpost-form button {
+    background-color: var(--main-color-green);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.editpost-form button:hover {
+    background-color: var(--shade-of-green);
+}
+
+/* Så de funkar för mobil */
+@media only screen and (max-width: 600px) {
+    .editpost-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .editpost-form input,
+    .editpost-form textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .editpost-form button {
+        font-size: 14px;
+    }
+}
+
+

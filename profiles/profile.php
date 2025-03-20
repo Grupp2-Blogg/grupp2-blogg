@@ -8,7 +8,15 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$user_id = $_SESSION['user']['id']; 
+
+if (!isset($_GET['id'])) {
+    
+    $user_id = $_SESSION['user']['id']; 
+} else {
+    $user_id = $_GET['id'];
+}   
+
+
 
 
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :user_id");
@@ -47,7 +55,7 @@ $posts = $posts ?? [];
 <body>
 
 <header class="top-header">
-        <img src="./fiskebi/Logga.png">
+        <img src="../public/fiskebi/Logga.png">
 
 
         <div class="login-banner">
@@ -112,7 +120,6 @@ $posts = $posts ?? [];
         <ul>
             <li><a href="../public/index.php">Hem</a></li>
             <li><a href="../public/picture.php">Bilder</a></li>
-            <li><a href="#">Recept</a></li>
             <li><a href="../public/addpost.php">Inlägg</a></li>
 
         </ul>
@@ -136,7 +143,8 @@ $posts = $posts ?? [];
            
 
             <div class="profile-picture-container">
-                <img src="../uploads/<?= htmlspecialchars($user['profile_picture'] ?? 'default.jpg') ?>" alt="Profilbild" class="profile-pic">
+                <img src="../uploads/1741173716_Character.png" alt="" srcset="">
+                
                 <a href="edit_profile.php" class="edit-btn">Ändra Profilbild</a>
             </div>
 
