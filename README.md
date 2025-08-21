@@ -11,7 +11,7 @@ The focus of the project was both on **technical implementation** and **collabor
 ## 🎥 Demo
 Below is a short demo showcasing the account and login system in action:
 
-![Demo of login and account system](docs/Fishyblogg_demo.gif)
+![Demo of login and account system](Fishyblogg_demo.gif)
 
 ---
 
