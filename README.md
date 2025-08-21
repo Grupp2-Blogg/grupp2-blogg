@@ -8,6 +8,13 @@ The focus of the project was both on **technical implementation** and **collabor
 
 ---
 
+## 🎥 Demo
+Below is a short demo showcasing the account and login system in action:
+
+![Demo of login and account system](docs/Fishyblogg_demo.gif)
+
+---
+
 ## 👥 Teamwork & Methods
 - Agile development with **User Stories**, Scrum-inspired workflow, and GitHub Projects.  
 - **Pair programming** and **code reviews** to improve collaboration and code quality.  
